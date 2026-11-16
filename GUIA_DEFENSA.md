@@ -81,24 +81,44 @@ CU-36-G1/
 
 ### Arrancar (3 terminales, en este orden)
 
+Copiar **solo las líneas de comandos** de cada bloque, sin agregarles nada. Todos los comandos se ejecutan desde la carpeta `CU-36-G1`.
+
 **Terminal 1 – API del GPS Tracker (puerto 8080)**
+
+Mac / Linux:
 ```bash
 cd implementacion/api-gps-tracker
-./mvnw spring-boot:run            # Windows: .\mvnw.cmd spring-boot:run
+./mvnw spring-boot:run
+```
+Windows (PowerShell):
+```powershell
+cd implementacion\api-gps-tracker
+.\mvnw.cmd spring-boot:run
 ```
 
 **Terminal 2 – Backend (puerto 8081)**
+
+Mac / Linux:
 ```bash
 cd implementacion/backend
-./mvnw spring-boot:run            # Windows: .\mvnw.cmd spring-boot:run
+./mvnw spring-boot:run
+```
+Windows (PowerShell):
+```powershell
+cd implementacion\backend
+.\mvnw.cmd spring-boot:run
 ```
 
 **Terminal 3 – Frontend (puerto 5173)**
+
+`npm install` va solo la primera vez. Es igual en Mac y en Windows; en Windows la carpeta se escribe `implementacion\frontend`.
 ```bash
 cd implementacion/frontend
-npm install                       # solo la primera vez
+npm install
 npm run dev
 ```
+
+Cada servidor queda corriendo en su terminal: no hay que cerrarla. Para detenerlo, `Ctrl + C` en esa terminal.
 
 Abrir en el navegador: **http://localhost:5173**
 

@@ -8,20 +8,28 @@
 
 ## Cómo levantarlo (3 terminales, en este orden)
 
+Desde la carpeta `CU-36-G1`, una terminal para cada parte. Copiar solo los comandos, sin agregarles nada.
+
+**1) API mock del GPS Tracker**
 ```bash
-# 1) API mock del GPS Tracker
 cd implementacion/api-gps-tracker
-./mvnw spring-boot:run          # Windows: .\mvnw.cmd spring-boot:run
+./mvnw spring-boot:run
+```
 
-# 2) Backend
+**2) Backend**
+```bash
 cd implementacion/backend
-./mvnw spring-boot:run          # Windows: .\mvnw.cmd spring-boot:run
+./mvnw spring-boot:run
+```
 
-# 3) Frontend
+**3) Frontend** (`npm install` solo la primera vez)
+```bash
 cd implementacion/frontend
-npm install                      # solo la primera vez
+npm install
 npm run dev
 ```
+
+En Windows (PowerShell) se usa `.\mvnw.cmd spring-boot:run` en lugar de `./mvnw spring-boot:run`, y las carpetas se escriben con `\`.
 
 Abrir **http://localhost:5173**.
 
