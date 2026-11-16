@@ -1,0 +1,25 @@
+@startuml 05_maquina_estados_remito
+' Máquina de estados del Remito (corregida según la revisión de la Entrega 1)
+' Notación de las transiciones: Evento (caso de uso) [guarda] / método()
+skinparam dpi 120
+skinparam state {
+  BackgroundColor #FFF3DD
+  BorderColor #1d4e89
+  ArrowColor #1d4e89
+}
+title Máquina de estados del Remito
+
+[*] --> Creado : 15. Generar remito / new()
+Creado --> Creado : 16. Modificar remito / modificarDocumentacion()
+Creado --> Cancelado : 17. Cancelar remito / cancelarRemito()
+Creado --> EnBolsinSaliente : 19. Generar bolsín / asociarABolsin()
+Creado --> EnBolsinSaliente : 20. Modificar bolsín / asociarABolsin()
+EnBolsinSaliente --> Creado : 20. Modificar bolsín / quitarDeBolsin()
+EnBolsinSaliente --> Creado : 21. Eliminar bolsín / quitarDeBolsin()
+EnBolsinSaliente --> EnBolsinEnviado : 27. Registrar el retiro de bolsines / enviar()
+EnBolsinEnviado --> RecibidoYAceptado : 28. Registrar recepción de bolsín\n[toda la documentación es aceptada] / registrarRecepcion()
+EnBolsinEnviado --> RecibidoYAceptadoParcial : 28. Registrar recepción de bolsín\n[no toda la documentación es aceptada] / registrarRecepcion()
+Cancelado --> [*]
+RecibidoYAceptado --> [*]
+RecibidoYAceptadoParcial --> [*]
+@enduml

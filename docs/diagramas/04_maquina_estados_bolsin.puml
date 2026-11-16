@@ -1,0 +1,28 @@
+@startuml 04_maquina_estados_bolsin
+' Máquina de estados del Bolsín (corregida según la revisión de la Entrega 1)
+' Notación de las transiciones: Evento (caso de uso) / método()
+skinparam dpi 120
+skinparam state {
+  BackgroundColor #FFF3DD
+  BorderColor #1d4e89
+  ArrowColor #1d4e89
+}
+title Máquina de estados del Bolsín
+
+[*] --> Creado : 19. Generar bolsín / new()
+Creado --> Creado : 20. Modificar bolsín / modificarBolsin()
+Creado --> Cerrado : 39. Cerrar bolsín / cerrarBolsin()
+Cerrado --> Creado : 40. Reabrir bolsín / reabrirBolsin()
+Creado --> DeBaja : 21. Eliminar bolsín / darDeBaja()
+Cerrado --> DeBaja : 21. Eliminar bolsín / darDeBaja()
+Cerrado --> Enviado : 27. Registrar el retiro de bolsines / enviar()
+Enviado --> RecibidoEnCMDestino : 28. Registrar recepción de bolsín / registrarRecepcion()
+DeBaja --> [*]
+RecibidoEnCMDestino --> [*]
+
+note right of Enviado
+  El CU 36 Consultar seguimiento de bolsines
+  consulta los bolsines en este estado
+  (no produce cambio de estado).
+end note
+@enduml

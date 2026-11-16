@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MoodBoard - Sistema Bolsines</title>
+<link rel="stylesheet" href="estilo_afiche.css">
+<style>
+  .palabra { position: absolute; font-weight: 800; letter-spacing: 2px; color: var(--azul); }
+  .muestra { width: 120px; text-align: center; font-size: 15px; }
+  .muestra .color { height: 90px; border-radius: 6px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<div class="titulo-afiche">
+  <h1>MOODBOARD · SISTEMA BOLSINES</h1>
+  <span class="sub">CU 36 Consultar seguimiento de bolsines · Grupo 1 · 3K4</span>
+</div>
+
+<!-- Logo y slogan -->
+<div class="tarjeta" style="left:60px; top:120px; width:430px; height:250px; transform:rotate(-2deg); text-align:center;">
+  <svg width="120" height="120" viewBox="0 0 120 120">
+    <!-- bolsín -->
+    <rect x="18" y="44" width="70" height="58" rx="10" fill="#1d4e89"/>
+    <path d="M36 44 Q53 18 70 44" stroke="#1d4e89" stroke-width="7" fill="none"/>
+    <rect x="44" y="64" width="18" height="12" rx="2" fill="#f2a541"/>
+    <!-- pin de ubicación -->
+    <path d="M92 20 c-13 0 -22 9 -22 21 c0 15 22 37 22 37 s22 -22 22 -37 c0 -12 -9 -21 -22 -21z" fill="#f2a541" stroke="#fff" stroke-width="3"/>
+    <circle cx="92" cy="41" r="8" fill="#fff"/>
+  </svg>
+  <div style="font-size:44px; font-weight:800; color:var(--azul); margin-top:-6px;">Bolsines</div>
+  <div class="manuscrita" style="font-size:25px; margin-top:6px;">"Cada documento, siempre ubicado."</div>
+</div>
+
+<!-- Problemática (notas) -->
+<div class="nota amarilla" style="left:560px; top:120px; width:260px; transform:rotate(3deg);">"¿Dónde está el bolsín que mandamos ayer a Rosario?"</div>
+<div class="nota rosa" style="left:850px; top:110px; width:250px; transform:rotate(-4deg);">El Gerente llama varias veces por día preguntando por expedientes</div>
+<div class="nota amarilla" style="left:1130px; top:125px; width:240px; transform:rotate(2deg);">Expedientes con plazos legales: no se pueden perder</div>
+<div class="nota rosa" style="left:600px; top:290px; width:250px; transform:rotate(-2deg);">Precintos y destinos anotados en planillas de papel</div>
+<div class="nota amarilla" style="left:900px; top:285px; width:230px; transform:rotate(4deg);">"Una vez que el correo lo retira, no sabemos nada más"</div>
+
+<!-- Elemento asociado: bolsín precintado con GPS -->
+<div class="tarjeta" style="left:1180px; top:270px; width:360px; height:330px; transform:rotate(3deg);">
+  <svg width="324" height="250" viewBox="0 0 324 250">
+    <rect x="40" y="70" width="200" height="160" rx="22" fill="#1d4e89"/>
+    <path d="M90 70 Q140 10 190 70" stroke="#163c69" stroke-width="14" fill="none"/>
+    <rect x="60" y="100" width="160" height="40" rx="6" fill="#ffffff" opacity="0.15"/>
+    <text x="140" y="127" text-anchor="middle" font-size="22" fill="#fff" font-weight="700">BOLSÍN</text>
+    <!-- precinto -->
+    <rect x="118" y="150" width="44" height="30" rx="4" fill="#f2a541"/>
+    <line x1="140" y1="180" x2="140" y2="212" stroke="#f2a541" stroke-width="4"/>
+    <circle cx="140" cy="218" r="9" fill="#f2a541"/>
+    <!-- etiqueta precinto -->
+    <rect x="200" y="160" width="100" height="38" rx="6" fill="#fff" stroke="#f2a541" stroke-width="3"/>
+    <text x="250" y="185" text-anchor="middle" font-size="17" font-weight="700" fill="#333">N° 50113</text>
+    <!-- GPS -->
+    <rect x="220" y="62" width="60" height="44" rx="8" fill="#333"/>
+    <circle cx="250" cy="84" r="8" fill="#4caf50"/>
+    <path d="M286 64 q14 20 0 40 M296 56 q22 28 0 56" stroke="#4caf50" stroke-width="4" fill="none"/>
+  </svg>
+  <div class="manuscrita" style="text-align:center; font-size:21px;">Bolsín precintado + GPS Tracker</div>
+</div>
+
+<!-- Mapa con recorrido -->
+<div class="tarjeta" style="left:70px; top:430px; width:520px; height:380px; transform:rotate(1.5deg);">
+  <svg width="484" height="300" viewBox="0 0 484 300">
+    <rect width="484" height="300" fill="#e7f0e3"/>
+    <path d="M0 230 Q120 200 200 240 T484 220" stroke="#b7d3ec" stroke-width="18" fill="none"/>
+    <path d="M60 60 L170 90 L240 150 L330 170 L420 200" stroke="#ccc" stroke-width="6" fill="none"/>
+    <path d="M90 70 C170 110 230 140 300 160 S400 190 430 205" stroke="#1d4e89" stroke-width="5" stroke-dasharray="12 10" fill="none"/>
+    <circle cx="90" cy="70" r="12" fill="#1d4e89"/>
+    <text x="70" y="45" font-size="18" font-weight="700" fill="#1d4e89">CM Córdoba</text>
+    <circle cx="430" cy="205" r="12" fill="#2e7d32"/>
+    <text x="380" y="245" font-size="18" font-weight="700" fill="#2e7d32">CM Rosario</text>
+    <path d="M262 98 c-12 0 -20 8 -20 19 c0 14 20 34 20 34 s20 -20 20 -34 c0 -11 -8 -19 -20 -19z" fill="#f2a541" stroke="#fff" stroke-width="3"/>
+    <circle cx="262" cy="117" r="7" fill="#fff"/>
+    <rect x="290" y="70" width="150" height="34" rx="6" fill="#fff" stroke="#ddd"/>
+    <text x="365" y="93" text-anchor="middle" font-size="15" fill="#333">Bolsín 101 · 12:30</text>
+  </svg>
+  <div class="manuscrita" style="text-align:center; font-size:22px; margin-top:8px;">Ver el recorrido en un mapa, en tiempo real</div>
+</div>
+
+<!-- Palabras clave -->
+<div class="palabra" style="left:640px; top:450px; font-size:64px; transform:rotate(-3deg);">TRAZABILIDAD</div>
+<div class="palabra" style="left:660px; top:545px; font-size:44px; color:#f2a541;">TRANQUILIDAD</div>
+<div class="palabra" style="left:1010px; top:610px; font-size:38px; transform:rotate(4deg);">CONTROL</div>
+<div class="palabra" style="left:650px; top:625px; font-size:34px; color:#2e7d32; transform:rotate(-2deg);">A TIEMPO</div>
+<div class="palabra" style="left:1300px; top:640px; font-size:36px; color:#555; transform:rotate(-5deg);">CONFIANZA</div>
+
+<!-- Paleta -->
+<div class="tarjeta" style="left:640px; top:720px; width:560px; height:250px; transform:rotate(-1.5deg);">
+  <div style="font-weight:700; color:var(--azul); margin-bottom:12px; font-size:20px;">Paleta de colores</div>
+  <div style="display:flex; gap:14px;">
+    <div class="muestra"><div class="color" style="background:#1d4e89"></div><b>Azul institucional</b><br>confianza, Estado</div>
+    <div class="muestra"><div class="color" style="background:#f2a541"></div><b>Amarillo precinto</b><br>atención, selección</div>
+    <div class="muestra"><div class="color" style="background:#2e7d32"></div><b>Verde</b><br>éxito, recibido</div>
+    <div class="muestra"><div class="color" style="background:#f4f6fa; border:1px solid #ddd"></div><b>Gris claro</b><br>orden, limpieza</div>
+  </div>
+</div>
+
+<!-- Mail al gerente -->
+<div class="tarjeta" style="left:1250px; top:720px; width:300px; height:250px; transform:rotate(2.5deg);">
+  <svg width="264" height="120" viewBox="0 0 264 120">
+    <rect x="22" y="10" width="220" height="100" rx="8" fill="#fff" stroke="#1d4e89" stroke-width="5"/>
+    <path d="M22 18 L132 72 L242 18" stroke="#1d4e89" stroke-width="5" fill="none"/>
+  </svg>
+  <div class="manuscrita" style="font-size:19px; text-align:center;">"Le informamos la ubicación del bolsín N° 113"</div>
+  <div style="font-size:14px; text-align:center; color:#555; margin-top:6px;">Aviso al Gerente de la CM destino</div>
+</div>
+
+<!-- Tipografía y estilo -->
+<div class="tarjeta" style="left:70px; top:860px; width:520px; height:190px; transform:rotate(-1deg);">
+  <div style="font-weight:700; color:var(--azul); font-size:20px;">Estilo visual</div>
+  <div style="font-size:34px; font-weight:700; margin:6px 0;">Aa · Simple y legible</div>
+  <div style="font-size:17px; line-height:1.45;">Tipografía sin serif, pantallas despejadas, mapa como protagonista, botones grandes y mensajes cortos.</div>
+</div>
+
+</body>
+</html>

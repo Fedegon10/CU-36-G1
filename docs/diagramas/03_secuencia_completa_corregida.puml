@@ -1,0 +1,70 @@
+@startuml 03_secuencia_completa_corregida
+' Secuencia completa del CU 36 (flujo básico) con las correcciones de la revisión de la Entrega 1:
+'  - mostrarComisionMedicaEmp recibe el nombre de la CM (se obtiene con getNombre())
+'  - Gestor no consulta directamente a Estado; el Bolsín resuelve su estado con el CambioEstado actual
+'  - Se usa esEnviado() en lugar de buscarBolsinEnEstadoEnviado()
+'  - Se obtienen número, precinto y CM destino de cada bolsín
+'  - Loop sobre Empleado: sosGCMDeCM() resuelve rol y CM a la vez
+'  - El CU incluido es "Notificar ubicación de bolsín" (no Registrar revisión de documentación)
+skinparam dpi 120
+autonumber
+title CU 36 Consultar seguimiento de bolsines - Flujo básico (diseño)
+
+actor ":EncargadoDeBolsines" as EB
+participant ":PantallaConsultar\nSeguimientoBolsines" as P <<boundary>>
+participant ":GestorConsultar\nSeguimientoBolsines" as G <<control>>
+participant ":Sesion" as SE <<entity>>
+participant ":Empleado" as EM <<entity>>
+participant "cm:\nComisionMedica" as CMU <<entity>>
+participant ":Bolsin" as B <<entity>>
+participant ":InterfazGPSTracker" as I <<boundary>>
+participant ":Rol" as R <<entity>>
+participant ":GestorNotificar\nUbicacionBolsin" as N <<control>>
+
+EB -> P : selecOpcionConsultarUbicacionBolsines()
+P -> P : habilitarPantalla()
+P -> G : consultarUbicacionBolsines()
+G -> G : buscarCM()
+G -> SE : getUsuario()
+loop para cada Empleado
+  G -> EM : esTuUsuario(usuario)
+end
+G -> EM : getCM()
+G -> CMU : getNombre()
+
+G -> G : buscarBolsinesEnviados()
+loop para cada Bolsin
+  G -> B : esEnviado()
+  G -> B : esTuCMOrigen(cm)
+end
+G -> G : obtenerUbicacionBolsines()
+loop para cada bolsín enviado
+  G -> B : getNumeroBolsin() / getNumeroPrecinto() / getDestino() / getModeloGPSTracker()
+  G -> I : solicitarUbicacionBolsin(...): UbicacionBolsin
+  note right of I : Ver diagrama 02 (Adapter)
+end
+G -> G : armarMapaDePosicionDeBolsines()
+G --> P : MapaBolsinesDTO (CM, bolsines con ubicación, bolsines sin ubicación)
+P -> P : mostrarMapaDeBolsines()
+
+EB -> P : selecBolsin()
+P -> G : tomarSeleccionBolsin(numeroBolsin)
+G --> P : BolsinEnMapaDTO
+P -> P : solicitarConfirmacionEnvioMail()
+EB -> P : confirmarEnvioMail()
+P -> G : tomarConfirmacionDeMail(true)
+G -> G : buscarMailDeGerenteCMDestino()
+loop para cada Empleado
+  G -> EM : sosGCMDeCM(cmDestino)
+  EM -> R : esGCM()
+  EM -> CMU : esMiCM(cmDestino)
+end
+G -> EM : getEmail() / getNombreCompleto()
+G -> G : llamarCUNotificarUbicacion(gerente)
+G -> N : notificarUbicacion(email, nombreGerente, numeroBolsin, fechaHora, latitud, longitud)
+note right of N : <<include>> CU Notificar ubicación de bolsín
+N --> G : MailEnviadoDTO
+G -> G : finCU()
+G --> P : MailEnviadoDTO
+P -> P : mostrarMailEnviado()
+@enduml

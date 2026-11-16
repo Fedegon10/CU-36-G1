@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>User Journey - Sistema Bolsines</title>
+<link rel="stylesheet" href="estilo_afiche.css">
+<style>
+  /* Tres momentos: el afiche dividido horizontalmente, como pide la consigna */
+  .momento { position: absolute; top: 110px; height: 960px; width: 455px; border: 3px solid var(--azul); background: rgba(255,255,255,0.35); }
+  .m1 { left: 190px; }
+  .m2 { left: 645px; border-left: none; }
+  .m3 { left: 1100px; border-left: none; }
+  .momento .cabecera { background: var(--azul); color: #fff; text-align: center; padding: 10px 0 8px; }
+  .momento .cabecera b { font-size: 30px; letter-spacing: 2px; }
+  .momento .cabecera span { display: block; font-size: 15px; opacity: 0.9; }
+
+  /* Etiquetas de filas */
+  .fila { position: absolute; left: 22px; width: 160px; font-weight: 700; color: var(--azul); font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .linea { position: absolute; left: 190px; width: 1365px; border-top: 2px dashed rgba(29,78,137,0.35); }
+
+  .nota { width: 205px; font-size: 16px; padding: 12px 14px; }
+  .chip { position: absolute; background: #fff; border: 2px solid var(--azul); border-radius: 20px; padding: 4px 12px; font-size: 15px; }
+  .cara { position: absolute; font-size: 15px; text-align: center; width: 120px; }
+</style>
+</head>
+<body>
+
+<div class="titulo-afiche">
+  <h1>USER JOURNEY · MARTA</h1>
+  <span class="sub">Encargada de Bolsines · CU 36 Consultar seguimiento de bolsines · Grupo 1 · 3K4</span>
+</div>
+
+<div class="momento m1"><div class="cabecera"><b>ANTES</b><span>Qué desencadena la necesidad</span></div></div>
+<div class="momento m2"><div class="cabecera"><b>DURANTE</b><span>Uso del Sistema Bolsines</span></div></div>
+<div class="momento m3"><div class="cabecera"><b>DESPUÉS</b><span>Consecuencias y expectativas</span></div></div>
+
+<!-- Filas -->
+<div class="fila" style="top:190px;">Acciones</div>
+<div class="linea" style="top:450px;"></div>
+<div class="fila" style="top:470px;">Piensa</div>
+<div class="linea" style="top:600px;"></div>
+<div class="fila" style="top:620px;">Emociones</div>
+<div class="linea" style="top:808px;"></div>
+<div class="fila" style="top:820px;">Puntos de contacto</div>
+<div class="linea" style="top:900px;"></div>
+<div class="fila" style="top:920px;">Oportunidades</div>
+
+<!-- ACCIONES -->
+<div class="nota celeste" style="left:205px; top:180px; transform:rotate(-2deg);">El Gerente de CM Rosario llama: necesita un expediente urgente</div>
+<div class="nota celeste" style="left:425px; top:210px; transform:rotate(2deg);">Busca en la planilla el bolsín y el precinto</div>
+<div class="nota celeste" style="left:230px; top:330px; width:240px; transform:rotate(1deg);">Recuerda que el bolsín 101 salió ayer con el correo</div>
+
+<div class="nota celeste" style="left:660px; top:180px; transform:rotate(1deg);">Inicia sesión y elige "Consultar seguimiento de bolsines"</div>
+<div class="nota celeste" style="left:880px; top:175px; transform:rotate(-2deg);">Ve en el mapa sus bolsines enviados</div>
+<div class="nota celeste" style="left:665px; top:310px; transform:rotate(-1deg);">Filtra por CM destino Rosario y elige el bolsín 101</div>
+<div class="nota celeste" style="left:885px; top:300px; transform:rotate(2deg);">Confirma enviar el mail con la ubicación al Gerente</div>
+
+<div class="nota celeste" style="left:1115px; top:180px; transform:rotate(-1deg);">El Gerente recibe el mail con ubicación, fecha y hora</div>
+<div class="nota celeste" style="left:1335px; top:200px; transform:rotate(2deg);">Marta vuelve a sus tareas sin más llamados</div>
+<div class="nota celeste" style="left:1180px; top:320px; width:250px; transform:rotate(-2deg);">Al día siguiente la CM Rosario registra la recepción del bolsín</div>
+
+<!-- PIENSA -->
+<div class="nota amarilla" style="left:270px; top:470px; width:290px; transform:rotate(-2deg);">"¿Ya habrá llegado? No tengo forma de saberlo..."</div>
+<div class="nota amarilla" style="left:720px; top:470px; width:290px; transform:rotate(1.5deg);">"¡Ahí está, ya pasó Marcos Juárez!"</div>
+<div class="nota amarilla" style="left:1180px; top:470px; width:290px; transform:rotate(-1.5deg);">"Listo, el Gerente ya sabe dónde está."</div>
+
+<!-- EMOCIONES: curva -->
+<svg style="position:absolute; left:190px; top:610px;" width="1365" height="190" viewBox="0 0 1365 190">
+  <path d="M40 150 C140 160 230 170 330 150 S470 120 520 110 S640 40 720 60 S850 120 900 95 S1050 30 1150 28 S1300 30 1330 28"
+        stroke="#1d4e89" stroke-width="5" fill="none"/>
+  <circle cx="60" cy="152" r="16" fill="#ffd9e1" stroke="#c0392b" stroke-width="3"/>
+  <circle cx="330" cy="150" r="16" fill="#ffd9e1" stroke="#c0392b" stroke-width="3"/>
+  <circle cx="720" cy="60" r="16" fill="#dff3d8" stroke="#2e7d32" stroke-width="3"/>
+  <circle cx="900" cy="95" r="16" fill="#fff3a8" stroke="#e0a100" stroke-width="3"/>
+  <circle cx="1150" cy="28" r="16" fill="#dff3d8" stroke="#2e7d32" stroke-width="3"/>
+</svg>
+<div class="cara manuscrita" style="left:190px; top:780px;">Preocupación</div>
+<div class="cara manuscrita" style="left:460px; top:780px;">Ansiedad</div>
+<div class="cara manuscrita" style="left:850px; top:610px;">Alivio</div>
+<div class="cara manuscrita" style="left:930px; top:735px; width:160px;">Duda: un bolsín sin ubicación (A3)</div>
+<div class="cara manuscrita" style="left:1290px; top:670px;">Tranquilidad</div>
+
+<!-- PUNTOS DE CONTACTO -->
+<div class="chip" style="left:210px; top:840px;">Teléfono</div>
+<div class="chip" style="left:320px; top:840px;">Planilla</div>
+<div class="chip" style="left:415px; top:840px;">Correo postal</div>
+<div class="chip" style="left:665px; top:840px;">Sistema Bolsines</div>
+<div class="chip" style="left:835px; top:840px;">Mapa</div>
+<div class="chip" style="left:910px; top:840px;">GPS Tracker</div>
+<div class="chip" style="left:1120px; top:840px;">Mail al Gerente</div>
+<div class="chip" style="left:1285px; top:840px;">CU 28 Recepción</div>
+
+<!-- OPORTUNIDADES -->
+<div class="nota verde" style="left:205px; top:925px; width:420px; transform:rotate(-1deg);">Tener toda la información de envíos en un solo lugar, no en planillas</div>
+<div class="nota verde" style="left:660px; top:925px; width:420px; transform:rotate(1deg);">Avisar claramente qué bolsín no informa ubicación y desde cuándo</div>
+<div class="nota verde" style="left:1115px; top:925px; width:425px; transform:rotate(-1deg);">Notificar automáticamente al Gerente cuando el bolsín esté cerca</div>
+
+</body>
+</html>

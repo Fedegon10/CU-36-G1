@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>PPAI2026_3K4_G1_E2_Diseño</title>
+<style>
+  /* ---------- Página, encabezado y pie ---------- */
+  @page {
+    size: A4;
+    margin: 24mm 18mm 20mm 18mm;
+    @top-left { content: "DSI – PPAI Bolsines · Entrega 2 – Diseño"; font: 8.5pt Helvetica, Arial, sans-serif; color: #555; border-bottom: 0.6pt solid #1d4e89; vertical-align: bottom; padding-bottom: 2mm; }
+    @top-right { content: "CU 36 · Grupo 1 · 3K4"; font: 8.5pt Helvetica, Arial, sans-serif; color: #555; border-bottom: 0.6pt solid #1d4e89; vertical-align: bottom; padding-bottom: 2mm; }
+    @bottom-center { content: "Página " counter(page) " de " counter(pages); font: 8.5pt Helvetica, Arial, sans-serif; color: #555; }
+  }
+  @page :first {
+    @top-left { content: none; border: none; }
+    @top-right { content: none; border: none; }
+    @bottom-center { content: none; }
+  }
+  @page apaisada { size: A4 landscape; margin: 22mm 16mm 16mm 16mm; }
+
+  /* ---------- Estilo general ---------- */
+  body { font-family: Helvetica, Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d1d1d; margin: 0; }
+  h1 { font-size: 17pt; color: #1d4e89; margin: 0 0 4mm; padding-bottom: 1.5mm; border-bottom: 1.2pt solid #1d4e89; break-after: avoid; }
+  h2 { font-size: 13pt; color: #1d4e89; margin: 6mm 0 2.5mm; break-after: avoid; }
+  h3 { font-size: 11pt; margin: 4mm 0 2mm; break-after: avoid; }
+  p { margin: 0 0 2.5mm; text-align: justify; }
+  ul, ol { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1mm; }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 9.5pt; break-inside: avoid; }
+  th, td { border: 0.5pt solid #b9c3d0; padding: 1.6mm 2.2mm; text-align: left; vertical-align: top; }
+  th { background: #e8eef6; color: #1d4e89; }
+  code { font-family: Menlo, Consolas, monospace; font-size: 8.8pt; background: #f1f3f6; padding: 0 1mm; border-radius: 1mm; }
+  pre { font-family: Menlo, Consolas, monospace; font-size: 7.4pt; line-height: 1.35; background: #f5f7fa; border: 0.5pt solid #d5dbe3; border-left: 2pt solid #1d4e89; padding: 3mm; margin: 2mm 0 4mm; white-space: pre-wrap; break-inside: avoid; }
+  .seccion { break-before: page; }
+  .nota { font-size: 9pt; color: #555; }
+  .apaisada { page: apaisada; break-before: page; }
+  .apaisada h2 { margin-top: 0; margin-bottom: 2mm; }
+  .figura { text-align: center; margin: 2mm 0 3mm; break-inside: avoid; }
+  .figura img { max-width: 100%; border: 0.5pt solid #d5dbe3; }
+  .apaisada .figura img { max-height: 160mm; }
+  .figura figcaption { font-size: 8.5pt; color: #555; margin-top: 1.5mm; }
+  .capturas { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .capturas .figura img { max-height: 70mm; }
+  .foto-ux { border: 1pt dashed #9aa7b8; min-height: 80mm; display: flex; align-items: center; justify-content: center; color: #8592a3; font-size: 10pt; margin: 2mm 0 4mm; position: relative; break-inside: avoid; }
+  .foto-ux img { max-width: 100%; max-height: 120mm; }
+  .foto-ux.con-foto { border: none; min-height: 0; }
+  .apaisada .foto-ux img { max-height: 158mm; border: 0.5pt solid #d5dbe3; }  /* cuando la foto existe, se quita el recuadro */
+
+  /* ---------- Carátula ---------- */
+  .caratula { text-align: center; padding-top: 6mm; }
+  .caratula .uni { font-size: 16pt; font-weight: bold; color: #1d4e89; letter-spacing: 0.3pt; }
+  .caratula .fac { font-size: 11pt; margin-top: 1mm; }
+  .caratula .proyecto { font-size: 11pt; font-weight: bold; margin-top: 10mm; letter-spacing: 0.5pt; }
+  .caratula .titulo { font-size: 22pt; font-weight: bold; margin: 6mm 0 2mm; }
+  .caratula .subtitulo { font-size: 12pt; color: #444; margin-bottom: 9mm; }
+  .caratula table { font-size: 10pt; text-align: left; }
+  .caratula td:first-child { width: 38%; background: #e8eef6; color: #1d4e89; font-weight: bold; }
+  .caratula h3 { text-align: center; margin-top: 7mm; }
+</style>
+</head>
+<body>
+
+<!-- ===================== CARÁTULA ===================== -->
+<section class="caratula">
+  <div class="uni">UNIVERSIDAD TECNOLÓGICA NACIONAL</div>
+  <div class="fac">Facultad Regional Córdoba<br>Ingeniería en Sistemas de Información</div>
+  <div class="proyecto">PROYECTO PRÁCTICO DE APLICACIÓN INTEGRADOR</div>
+  <div class="titulo">Entrega 2 – Diseño</div>
+  <div class="subtitulo">Rediseño de la realización del caso de uso aplicando el patrón Adapter e implementación</div>
+
+  <table>
+    <tr><td>Cátedra</td><td>Diseño de Sistemas de Información</td></tr>
+    <tr><td>Caso de estudio</td><td>Bolsines</td></tr>
+    <tr><td>Caso de uso asignado</td><td>CU 36 – Consultar seguimiento de bolsines</td></tr>
+    <tr><td>Tema de la entrega</td><td>Diseño: patrón de diseño (Adapter), implementación y diseño de experiencia de usuario</td></tr>
+    <tr><td>Curso</td><td>3K4</td></tr>
+    <tr><td>Número de entrega</td><td>2</td></tr>
+    <tr><td>Número de grupo</td><td>G1</td></tr>
+    <tr><td>Fecha de entrega</td><td>16/11/2026</td></tr>
+    <tr><td>Docentes del curso</td><td>Ing. Judith Meles, Ing. María Sol Vega, Ing. Federico Mizzau Anadón, Camila Linaza</td></tr>
+    <tr><td>Docente tutor (docente del práctico)</td><td>Ing. Judith Meles</td></tr>
+    <tr><td>Ciclo lectivo</td><td>2026</td></tr>
+  </table>
+
+  <h3>Integrantes del grupo</h3>
+  <table>
+    <tr><th>Apellido y nombre</th><th>Legajo</th><th>Correo electrónico</th></tr>
+    <tr><td>Baudo, Ramiro</td><td>78737</td><td>baudoramiro@gmail.com</td></tr>
+    <tr><td>Esquivel, Ignacio</td><td>408359</td><td>nachoesquivel001@gmail.com</td></tr>
+    <tr><td>Frances, David</td><td>80370</td><td>davidtkf256@gmail.com</td></tr>
+    <tr><td>Gon, Federico</td><td>94470</td><td>federicomgon@gmail.com</td></tr>
+    <tr><td>Vasquez, Facundo Santiago</td><td>403818</td><td>facuvasquezzz@gmail.com</td></tr>
+  </table>
+</section>
+
+<!-- ===================== CONTENIDO ===================== -->
+<section class="seccion">
+  <h1>Contenido</h1>
+  <ol>
+    <li>Identificación del patrón implementado</li>
+    <li>Vista estática de la realización de caso de uso de diseño</li>
+    <li>Vista dinámica de la realización de caso de uso de diseño</li>
+    <li>Implementación del rediseño</li>
+    <li>Correcciones aplicadas de la Entrega 1</li>
+    <li>Diseño de experiencia de usuario</li>
+    <li>Anexo: máquinas de estado corregidas (Bolsín y Remito)</li>
+  </ol>
+
+  <!-- ===================== 1. PATRÓN ===================== -->
+  <h1 style="margin-top:10mm">1. Identificación del patrón implementado</h1>
+  <p><b>Patrón aplicado:</b> Adapter (Gamma et al.), patrón estructural en su variante de objetos.</p>
+
+  <h2>1.1 Problema</h2>
+  <p>En el CU 36 el sistema debe solicitar la ubicación de cada bolsín en tránsito al dispositivo GPS Tracker que lo acompaña. Según la Observación 1 del caso de uso, existen tres modelos de GPS Tracker y cada uno expone una interfaz distinta e incompatible con las demás:</p>
+  <table>
+    <tr><th>Modelo</th><th>Operación</th><th>Parámetros</th><th>Respuesta</th></tr>
+    <tr><td>XTR-4500L</td><td><code>getBolsinLocation()</code></td><td>API Key, número de bolsín (entero), código de CM <b>origen</b> (String)</td><td>JSON en formato cadena de caracteres</td></tr>
+    <tr><td>NavTrack QX-7A</td><td><code>retrieveTrackingData()</code></td><td>API Key, número de bolsín (entero), código de CM <b>destino</b> (String)</td><td>Un único String con los ítems separados por comas</td></tr>
+    <tr><td>GeoPulse MTR-900</td><td><code>fetchCargoPositions()</code></td><td>API Key, número de bolsín (entero)</td><td>Matriz</td></tr>
+  </table>
+  <p>En los tres casos el sistema necesita la misma información: número de bolsín, latitud, longitud y fecha y hora de la última actualización de posición.</p>
+
+  <h2>1.2 Justificación</h2>
+  <ul>
+    <li>Si el gestor invocara directamente a cada servicio, debería conocer los tres formatos y contener condicionales por modelo. Eso lo acopla a sistemas externos y lo obliga a modificarse ante cada cambio de proveedor.</li>
+    <li>El patrón Adapter define una <b>interfaz común</b> (<code>IAdaptadorGPSTracker</code>) que siempre devuelve un objeto <code>UbicacionBolsin</code>. Cada <b>adaptador concreto</b> encapsula la comunicación con un modelo y traduce su pedido y su respuesta al formato que espera el sistema.</li>
+    <li>Agregar un nuevo modelo de GPS solo requiere un nuevo adaptador, sin modificar el gestor ni la pantalla (principio abierto/cerrado). Cada adaptador tiene una única responsabilidad.</li>
+  </ul>
+
+  <h2>1.3 Participantes</h2>
+  <table>
+    <tr><th>Rol en el patrón</th><th>Clase</th></tr>
+    <tr><td>Cliente</td><td><code>InterfazGPSTracker</code> «boundary», utilizada por <code>GestorConsultarSeguimientoBolsines</code></td></tr>
+    <tr><td>Target (objetivo)</td><td><code>IAdaptadorGPSTracker</code> «interface»</td></tr>
+    <tr><td>Adapter (adaptadores)</td><td><code>AdaptadorGPSTrackerXTR4500L</code>, <code>AdaptadorGPSTrackerNavTrackQX7A</code>, <code>AdaptadorGPSTrackerGeoPulseMTR900</code></td></tr>
+    <tr><td>Adaptee (adaptados)</td><td><code>ServicioGPSTrackerXTR4500L</code>, <code>ServicioGPSTrackerNavTrackQX7A</code>, <code>ServicioGPSTrackerGeoPulseMTR900</code></td></tr>
+    <tr><td>Resultado común</td><td><code>UbicacionBolsin</code></td></tr>
+  </table>
+</section>
+
+<!-- ===================== 2. VISTA ESTÁTICA ===================== -->
+<section>
+  <h1 style="margin-top:10mm">2. Vista estática de la realización de caso de uso de diseño</h1>
+  <p>El diagrama de clases de diseño (Figura 1, en la página siguiente) muestra la estructura que resulta de aplicar el patrón. Incluye tipos de datos, tipos de parámetros y retornos y visibilidad de los métodos: <code>+</code> público, <code>-</code> privado.</p>
+  <h2>2.1 Decisiones de diseño</h2>
+  <ul>
+    <li><code>Bolsin</code> incorpora el atributo <code>modeloGPSTracker: String</code>, que indica qué dispositivo lleva cada bolsín. <code>InterfazGPSTracker</code> usa ese dato para crear el adaptador concreto en <code>crearAdaptador()</code>.</li>
+    <li>La operación del target, <code>obtenerUbicacion(numeroBolsin: int, codigoCMOrigen: String, codigoCMDestino: String): UbicacionBolsin</code>, recibe todos los datos que podría necesitar cualquier modelo. Cada adaptador usa solo los que su servicio requiere.</li>
+    <li>Cada adaptador tiene dos métodos privados: <code>solicitarUbicacion()</code> (comunicación con el servicio externo) y <code>adaptarUbicacion()</code> (traducción del formato recibido a <code>UbicacionBolsin</code>).</li>
+    <li>La clave API de cada modelo se configura en la aplicación. La interfaz la entrega al adaptador al crearlo, como en el ejemplo de la cátedra (Monitores AGCO, Case IH, Topcon).</li>
+  </ul>
+</section>
+
+<section class="apaisada">
+  <figure class="figura">
+    <img src="imagenes/diagramas/01_clases_diseno_adapter.svg" alt="Diagrama de clases de diseño">
+    <figcaption>Figura 1 – Diagrama de clases de diseño del CU 36 con el patrón Adapter.</figcaption>
+  </figure>
+</section>
+
+<!-- ===================== 3. VISTA DINÁMICA ===================== -->
+<section class="seccion">
+  <h1>3. Vista dinámica de la realización de caso de uso de diseño</h1>
+  <p>La Figura 2 modela la parte del escenario que se rediseña por la aplicación del patrón: la obtención de la ubicación de los bolsines con el GPS Tracker modelo XTR-4500L, el del flujo descripto. La Figura 3 muestra el flujo básico completo, con las correcciones de la Entrega 1.</p>
+  <h2>3.1 Explicación de la dinámica</h2>
+  <ol>
+    <li><code>GestorConsultarSeguimientoBolsines</code> busca los bolsines en estado Enviado de la CM del usuario logueado. Cada <code>Bolsin</code> resuelve su estado a través de su <code>CambioEstadoBolsin</code> actual.</li>
+    <li>En <code>obtenerUbicacionBolsines()</code>, para cada bolsín, obtiene el número, los códigos de CM origen y destino y el modelo de GPS. Luego invoca <code>InterfazGPSTracker.solicitarUbicacionBolsin(numeroBolsin, codigoCMOrigen, codigoCMDestino, modeloGPSTracker): UbicacionBolsin</code>.</li>
+    <li><code>InterfazGPSTracker.crearAdaptador(modeloGPSTracker)</code> crea el adaptador concreto con <code>new(claveAPI, servicio)</code>. En el escenario modelado crea <code>AdaptadorGPSTrackerXTR4500L</code>.</li>
+    <li>La interfaz invoca el método polimórfico <code>obtenerUbicacion()</code> del adaptador.</li>
+    <li>El adaptador ejecuta <code>solicitarUbicacion()</code>, que llama a <code>ServicioGPSTrackerXTR4500L.getBolsinLocation(apiKey, numeroBolsin, codigoCMOrigen): String</code> y recibe el JSON.</li>
+    <li>El adaptador ejecuta <code>adaptarUbicacion(json)</code>: toma el primer ítem y convierte el número de bolsín a entero, la latitud y la longitud a decimal y la fecha y hora a <code>LocalDateTime</code>. Con esos datos crea <code>UbicacionBolsin</code> y lo devuelve.</li>
+    <li>El gestor guarda la ubicación de cada bolsín y ejecuta <code>armarMapaDePosicionDeBolsines()</code> para que la pantalla dibuje el mapa.</li>
+  </ol>
+  <p>Los otros dos adaptadores siguen la misma secuencia, cada uno con su formato. <code>AdaptadorGPSTrackerNavTrackQX7A</code> separa el String por comas y <code>AdaptadorGPSTrackerGeoPulseMTR900</code> lee la primera fila de la matriz. Si el servicio no informa la ubicación, el adaptador lanza <code>GPSTrackerException</code> y el gestor registra el bolsín como "sin ubicación" (flujo alternativo A3).</p>
+
+  <h2>3.2 Pseudocódigo de los métodos principales</h2>
+<pre>InterfazGPSTracker.solicitarUbicacionBolsin(nroBolsin, cmOrigen, cmDestino, modelo)
+    adaptador = crearAdaptador(modelo)
+    retornar adaptador.obtenerUbicacion(nroBolsin, cmOrigen, cmDestino)
+
+InterfazGPSTracker.crearAdaptador(modelo)
+    si modelo = "XTR-4500L"        retornar new AdaptadorGPSTrackerXTR4500L(claveAPIXtr, servicio)
+    si modelo = "NavTrack QX-7A"   retornar new AdaptadorGPSTrackerNavTrackQX7A(claveAPINavTrack, servicio)
+    si modelo = "GeoPulse MTR-900" retornar new AdaptadorGPSTrackerGeoPulseMTR900(claveAPIGeoPulse, servicio)
+
+AdaptadorGPSTrackerXTR4500L.obtenerUbicacion(nroBolsin, cmOrigen, cmDestino)
+    json = solicitarUbicacion(nroBolsin, cmOrigen)   // servicio.getBolsinLocation(claveAPI, ...)
+    retornar adaptarUbicacion(json)                  // items[0] -> new UbicacionBolsin(...)</pre>
+</section>
+
+<section class="apaisada">
+  <figure class="figura">
+    <img src="imagenes/diagramas/02_secuencia_diseno_adapter.svg" alt="Diagrama de secuencia del patrón Adapter">
+    <figcaption>Figura 2 – Diagrama de secuencia de la parte del escenario rediseñada por el patrón Adapter (GPS Tracker modelo XTR-4500L).</figcaption>
+  </figure>
+</section>
+
+<section class="apaisada">
+  <figure class="figura">
+    <img src="imagenes/diagramas/03_secuencia_completa_corregida.svg" alt="Diagrama de secuencia completo" style="max-height:165mm">
+    <figcaption>Figura 3 – Diagrama de secuencia del flujo básico completo del CU 36 (diseño), con las correcciones de la Entrega 1 aplicadas.</figcaption>
+  </figure>
+</section>
+
+<!-- ===================== 4. IMPLEMENTACIÓN ===================== -->
+<section class="seccion">
+  <h1>4. Implementación del rediseño</h1>
+  <h2 style="margin-top:0">4.1 Detalles de implementación</h2>
+  <table>
+    <tr><th style="width:32%">Aspecto</th><th>Detalle</th></tr>
+    <tr><td>Lenguaje de programación</td><td>Java 17 (backend) · JavaScript (frontend)</td></tr>
+    <tr><td>Framework</td><td>Spring Boot 3.3 (Spring Web, Spring Data JPA) · React 18 con Vite y Material UI</td></tr>
+    <tr><td>Tecnología</td><td>Web: API REST y aplicación web, según el requerimiento no funcional 1 de la ERS</td></tr>
+    <tr><td>Base de datos</td><td>H2 en modo archivo (los datos persisten entre ejecuciones)</td></tr>
+    <tr><td>Framework de persistencia</td><td>JPA con Hibernate (Spring Data JPA, repositorios <code>JpaRepository</code>)</td></tr>
+    <tr><td>GPS Tracker</td><td>API provista por la cátedra (<code>dsi-api-bolsines</code>), consumida mediante <code>RestClient</code> desde las clases <code>ServicioGPSTracker…</code></td></tr>
+    <tr><td>Mapa</td><td>Leaflet con OpenStreetMap, usado en lugar de la librería de Google Maps porque no requiere API key ni facturación. La responsabilidad de la boundary con el servidor de mapas no cambia.</td></tr>
+    <tr><td>Correo electrónico</td><td><code>InterfazServidorCorreo</code> con envío simulado: el correo se registra en el log del servidor y se muestra en pantalla</td></tr>
+  </table>
+
+  <h2>4.2 Consistencia con el modelado</h2>
+  <table>
+    <tr><th style="width:40%">Elemento del modelo</th><th>Implementación (paquete <code>ar.edu.utn.dsi.bolsines</code>)</th></tr>
+    <tr><td>PantallaConsultarSeguimientoBolsines «boundary»</td><td><code>boundary/pantallas/PantallaConsultarSeguimientoBolsines.java</code> (endpoints REST) y su vista en <code>frontend/src/pantallas/</code></td></tr>
+    <tr><td>GestorConsultarSeguimientoBolsines «control»</td><td><code>control/GestorConsultarSeguimientoBolsines.java</code></td></tr>
+    <tr><td>Entidades «entity»</td><td><code>entidades/</code>: Bolsin, CambioEstadoBolsin, Estado, ComisionMedica, Empleado, Rol, Usuario, Sesion</td></tr>
+    <tr><td>InterfazGPSTracker «boundary» (cliente del patrón)</td><td><code>boundary/interfaces/InterfazGPSTracker.java</code></td></tr>
+    <tr><td>Patrón Adapter (target y adaptadores)</td><td><code>patrones/adapter/</code></td></tr>
+    <tr><td>Adaptees (servicios de cada GPS)</td><td><code>patrones/adapter/serviciosexternos/</code></td></tr>
+    <tr><td>CU incluido Notificar ubicación de bolsín</td><td><code>control/GestorNotificarUbicacionBolsin.java</code></td></tr>
+    <tr><td>Persistencia</td><td><code>repositorios/</code> (Spring Data JPA)</td></tr>
+  </table>
+  <p>Como en la implementación de referencia de la cátedra, por tratarse de una API REST, los mensajes del gestor hacia la pantalla se resuelven con el valor de retorno de cada operación. Las entidades no se envían a la pantalla: se envían objetos de transferencia de datos (DTO).</p>
+
+  <h2>4.3 Código del patrón</h2>
+<pre>// Target
+public interface IAdaptadorGPSTracker {
+    UbicacionBolsin obtenerUbicacion(int numeroBolsin, String codigoCMOrigen, String codigoCMDestino);
+}
+
+// Adaptador concreto (XTR-4500L)
+public class AdaptadorGPSTrackerXTR4500L implements IAdaptadorGPSTracker {
+    private final String claveAPI;
+    private final ServicioGPSTrackerXTR4500L servicio;
+
+    public UbicacionBolsin obtenerUbicacion(int numeroBolsin, String codigoCMOrigen, String codigoCMDestino) {
+        String respuesta = solicitarUbicacion(numeroBolsin, codigoCMOrigen);
+        return adaptarUbicacion(respuesta);
+    }
+    ...
+}
+
+// Cliente
+public UbicacionBolsin solicitarUbicacionBolsin(int numeroBolsin, String codigoCMOrigen,
+                                                String codigoCMDestino, String modeloGPSTracker) {
+    IAdaptadorGPSTracker adaptador = crearAdaptador(modeloGPSTracker);
+    return adaptador.obtenerUbicacion(numeroBolsin, codigoCMOrigen, codigoCMDestino);
+}</pre>
+
+  <h2>4.4 Flujos implementados</h2>
+  <table>
+    <tr><th style="width:42%">Flujo</th><th>Implementación</th></tr>
+    <tr><td>Flujo básico (pasos 1 a 11)</td><td>Consulta, mapa, selección del bolsín, confirmación y envío del correo al GCM destino</td></tr>
+    <tr><td>A1 – No se encuentran bolsines en estado Enviado</td><td>La pantalla informa que no hay bolsines en tránsito</td></tr>
+    <tr><td>A2 – No se encuentra bolsín con el número de precinto ingresado</td><td>Filtro por número de precinto (<code>tomarFiltro()</code>)</td></tr>
+    <tr><td>A3 – El GPS Tracker no pudo informar ubicación</td><td>El adaptador lanza <code>GPSTrackerException</code> y el bolsín se informa como "sin ubicación"</td></tr>
+    <tr><td>A4 – El EB cancela la ejecución del CU</td><td>Botón Cancelar (<code>cancelarCU()</code>)</td></tr>
+    <tr><td>A5 – El EB no selecciona enviar el correo</td><td>Opción "No enviar" (<code>tomarConfirmacionDeMail(false)</code>)</td></tr>
+  </table>
+</section>
+
+<section class="seccion">
+  <h2 style="margin-top:0">4.5 Capturas de la implementación</h2>
+  <div class="capturas">
+    <figure class="figura"><img src="imagenes/capturas/03_mapa_bolsines.jpg"><figcaption>Pasos 2 a 6: mapa con los bolsines enviados, filtros y aviso de A3</figcaption></figure>
+    <figure class="figura"><img src="imagenes/capturas/04_detalle_bolsin.jpg"><figcaption>Paso 7: selección de un bolsín en el mapa</figcaption></figure>
+    <figure class="figura"><img src="imagenes/capturas/05_confirmar_envio_mail.jpg"><figcaption>Paso 8: confirmación del envío del correo</figcaption></figure>
+    <figure class="figura"><img src="imagenes/capturas/06_mail_enviado.jpg"><figcaption>Paso 11: correo enviado al Gerente de la CM destino</figcaption></figure>
+    <figure class="figura"><img src="imagenes/capturas/07_A2_precinto_inexistente.jpg"><figcaption>A2: precinto inexistente</figcaption></figure>
+    <figure class="figura"><img src="imagenes/capturas/08_A1_sin_bolsines.jpg"><figcaption>A1: no hay bolsines en estado Enviado</figcaption></figure>
+  </div>
+</section>
+
+<!-- ===================== 5. CORRECCIONES ===================== -->
+<section class="seccion">
+  <h1>5. Correcciones aplicadas de la Entrega 1</h1>
+  <table>
+    <tr><th style="width:45%">Observación de la revisión</th><th>Corrección</th></tr>
+    <tr><td>Qué información muestra <code>mostrarComisionMedicaEmp()</code> y de dónde la obtiene</td><td>Se obtiene la CM del empleado logueado (<code>getCM()</code>) y su nombre (<code>ComisionMedica.getNombre()</code>)</td></tr>
+    <tr><td>No necesita el puntero a <code>Estado</code> desde el gestor</td><td>Se eliminó. El bolsín consulta su estado a través de su <code>CambioEstadoBolsin</code> actual</td></tr>
+    <tr><td>No utiliza el cambio de estado actual</td><td><code>Bolsin.esEnviado()</code> recorre sus cambios de estado con <code>esActual()</code> y al actual le pide <code>esEnviado()</code></td></tr>
+    <tr><td><code>buscarBolsinEnEstadoEnviado()</code> poco coherente</td><td>Reemplazado por <code>Bolsin.esEnviado()</code></td></tr>
+    <tr><td>No busca la CM destino ni el número de bolsín</td><td>Se obtienen número, precinto, CM destino y modelo de GPS de cada bolsín</td></tr>
+    <tr><td>Faltaban automensajes antes de consultar al GPS y al mapa</td><td>Se agregaron <code>obtenerUbicacionBolsines()</code> y <code>armarMapaDePosicionDeBolsines()</code></td></tr>
+    <tr><td><code>sosGCM()</code>: "lo puede resolver todo" y falta el loop</td><td>Loop sobre los empleados con <code>Empleado.sosGCMDeCM(cmDestino)</code>, que consulta a <code>Rol.esGCM()</code> y a <code>ComisionMedica.esMiCM()</code></td></tr>
+    <tr><td>Línea de vida <code>seleccionado: Bolsin</code> sin uso</td><td>Se eliminó</td></tr>
+    <tr><td>CU incluido</td><td>Se corrigió a "Notificar ubicación de bolsín" (antes figuraba "Registrar revisión de documentación")</td></tr>
+    <tr><td>Asociación <code>CambioEstadoBolsin → Empleado</code> mal nombrada ("estado")</td><td>Se nombra <code>responsable</code> (atributo <code>CambioEstadoBolsin.responsable</code> en la implementación)</td></tr>
+    <tr><td>Resolución de las imágenes</td><td>Los diagramas se exportan en formato vectorial (SVG)</td></tr>
+    <tr><td>Máquinas de estado: notación de las transiciones y guardas del Remito</td><td>Se redibujaron con la notación <b>Evento / método()</b> (por ejemplo <i>19. Generar bolsín / new()</i>). En Remito se usan las guardas [toda la documentación es aceptada] y [no toda la documentación es aceptada], se eliminó la transición por documentación que no corresponde a la CM destino y se agregó el retorno a Creado por el CU 21 Eliminar bolsín. Ver Anexo 7.</td></tr>
+  </table>
+</section>
+
+<!-- ===================== 6. UX ===================== -->
+<section class="seccion">
+  <h1>6. Diseño de experiencia de usuario</h1>
+  <p>Resultados de las actividades de descubrimiento (MoodBoard, Mapa de Empatía y User Journey) para una Persona vinculada al actor Encargado de Bolsines (EB): <b>Marta Giménez</b>, 48 años, Encargada de Bolsines de la Comisión Médica Córdoba. Su objetivo es saber dónde está cada bolsín enviado y avisar a la CM destino sin perder tiempo. Los afiches, elaborados en formato digital, se presentan en las secciones 6.4 a 6.6.</p>
+
+  <h2>6.1 Del descubrimiento a las decisiones de interfaz</h2>
+  <table>
+    <tr><th style="width:42%">Hallazgo (Mapa de Empatía / User Journey)</th><th>Decisión de diseño de la interfaz</th></tr>
+    <tr><td>Cuando el correo retira el bolsín, la Persona pierde el rastro</td><td>El mapa con la posición de los bolsines es el elemento principal de la pantalla</td></tr>
+    <tr><td>Busca números de precinto en planillas</td><td>Filtro por número de precinto y por CM destino</td></tr>
+    <tr><td>Escribe a mano los mails para los gerentes</td><td>Acción "Informar ubicación al Gerente" con el correo armado por el sistema</td></tr>
+    <tr><td>Momento crítico: un bolsín que no informa ubicación</td><td>Aviso destacado con los bolsines sin ubicación (A3)</td></tr>
+    <tr><td>No es experta en tecnología y tiene poco tiempo</td><td>Pantallas despejadas, una acción principal por pantalla, mensajes cortos y confirmación antes de enviar</td></tr>
+    <tr><td>Paleta del MoodBoard (azul institucional, amarillo precinto, verde)</td><td>Azul para la barra y las acciones; amarillo para el bolsín seleccionado en el mapa; verde para los mensajes de éxito</td></tr>
+  </table>
+
+  <h2>6.2 Patrones de diseño de interfaz aplicados</h2>
+  <table>
+    <tr><th style="width:30%">Patrón</th><th>Aplicación</th></tr>
+    <tr><td>Maestro-detalle</td><td>Lista de bolsines a la izquierda y mapa a la derecha; al elegir un bolsín en la lista, el mapa se centra en él</td></tr>
+    <tr><td>Filtro / búsqueda</td><td>Panel "Filtrar bolsines" por número de precinto y CM destino</td></tr>
+    <tr><td>Diálogo modal de confirmación</td><td>Consulta previa al envío del correo (paso 8)</td></tr>
+    <tr><td>Retroalimentación</td><td>Diálogo "Correo enviado" con vista previa del mensaje y avisos temporales</td></tr>
+    <tr><td>Estado vacío</td><td>Pantalla "No hay bolsines en tránsito" (A1)</td></tr>
+    <tr><td>Indicador de progreso</td><td>Mensaje mientras se consulta a los GPS Tracker</td></tr>
+    <tr><td>Alertas no bloqueantes</td><td>Bolsines sin ubicación (A3) y precinto inexistente (A2)</td></tr>
+    <tr><td>Menú de tarjetas</td><td>Menú principal del EB; las opciones no implementadas aparecen deshabilitadas</td></tr>
+    <tr><td>Contexto del usuario</td><td>Barra superior con nombre, rol y CM del usuario logueado</td></tr>
+    <tr><td>Ventana emergente sobre el mapa</td><td>Detalle del bolsín al hacer clic en su marcador</td></tr>
+  </table>
+
+  <h2>6.3 Interfaces de usuario</h2>
+  <div class="capturas">
+    <figure class="figura"><img src="imagenes/capturas/01_login.jpg"><figcaption>Inicio de sesión</figcaption></figure>
+    <figure class="figura"><img src="imagenes/capturas/02_menu_principal.jpg"><figcaption>Menú principal del Encargado de Bolsines</figcaption></figure>
+  </div>
+  <p class="nota">Las pantallas del caso de uso se muestran en la sección 4.5.</p>
+</section>
+
+<section class="apaisada">
+  <h2>6.4 MoodBoard</h2>
+  <div class="foto-ux"><span>Foto del MoodBoard (imagenes/ux/moodboard.jpg)</span><img src="imagenes/ux/moodboard.jpg" alt="Foto del MoodBoard" onload="this.previousElementSibling.remove(); this.parentElement.classList.add('con-foto')" onerror="this.remove()"></div>
+</section>
+
+<section class="apaisada">
+  <h2>6.5 Mapa de Empatía</h2>
+  <div class="foto-ux"><span>Foto del Mapa de Empatía (imagenes/ux/mapa_empatia.jpg)</span><img src="imagenes/ux/mapa_empatia.jpg" alt="Foto del Mapa de Empatía" onload="this.previousElementSibling.remove(); this.parentElement.classList.add('con-foto')" onerror="this.remove()"></div>
+</section>
+
+<section class="apaisada">
+  <h2>6.6 User Journey</h2>
+  <div class="foto-ux"><span>Foto del User Journey (imagenes/ux/user_journey.jpg)</span><img src="imagenes/ux/user_journey.jpg" alt="Foto del User Journey" onload="this.previousElementSibling.remove(); this.parentElement.classList.add('con-foto')" onerror="this.remove()"></div>
+</section>
+
+<!-- ===================== 7. ANEXO ===================== -->
+<section class="seccion">
+  <h1>7. Anexo: máquinas de estado corregidas</h1>
+  <p>Máquinas de estado asignadas al CU 36 (Bolsín y Remito), redibujadas según la revisión de la Entrega 1. Las transiciones usan la notación <b>Evento / método()</b>, donde el evento es el caso de uso que provoca el cambio.</p>
+  <figure class="figura">
+    <img src="imagenes/diagramas/04_maquina_estados_bolsin.svg" alt="Máquina de estados del Bolsín" style="max-height:175mm">
+    <figcaption>Figura 4 – Máquina de estados del Bolsín.</figcaption>
+  </figure>
+</section>
+
+<section class="apaisada">
+  <figure class="figura">
+    <img src="imagenes/diagramas/05_maquina_estados_remito.svg" alt="Máquina de estados del Remito">
+    <figcaption>Figura 5 – Máquina de estados del Remito.</figcaption>
+  </figure>
+</section>
+
+</body>
+</html>

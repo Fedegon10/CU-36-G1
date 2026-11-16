@@ -1,0 +1,52 @@
+@startuml 02_secuencia_diseno_adapter
+' Vista dinámica de la realización de CU de diseño - parte rediseñada por el patrón ADAPTER
+' Escenario del flujo descripto: GPS Tracker modelo XTR-4500L (pasos 3 a 6 del CU 36)
+skinparam dpi 120
+skinparam sequenceMessageAlign center
+autonumber
+title CU 36 - Obtención de ubicación de bolsines con Adapter (modelo XTR-4500L)
+
+participant ":GestorConsultar\nSeguimientoBolsines" as G <<control>>
+participant ":Bolsin" as B <<entity>>
+participant "actual:\nCambioEstadoBolsin" as CE <<entity>>
+participant ":Estado" as E <<entity>>
+participant "origen:\nComisionMedica" as CM <<entity>>
+participant ":InterfazGPSTracker" as I <<boundary>>
+participant ":AdaptadorGPSTracker\nXTR4500L" as A
+participant ":ServicioGPSTracker\nXTR4500L" as S <<adaptee>>
+participant ":UbicacionBolsin" as U
+
+G -> G : buscarBolsinesEnviados()
+loop para cada Bolsin
+  G -> B : esEnviado()
+  loop para cada CambioEstadoBolsin
+    B -> CE : esActual()
+  end
+  B -> CE : esEnviado()
+  CE -> E : esEnviado()
+  G -> B : esTuCMOrigen(cmUsuario)
+  B -> CM : esMiCM(cmUsuario)
+end
+
+G -> G : obtenerUbicacionBolsines()
+loop para cada bolsín enviado
+  G -> B : getNumeroBolsin()
+  G -> B : getOrigen() / getDestino() (getCodigo())
+  G -> B : getModeloGPSTracker()
+  G -> I : solicitarUbicacionBolsin(numeroBolsin: int, codigoCMOrigen: String,\ncodigoCMDestino: String, modeloGPSTracker: String): UbicacionBolsin
+  I -> I : crearAdaptador(modeloGPSTracker: String): IAdaptadorGPSTracker
+  create A
+  I -> A : new(claveAPI: String, servicio: ServicioGPSTrackerXTR4500L)
+  I -> A : obtenerUbicacion(numeroBolsin: int, codigoCMOrigen: String,\ncodigoCMDestino: String): UbicacionBolsin
+  A -> A : solicitarUbicacion(numeroBolsin: int, codigoCMOrigen: String): String
+  A -> S : getBolsinLocation(apiKey: String, numeroBolsin: int, codigoCMOrigen: String): String
+  S --> A : JSON (String)
+  A -> A : adaptarUbicacion(json: String): UbicacionBolsin
+  create U
+  A -> U : new(numeroBolsin, latitud, longitud, fechaHoraUltimaActualizacion)
+  A --> I : UbicacionBolsin
+  I --> G : UbicacionBolsin
+end
+
+G -> G : armarMapaDePosicionDeBolsines(): MapaBolsinesDTO
+@enduml

@@ -1,0 +1,175 @@
+@startuml 01_clases_diseno_adapter
+' Vista estática de la realización de CU de diseño - CU 36 con patrón ADAPTER
+' Exportar en alta resolución (PNG con scale o SVG) para el informe.
+skinparam classAttributeIconSize 0
+skinparam dpi 120
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor<<boundary>> #DDF3FF
+  BackgroundColor<<control>> #DDF3FF
+  BackgroundColor<<entity>> #FFF3DD
+  BackgroundColor<<interface>> #CCF5F5
+  BackgroundColor<<adaptee>> #FFFFA8
+}
+title CU 36 Consultar seguimiento de bolsines - Diseño (Adapter)
+
+class PantallaConsultarSeguimientoBolsines <<boundary>> {
+  + selecOpcionConsultarUbicacionBolsines(): MapaBolsinesDTO
+  + tomarFiltro(numeroPrecinto: Integer, codigoCMDestino: String): List<BolsinEnMapaDTO>
+  + tomarSeleccionBolsin(numeroBolsin: int): BolsinEnMapaDTO
+  + tomarConfirmacionDeMail(confirma: boolean): MailEnviadoDTO
+  + cancelar(): void
+}
+
+class GestorConsultarSeguimientoBolsines <<control>> {
+  - comisionMedicaUsuario: ComisionMedica
+  - bolsinesEnviados: List<Bolsin>
+  - ubicacionesBolsines: Map<Integer, UbicacionBolsin>
+  - bolsinesSinUbicacion: List<BolsinSinUbicacionDTO>
+  - bolsinSeleccionado: Bolsin
+  + consultarUbicacionBolsines(): MapaBolsinesDTO
+  - buscarCM(): ComisionMedica
+  - buscarBolsinesEnviados(): void
+  - obtenerUbicacionBolsines(): void
+  - armarMapaDePosicionDeBolsines(): MapaBolsinesDTO
+  + tomarFiltro(numeroPrecinto: Integer, codigoCMDestino: String): List<BolsinEnMapaDTO>
+  + tomarSeleccionBolsin(numeroBolsin: int): BolsinEnMapaDTO
+  + tomarConfirmacionDeMail(confirma: boolean): MailEnviadoDTO
+  - buscarMailDeGerenteCMDestino(): Empleado
+  - llamarCUNotificarUbicacion(gerente: Empleado): MailEnviadoDTO
+  + cancelarCU(): void
+  - finCU(): void
+}
+
+' ===== PATRÓN ADAPTER =====
+class InterfazGPSTracker <<boundary>> {
+  - restClient: RestClient
+  - claveAPIXtr: String
+  - claveAPINavTrack: String
+  - claveAPIGeoPulse: String
+  + solicitarUbicacionBolsin(numeroBolsin: int, codigoCMOrigen: String, codigoCMDestino: String, modeloGPSTracker: String): UbicacionBolsin
+  - crearAdaptador(modeloGPSTracker: String): IAdaptadorGPSTracker
+}
+
+interface IAdaptadorGPSTracker <<interface>> {
+  + obtenerUbicacion(numeroBolsin: int, codigoCMOrigen: String, codigoCMDestino: String): UbicacionBolsin
+}
+
+class AdaptadorGPSTrackerXTR4500L {
+  - claveAPI: String
+  + new(claveAPI: String, servicio: ServicioGPSTrackerXTR4500L)
+  + obtenerUbicacion(numeroBolsin: int, codigoCMOrigen: String, codigoCMDestino: String): UbicacionBolsin
+  - solicitarUbicacion(numeroBolsin: int, codigoCMOrigen: String): String
+  - adaptarUbicacion(json: String): UbicacionBolsin
+}
+
+class AdaptadorGPSTrackerNavTrackQX7A {
+  - claveAPI: String
+  + new(claveAPI: String, servicio: ServicioGPSTrackerNavTrackQX7A)
+  + obtenerUbicacion(numeroBolsin: int, codigoCMOrigen: String, codigoCMDestino: String): UbicacionBolsin
+  - solicitarUbicacion(numeroBolsin: int, codigoCMDestino: String): String
+  - adaptarUbicacion(texto: String): UbicacionBolsin
+}
+
+class AdaptadorGPSTrackerGeoPulseMTR900 {
+  - claveAPI: String
+  + new(claveAPI: String, servicio: ServicioGPSTrackerGeoPulseMTR900)
+  + obtenerUbicacion(numeroBolsin: int, codigoCMOrigen: String, codigoCMDestino: String): UbicacionBolsin
+  - solicitarUbicacion(numeroBolsin: int): Object[][]
+  - adaptarUbicacion(matriz: Object[][]): UbicacionBolsin
+}
+
+class ServicioGPSTrackerXTR4500L <<adaptee>> {
+  + getBolsinLocation(apiKey: String, numeroBolsin: int, codigoCMOrigen: String): String
+}
+class ServicioGPSTrackerNavTrackQX7A <<adaptee>> {
+  + retrieveTrackingData(apiKey: String, numeroBolsin: int, codigoCMDestino: String): String
+}
+class ServicioGPSTrackerGeoPulseMTR900 <<adaptee>> {
+  + fetchCargoPositions(apiKey: String, numeroBolsin: int): Object[][]
+}
+
+class UbicacionBolsin {
+  - numeroBolsin: int
+  - latitud: double
+  - longitud: double
+  - fechaHoraUltimaActualizacion: LocalDateTime
+  + getNumeroBolsin(): int
+  + getLatitud(): double
+  + getLongitud(): double
+  + getFechaHoraUltimaActualizacion(): LocalDateTime
+}
+
+' ===== Entidades usadas en el escenario =====
+class Bolsin <<entity>> {
+  - numeroBolsin: Integer
+  - fecha: LocalDate
+  - numeroPrecinto: Integer
+  - peso: Integer
+  - modeloGPSTracker: String
+  + esEnviado(): boolean
+  + esTuCMOrigen(cm: ComisionMedica): boolean
+  + esTuNumeroPrecinto(numero: Integer): boolean
+  + esTuCMDestino(codigoCM: String): boolean
+  + getNumeroBolsin(): Integer
+  + getNumeroPrecinto(): Integer
+  + getModeloGPSTracker(): String
+  + getOrigen(): ComisionMedica
+  + getDestino(): ComisionMedica
+}
+
+class CambioEstadoBolsin <<entity>> {
+  - fechaHoraInicio: LocalDateTime
+  - fechaHoraFin: LocalDateTime
+  + esActual(): boolean
+  + esEnviado(): boolean
+}
+
+class Estado <<entity>> {
+  - ambito: String
+  - nombre: String
+  - descripcion: String
+  + esAmbitoBolsin(): boolean
+  + esEnviado(): boolean
+}
+
+class ComisionMedica <<entity>> {
+  - codigo: String
+  - nombre: String
+  - direccion: String
+  - email: String
+  - telefono: String
+  + esMiCM(otra: ComisionMedica): boolean
+  + getCodigo(): String
+  + getNombre(): String
+}
+
+PantallaConsultarSeguimientoBolsines ..> GestorConsultarSeguimientoBolsines
+GestorConsultarSeguimientoBolsines ..> InterfazGPSTracker
+GestorConsultarSeguimientoBolsines ..> Bolsin
+GestorConsultarSeguimientoBolsines ..> UbicacionBolsin
+
+InterfazGPSTracker ..> IAdaptadorGPSTracker : <<usa>>
+IAdaptadorGPSTracker <|.. AdaptadorGPSTrackerXTR4500L
+IAdaptadorGPSTracker <|.. AdaptadorGPSTrackerNavTrackQX7A
+IAdaptadorGPSTracker <|.. AdaptadorGPSTrackerGeoPulseMTR900
+
+AdaptadorGPSTrackerXTR4500L o--> "1" ServicioGPSTrackerXTR4500L : servicio
+AdaptadorGPSTrackerNavTrackQX7A o--> "1" ServicioGPSTrackerNavTrackQX7A : servicio
+AdaptadorGPSTrackerGeoPulseMTR900 o--> "1" ServicioGPSTrackerGeoPulseMTR900 : servicio
+
+AdaptadorGPSTrackerXTR4500L ..> UbicacionBolsin : <<crea>>
+AdaptadorGPSTrackerNavTrackQX7A ..> UbicacionBolsin : <<crea>>
+AdaptadorGPSTrackerGeoPulseMTR900 ..> UbicacionBolsin : <<crea>>
+
+Bolsin --> "1..*" CambioEstadoBolsin : cambioEstado
+CambioEstadoBolsin --> "1" Estado : estado
+Bolsin --> "1" ComisionMedica : origen
+Bolsin --> "1" ComisionMedica : destino
+
+note bottom of IAdaptadorGPSTracker
+  Target del patrón Adapter.
+  Cliente: InterfazGPSTracker.
+  Adaptees: servicios de cada modelo de GPS Tracker.
+end note
+@enduml
