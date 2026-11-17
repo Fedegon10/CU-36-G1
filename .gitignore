@@ -1,18 +1,17 @@
 .DS_Store
+~$*.docx
 
-# Backend y API GPS: compilados y base de datos local
-implementacion/backend/target/
-implementacion/backend/data/
-implementacion/api-gps-tracker/target/
+# Sistema: compilados, base de datos local y dependencias
+02_implementacion/backend/target/
+02_implementacion/backend/data/
+02_implementacion/api-gps-tracker/target/
+02_implementacion/frontend/node_modules/
+02_implementacion/frontend/dist/
 
-# Frontend
-implementacion/frontend/node_modules/
-implementacion/frontend/dist/
-
-# Repos de la cátedra clonados (tienen su propio .git).
-# La API del GPS que usamos (con nuestros cambios) está en implementacion/api-gps-tracker/
-PPAI/API CU 36/
-PPAI/Recursos de Ayuda/dsi-implementaciones-uc/
+# Repos originales de la cátedra clonados localmente (tienen su propio .git).
+# Los links están en 05_material_catedra/enlaces.md.
+# La API del GPS que usamos (con nuestros cambios) está en 02_implementacion/api-gps-tracker/
+05_material_catedra/repos_originales/
 
 # IDE
 .idea/

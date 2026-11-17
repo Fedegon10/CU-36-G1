@@ -12,19 +12,19 @@ Desde la carpeta `CU-36-G1`, una terminal para cada parte. Copiar solo los coman
 
 **1) API mock del GPS Tracker**
 ```bash
-cd implementacion/api-gps-tracker
+cd 02_implementacion/api-gps-tracker
 ./mvnw spring-boot:run
 ```
 
 **2) Backend**
 ```bash
-cd implementacion/backend
+cd 02_implementacion/backend
 ./mvnw spring-boot:run
 ```
 
 **3) Frontend** (`npm install` solo la primera vez)
 ```bash
-cd implementacion/frontend
+cd 02_implementacion/frontend
 npm install
 npm run dev
 ```
@@ -33,8 +33,8 @@ En Windows (PowerShell) se usa `.\mvnw.cmd spring-boot:run` en lugar de `./mvnw 
 
 Abrir **http://localhost:5173**.
 
-- La base de datos es H2 **en archivo** (`implementacion/backend/data/`). Los datos se cargan la primera vez y persisten entre reinicios.
-- Para volver a los datos iniciales: detener el backend y borrar la carpeta `implementacion/backend/data/`.
+- La base de datos es H2 **en archivo** (`02_implementacion/backend/data/`). Los datos se cargan la primera vez y persisten entre reinicios.
+- Para volver a los datos iniciales: detener el backend y borrar la carpeta `02_implementacion/backend/data/`.
 - Consola de la BD: http://localhost:8081/h2-console (JDBC URL `jdbc:h2:file:./data/bolsinesdb;AUTO_SERVER=TRUE`, usuario `sa`, sin contraseña).
 - El mapa usa OpenStreetMap: necesita internet.
 
