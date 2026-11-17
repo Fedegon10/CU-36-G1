@@ -23,6 +23,7 @@ Docente tutora: Ing. Judith Meles · Patrón aplicado: **Adapter**
 CU-36-G1/
 ├── README.md                ← este archivo (empezar acá)
 ├── GUIA_DEFENSA.md          ← guía para la defensa oral: cómo levantar, demo, patrón y preguntas
+├── GUIA_PERSONAL_CU36.pdf   ← CU de la cátedra + diagramas + cada paso con su captura y su código (líneas exactas)
 │
 ├── 01_entrega_2/            ← LO QUE SE ENTREGA
 │   ├── PPAI2026_3K4_G1_E2_Diseño.docx    documento de la entrega (se edita acá)
