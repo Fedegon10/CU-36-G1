@@ -18,7 +18,6 @@ Esta guía cubre qué hicimos, cómo levantar el sistema, cómo explicar el patr
 9. [Preguntas probables y cómo responderlas](#9-preguntas-probables-y-cómo-responderlas)
 10. [Checklist antes de entregar y de la defensa](#10-checklist-antes-de-entregar-y-de-la-defensa)
 11. [Glosario rápido](#11-glosario-rápido)
-12. [Diseño de experiencia de usuario (UX)](#12-diseño-de-experiencia-de-usuario-ux)
 
 ---
 
@@ -37,7 +36,7 @@ Esta guía cubre qué hicimos, cómo levantar el sistema, cómo explicar el patr
 **La solución.** Aplicamos el patrón **Adapter**. Hay un "adaptador" por modelo que traduce la respuesta a un formato único (`UbicacionBolsin`). El resto del sistema no sabe ni le importa qué modelo de GPS tiene cada bolsín.
 
 **Qué entregamos.**
-- El **PDF** de la Entrega 2: `docs/entrega2/PPAI2026_3K4_G1_E2_Diseño.pdf`.
+- El documento de la Entrega 2 en **Word (.docx)**, editable: `docs/entrega2/PPAI2026_3K4_G1_E2_Diseño.docx`.
 - El **sistema funcionando**: web, con base de datos, contra la API real de la cátedra. Andan el flujo básico y los **5 flujos alternativos**; la consigna pide al menos 2.
 
 ---
@@ -55,11 +54,9 @@ CU-36-G1/
 ├── docs/
 │   ├── diagramas/               ← diagramas en PlantUML (.puml): clases, secuencias y máquinas de estado
 │   └── entrega2/
-│       ├── PPAI2026_3K4_G1_E2_Diseño.pdf   ← EL PDF PARA SUBIR
-│       ├── Entrega2_Diseno.html            ← fuente del PDF (se edita acá)
-│       ├── generar_pdf.sh                  ← regenera el PDF (Mac)
-│       ├── ux_fuentes/                     ← afiches de UX (HTML) y script que genera sus imágenes
-│       └── imagenes/                       ← diagramas, capturas y afiches de UX
+│       ├── PPAI2026_3K4_G1_E2_Diseño.docx  ← EL DOCUMENTO DE LA ENTREGA (Word, editable)
+│       ├── entrega 2_modelo_formato.docx   ← modelo de formato del grupo (referencia)
+│       └── imagenes/                       ← diagramas (SVG) y capturas del sistema
 └── PPAI/                        ← material de la cátedra
     ├── Enunciado/                    ← consignas, ERS y dominio
     ├── Entrega 1_G1/                 ← entrega 1 y su revisión
@@ -290,7 +287,7 @@ Orden recomendado para mostrar el código (sigue el diagrama de secuencia):
 | CU incluido equivocado (decía Registrar Revisión) | Ahora es **Notificar ubicación de bolsín** |
 | Asociación "estado" entre CambioEstadoBolsin y Empleado | Renombrada **responsable** |
 | "Escalar las imágenes para mayor resolución" | Diagramas en SVG (vectorial) |
-| Máquinas de estado: "Evento / método()" | Redibujadas (`docs/diagramas/04_...` y `05_...`, anexo del PDF) con la notación *Evento / método()*. En Remito: guardas [toda / no toda la documentación es aceptada], sin la transición "no corresponde a CM destino" y con retorno a Creado por el CU 21 |
+| Máquinas de estado: "Evento / método()" | Redibujadas (`docs/diagramas/04_...` y `05_...`, anexo del documento) con la notación *Evento / método()*. En Remito: guardas [toda / no toda la documentación es aceptada], sin la transición "no corresponde a CM destino" y con retorno a Creado por el CU 21 |
 
 ---
 
@@ -330,28 +327,23 @@ Java es uno de los lenguajes que soporta la cátedra. Es el mismo stack del ejem
 
 ## 10. Checklist antes de entregar y de la defensa
 
-### Antes de subir el PDF
+### Antes de entregar
 - [x] Patrón **Adapter** confirmado con la profe (Ing. Judith Meles).
-- [ ] Revisar en la carátula la **fecha de entrega** (puse 16/11/2026), el **curso (3K4)** y los docentes.
-- [x] Afiches de UX (MoodBoard, Mapa de Empatía, User Journey) incluidos en el PDF (sección 6).
+- [x] Sin apartado de Diseño de experiencia de usuario: según el aviso del equipo docente, no se pide en la Entrega 2.
+- [ ] Revisar el documento en Word (carátula, fecha 20/11/2026, docentes e integrantes).
+- [ ] Exportarlo a PDF desde Word: **Archivo → Guardar como → PDF**. La consigna dice que PDF es el único formato permitido.
 - [ ] Subir **un solo integrante**, con el nombre `PPAI2026_3K4_G1_E2_Diseño.pdf`.
 
-### Cómo cambiar algo del PDF
-- **Textos** (fecha, integrantes, etc.): editar `docs/entrega2/Entrega2_Diseno.html`.
-- **Afiches de UX**: editar los HTML de `docs/entrega2/ux_fuentes/` y regenerar sus imágenes con `./docs/entrega2/ux_fuentes/generar_imagenes_ux.sh` (Mac). También se puede reemplazar directamente `moodboard.jpg`, `mapa_empatia.jpg` o `user_journey.jpg` en `docs/entrega2/imagenes/ux/` (por ejemplo, con fotos de afiches en papel).
-- **Diagramas**: editar los `.puml` de `docs/diagramas/`, exportarlos en SVG desde https://www.plantuml.com/plantuml/uml/ y reemplazarlos en `docs/entrega2/imagenes/diagramas/`.
-
-Después, regenerar el PDF:
-- **Mac:** `./docs/entrega2/generar_pdf.sh`
-- **Windows:** abrir `docs/entrega2/Entrega2_Diseno.html` con **Chrome** → `Ctrl+P` → Destino "Guardar como PDF" → en "Más opciones" **desactivar "Encabezados y pies de página"** → Guardar.
+### Cómo cambiar algo del documento
+- **Textos** (fecha, integrantes, explicaciones): editar directamente `docs/entrega2/PPAI2026_3K4_G1_E2_Diseño.docx` en Word.
+- **Diagramas**: editar los `.puml` de `docs/diagramas/`, exportarlos desde https://www.plantuml.com/plantuml/uml/ (PNG o SVG) y reemplazar la imagen en Word (clic derecho → Cambiar imagen).
 
 ### El día de la defensa
 - [ ] Levantar las 3 terminales **antes** de entrar y probar el flujo una vez.
 - [ ] Tener internet (mapa).
 - [ ] Tener abiertos en VS Code: `GestorConsultarSeguimientoBolsines.java`, `InterfazGPSTracker.java`, `IAdaptadorGPSTracker.java` y `AdaptadorGPSTrackerXTR4500L.java`.
 - [ ] Tener a mano los diagramas (`docs/entrega2/imagenes/diagramas/`, en SVG).
-- [ ] Leer la sección 12 de esta guía (UX) y tener abiertos los tres afiches (`docs/entrega2/imagenes/ux/`).
-- [ ] Repartir quién explica qué: demo, patrón, código y UX.
+- [ ] Repartir quién explica qué: demo, patrón y código.
 
 ---
 
@@ -369,53 +361,3 @@ Después, regenerar el PDF:
 | **H2** | Base de datos liviana que se guarda en un archivo dentro del proyecto |
 | **API Key** | Clave que identifica a quien llama a la API del GPS. Cada modelo tiene la suya |
 | **Mock** | Versión simulada de un sistema real. La API del GPS de la cátedra es un mock |
-
----
-
-## 12. Diseño de experiencia de usuario (UX)
-
-La consigna pide **defender** el diseño de UX que surge de tres herramientas y el diseño de las pantallas con patrones de GUI. Los afiches están en `docs/entrega2/imagenes/ux/` y en la sección 6 del PDF. Son **versiones digitales**, no afiches de papel: si lo preguntan, decirlo así.
-
-### La Persona: Marta Giménez
-- 48 años, **Encargada de Bolsines** de la CM Córdoba, 15 años en el organismo.
-- Arma, precinta y despacha bolsines. Trabaja con PC, correo, teléfono y una planilla.
-- No es experta en tecnología.
-- **Objetivo:** saber dónde está cada bolsín enviado y avisar a la CM destino sin perder tiempo.
-- **Frustración principal:** cuando el correo retira el bolsín, pierde el rastro, y los gerentes la llaman todo el día.
-
-Una **Persona** no es un actor: el actor es el rol (EB). La Persona es un perfil con objetivos, contexto y dificultades, que sirve para tomar decisiones de diseño. En el PPAI se trabaja con hipótesis, no con investigación real.
-
-### MoodBoard: qué queremos transmitir
-- **Problemática:** notas con "¿Dónde está el bolsín?", llamados del gerente, planillas en papel, plazos legales.
-- **Elemento del sistema:** bolsín precintado (N° de precinto) con GPS Tracker, y mapa con el recorrido Córdoba → Rosario.
-- **Logo y slogan:** bolsín con un pin de ubicación. *"Cada documento, siempre ubicado."*
-- **Palabras clave:** trazabilidad, tranquilidad, control, a tiempo, confianza.
-- **Paleta:** azul institucional (confianza, Estado), **amarillo precinto** (atención, selección), verde (éxito, recibido) y gris claro (orden).
-
-**Conexión con la aplicación (muy importante para defender):** la app usa **exactamente esa paleta**. La barra y los botones son azules. El bolsín seleccionado en el mapa se pinta de **amarillo precinto**. El mensaje de éxito es verde.
-
-### Mapa de Empatía
-| Cuadrante | Ideas principales |
-|---|---|
-| Piensa y siente | Miedo a perder expedientes con plazos legales; siente que depende del correo |
-| Observa y escucha | Gerentes que llaman; compañeros buscando precintos en planillas; reclamos de otras CM |
-| Dice y hace | "Ya lo mandamos, debería llegar"; llama al correo; anota en planillas; escribe mails a mano |
-| Necesidades y dificultades | Ver en un mapa dónde está cada bolsín; buscar por precinto o destino; avisar al gerente en un clic. Dificultades: información dispersa y poco tiempo |
-
-### User Journey (antes, durante y después)
-- **Antes:** el Gerente de Rosario llama por un expediente urgente; Marta busca en la planilla y no sabe si el bolsín llegó. Emoción: **preocupación**.
-- **Durante:** entra al sistema, ve el mapa, filtra por CM destino, elige el bolsín y envía el mail. Emoción: **alivio**. Momento crítico: un bolsín sin ubicación (A3) genera duda.
-- **Después:** el Gerente recibe el mail con ubicación, fecha y hora, y Marta no recibe más llamados. Emoción: **tranquilidad**.
-
-### Cómo el análisis UX se convirtió en decisiones de pantalla
-| Hallazgo de UX | Decisión en la interfaz |
-|---|---|
-| "No sé dónde está el bolsín" | El **mapa** es lo principal de la pantalla |
-| Busca por precinto en planillas | **Filtro** por N° de precinto y por CM destino |
-| Escribe mails a mano | Botón **"Informar ubicación al Gerente"** y mail armado automáticamente |
-| Momento de duda (GPS sin ubicación) | **Aviso amarillo** que dice qué bolsín no informa ubicación (A3) |
-| No es experta en tecnología | Pantallas simples, un botón principal por pantalla, mensajes cortos y confirmación antes de enviar |
-| Necesita saber en qué CM está trabajando | Barra superior con su nombre, rol y CM |
-
-Los patrones de GUI aplicados (maestro-detalle, filtro, diálogo de confirmación, estado vacío, etc.) están en la tabla de la sección 6.4 del PDF.
-
