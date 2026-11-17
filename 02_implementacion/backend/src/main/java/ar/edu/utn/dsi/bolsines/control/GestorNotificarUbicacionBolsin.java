@@ -19,7 +19,8 @@ public class GestorNotificarUbicacionBolsin {
         this.interfazServidorCorreo = interfazServidorCorreo;
     }
 
-    // Arma y envía el correo con: número de bolsín, fecha y hora de última actualización y coordenadas
+    // [Fig. 3 · 42] Arma y envía el correo con: número de bolsín, fecha y hora de última actualización y coordenadas
+    // [Fig. 3 · 43] devuelve el correo enviado
     public MailEnviadoDTO notificarUbicacion(String emailGerente, String nombreGerente, int numeroBolsin,
                                              LocalDateTime fechaHoraUltimaActualizacion,
                                              double latitud, double longitud) {

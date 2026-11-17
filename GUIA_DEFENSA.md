@@ -12,7 +12,7 @@ Esta guía cubre qué hicimos, cómo levantar el sistema, cómo explicar el patr
 3. [Cómo levantar todo](#3-cómo-levantar-todo)
 4. [Guion de la demo](#4-guion-de-la-demo)
 5. [El patrón Adapter, explicado](#5-el-patrón-adapter-explicado)
-6. [Recorrido del código para la defensa](#6-recorrido-del-código-para-la-defensa)
+6. [Diagrama de secuencia ↔ código (cómo se evalúa)](#6-diagrama-de-secuencia--código-cómo-se-evalúa)
 7. [Persistencia (base de datos)](#7-persistencia-base-de-datos)
 8. [Correcciones de la Entrega 1 que aplicamos](#8-correcciones-de-la-entrega-1-que-aplicamos)
 9. [Preguntas probables y cómo responderlas](#9-preguntas-probables-y-cómo-responderlas)
@@ -230,31 +230,121 @@ Todos los archivos del patrón tienen al principio un comentario `// PATRÓN ADA
 
 ---
 
-## 6. Recorrido del código para la defensa
+## 6. Diagrama de secuencia ↔ código (cómo se evalúa)
 
-Orden recomendado para mostrar el código (sigue el diagrama de secuencia):
+En la evaluación, la profe **compara el diagrama de secuencia con el código** y controla que los pasos estén **en el mismo orden** y que coincidan. Para facilitarlo:
 
-1. **`boundary/pantallas/PantallaConsultarSeguimientoBolsines.java`**: la «boundary». Cada método es una acción del EB, con el número de paso del CU en un comentario.
-2. **`control/GestorConsultarSeguimientoBolsines.java`**: el «control». Está dividido por pasos del CU:
-   - `buscarCM()`: Sesión → Usuario → Empleado → CM.
-   - `buscarBolsinesEnviados()`: le pregunta **a cada Bolsín** si está Enviado (`esEnviado()`) y si es de mi CM (`esTuCMOrigen()`). Es el patrón **Experto**: el bolsín responde sobre sí mismo.
-   - `obtenerUbicacionBolsines()`: **acá se usa el Adapter**, a través de `InterfazGPSTracker`.
-   - `buscarMailDeGerenteCMDestino()`: loop sobre empleados con `sosGCMDeCM()`.
-3. **`entidades/Bolsin.java`**: `esEnviado()` recorre los cambios de estado, busca el **actual** y le pregunta si es Enviado.
-4. **`boundary/interfaces/InterfazGPSTracker.java`**: `crearAdaptador()` según el modelo.
-5. **`patrones/adapter/AdaptadorGPSTrackerXTR4500L.java`**: `solicitarUbicacion()` y `adaptarUbicacion()`. Compararlo con el de NavTrack para mostrar que hacen lo mismo con formatos distintos.
+- Los diagramas de secuencia tienen los **mensajes numerados**:
+  - **Figura 3**: flujo básico completo (46 mensajes). Archivo `03_diagramas/png/03_secuencia_completa_corregida.png`.
+  - **Figura 2**: parte rediseñada con el patrón Adapter (19 mensajes). Archivo `03_diagramas/png/02_secuencia_diseno_adapter.png`.
+- En el código, cada mensaje tiene un comentario con su número, en la línea donde se envía o se recibe:
+  ```java
+  // [Fig. 3 · 4] Paso 2: busca la CM del usuario logueado
+  comisionMedicaUsuario = buscarCM();
+  ```
+  `[Fig. 3 · 4]` significa **Figura 3, mensaje 4**. También se indica el **paso del CU** (paso 2, paso 7, etc.) y los flujos alternativos (`A1` a `A5`).
+- **Para encontrar un mensaje rápido:** en VS Code, `Ctrl + Shift + F` (Mac: `Cmd + Shift + F`) y buscar, por ejemplo, `Fig. 3 · 17`.
 
-### Cómo se corresponde el diagrama con el código
+### Cómo recorrer el código durante la evaluación
 
-| En el diagrama | En el código |
-|---|---|
-| «boundary» Pantalla | `boundary/pantallas/` (endpoints) + `frontend/src/pantallas/` (lo que se ve) |
-| «control» Gestor | `control/` |
-| «entity» | `entidades/` |
-| Boundary con el GPS | `boundary/interfaces/InterfazGPSTracker.java` |
-| Patrón | `patrones/adapter/` |
+Con la Figura 3 en la mano, ir de arriba hacia abajo:
 
-**Diferencia con el diagrama de análisis (por si preguntan).** Como es una API REST, los mensajes del Gestor a la Pantalla (por ejemplo `mostrarMapaDeBolsines()`) se resuelven con lo que **devuelve** cada método. La pantalla nunca recibe entidades: recibe **DTO**, objetos solo con los datos a mostrar. La implementación de ejemplo de la cátedra lo hace igual.
+1. **Mensajes 1–3**: `boundary/pantallas/PantallaConsultarSeguimientoBolsines.java`. Igual que el ejemplo de la cátedra (`opcionRegLaboreoLote()` → `habilitarVentana()` → gestor).
+2. **Mensajes 3–24**: `control/GestorConsultarSeguimientoBolsines.java`, método `consultarUbicacionBolsines()`. Se lee de arriba hacia abajo en el mismo orden que el diagrama: `buscarCM()` (4–9), `buscarBolsinesEnviados()` (10–17), `obtenerUbicacionBolsines()` (18–20), `armarMapaDePosicionDeBolsines()` (21–24).
+3. **Mensajes 18–20 en detalle, el patrón (Figura 2)**: `obtenerUbicacionBolsines()` → `boundary/interfaces/InterfazGPSTracker.java` → `patrones/adapter/AdaptadorGPSTrackerXTR4500L.java` → `patrones/adapter/serviciosexternos/ServicioGPSTrackerXTR4500L.java`.
+4. **Mensajes 26–29**: `PantallaConsultarSeguimientoBolsines.selecBolsin()` → gestor `tomarSeleccionBolsin()`.
+5. **Mensajes 31–45**: `PantallaConsultarSeguimientoBolsines.confirmarEnvioMail()` → gestor `tomarConfirmacionDeMail()`, que se lee en orden: `buscarMailDeGerenteCMDestino()` (33–37), `getEmail()` (38), `llamarCUNotificarUbicacion()` (39–43), `finCU()` (44).
+6. **Mensajes a entidades** (5–17, 28, 34–37, 40): cada método de `entidades/` tiene arriba su número, por ejemplo `// [Fig. 3 · 17]` en `ComisionMedica.esMiCM()`.
+
+**La pantalla está en dos partes.** El backend (`PantallaConsultarSeguimientoBolsines.java`) recibe las acciones del EB y llama al gestor. El frontend (`PantallaConsultarSeguimientoBolsines.jsx`) es lo que se ve y tiene los mensajes que la pantalla se envía a sí misma (`mostrarMapaDeBolsines()`, `solicitarConfirmacionEnvioMail()`, `mostrarMailEnviado()`). Los dos archivos tienen los mismos números de mensaje.
+
+**Mensajes de la pantalla al gestor.** Como es una API REST, los retornos (24, 29, 45) son el valor que devuelve cada método. La pantalla recibe **DTO** (objetos solo con datos), nunca entidades. La implementación de ejemplo de la cátedra lo hace igual.
+
+Rutas: `backend/src/main/java/ar/edu/utn/dsi/bolsines/` (Java) y `frontend/src/` (React), ambas dentro de `02_implementacion/`.
+
+### Figura 3 – Flujo básico completo: dónde está cada mensaje
+
+| N° | Mensaje | De → a | Dónde está en el código |
+|---|---|---|---|
+| **1** | `selecOpcionConsultarUbicacionBolsines()` | EB → Pantalla | Frontend: clic en la opción (`PantallaMenuPrincipal.jsx`). Backend: `PantallaConsultarSeguimientoBolsines.selecOpcionConsultarUbicacionBolsines()` |
+| **2** | `habilitarPantalla()` | Pantalla → Pantalla | `PantallaConsultarSeguimientoBolsines.habilitarPantalla()` (backend y frontend) |
+| **3** | `consultarUbicacionBolsines()` | Pantalla → Gestor | `GestorConsultarSeguimientoBolsines.consultarUbicacionBolsines()` |
+| **4** | `buscarCM()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.buscarCM()` |
+| **5** | `estaActiva()` | Gestor → Sesion | `Sesion.estaActiva()` (loop en `buscarCM()`) |
+| **6** | `getUsuario()` | Gestor → Sesion | `Sesion.getUsuario()` |
+| **7** | `esTuUsuario(usuario)` | Gestor → Empleado | `Empleado.esTuUsuario()` (loop en `buscarCM()`) |
+| **8** | `getCM()` | Gestor → Empleado | `Empleado.getCM()` |
+| **9** | `getCodigo() / getNombre()` | Gestor → ComisionMedica | `ComisionMedica.getCodigo()` y `getNombre()` |
+| **10** | `buscarBolsinesEnviados()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.buscarBolsinesEnviados()` |
+| **11** | `esEnviado()` | Gestor → Bolsin | `Bolsin.esEnviado()` |
+| **12** | `esActual()` | Bolsin → CambioEstadoBolsin | `CambioEstadoBolsin.esActual()` (loop en `Bolsin.esEnviado()`) |
+| **13** | `esEnviado()` | Bolsin → CambioEstadoBolsin | `CambioEstadoBolsin.esEnviado()` |
+| **14** | `esEnviado()` | CambioEstadoBolsin → Estado | `Estado.esEnviado()` |
+| **15** | `esAmbitoBolsin()` | Estado → Estado | `Estado.esAmbitoBolsin()` |
+| **16** | `esTuCMOrigen(cm)` | Gestor → Bolsin | `Bolsin.esTuCMOrigen()` |
+| **17** | `esMiCM(cm)` | Bolsin → ComisionMedica | `ComisionMedica.esMiCM()` |
+| **18** | `obtenerUbicacionBolsines()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.obtenerUbicacionBolsines()` (detalle en la Figura 2) |
+| **19** | `getNumeroBolsin() / getCodigoCMOrigen() / getCodigoCMDestino() / getModeloGPSTracker()` | Gestor → Bolsin | `Bolsin` (llamados en `obtenerUbicacionBolsines()`) |
+| **20** | `solicitarUbicacionBolsin(...)` | Gestor → InterfazGPSTracker | `InterfazGPSTracker.solicitarUbicacionBolsin()` (detalle en la Figura 2) |
+| **21** | `armarMapaDePosicionDeBolsines()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.armarMapaDePosicionDeBolsines()` |
+| **22** | `getNumeroBolsin() / getNumeroPrecinto() / getCodigoCMDestino() / getNombreCMDestino() / getModeloGPSTracker()` | Gestor → Bolsin | `Bolsin` (llamados en `armarMapaDePosicionDeBolsines()`) |
+| **23** | `getLatitud() / getLongitud() / getFechaHoraUltimaActualizacion()` | Gestor → UbicacionBolsin | `UbicacionBolsin` (llamados en `armarMapaDePosicionDeBolsines()`) |
+| **24** | `MapaBolsinesDTO (retorno)` | Gestor → Pantalla | `return` de `GestorConsultarSeguimientoBolsines.consultarUbicacionBolsines()` |
+| **25** | `mostrarMapaDeBolsines()` | Pantalla → Pantalla | Frontend: `mostrarMapaDeBolsines()` en `PantallaConsultarSeguimientoBolsines.jsx` |
+| **26** | `selecBolsin()` | EB → Pantalla | Frontend: `selecBolsin()`. Backend: `PantallaConsultarSeguimientoBolsines.selecBolsin()` |
+| **27** | `tomarSeleccionBolsin(numeroBolsin)` | Pantalla → Gestor | `GestorConsultarSeguimientoBolsines.tomarSeleccionBolsin()` |
+| **28** | `esTuNumeroBolsin(numeroBolsin)` | Gestor → Bolsin | `Bolsin.esTuNumeroBolsin()` (loop en `tomarSeleccionBolsin()`) |
+| **29** | `BolsinEnMapaDTO (retorno)` | Gestor → Pantalla | `return` de `GestorConsultarSeguimientoBolsines.tomarSeleccionBolsin()` |
+| **30** | `solicitarConfirmacionEnvioMail()` | Pantalla → Pantalla | Frontend: `solicitarConfirmacionEnvioMail()` (abre `DialogoConfirmarEnvioMail.jsx`) |
+| **31** | `confirmarEnvioMail()` | EB → Pantalla | Frontend: `confirmarEnvioMail()`. Backend: `PantallaConsultarSeguimientoBolsines.confirmarEnvioMail()` |
+| **32** | `tomarConfirmacionDeMail(true)` | Pantalla → Gestor | `GestorConsultarSeguimientoBolsines.tomarConfirmacionDeMail()` |
+| **33** | `buscarMailDeGerenteCMDestino()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.buscarMailDeGerenteCMDestino()` |
+| **34** | `getDestino()` | Gestor → Bolsin | `Bolsin.getDestino()` |
+| **35** | `sosGCMDeCM(cmDestino)` | Gestor → Empleado | `Empleado.sosGCMDeCM()` (loop en `buscarMailDeGerenteCMDestino()`) |
+| **36** | `esGCM()` | Empleado → Rol | `Rol.esGCM()` |
+| **37** | `esMiCM(cmDestino)` | Empleado → ComisionMedica | `ComisionMedica.esMiCM()` |
+| **38** | `getEmail() / getNombreCompleto()` | Gestor → Empleado | `Empleado.getEmail()` y `getNombreCompleto()` (en `tomarConfirmacionDeMail()`) |
+| **39** | `llamarCUNotificarUbicacion(...)` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.llamarCUNotificarUbicacion()` |
+| **40** | `getNumeroBolsin()` | Gestor → Bolsin | `Bolsin.getNumeroBolsin()` |
+| **41** | `getFechaHoraUltimaActualizacion() / getLatitud() / getLongitud()` | Gestor → UbicacionBolsin | `UbicacionBolsin` (en `llamarCUNotificarUbicacion()`) |
+| **42** | `notificarUbicacion(...)` | Gestor → GestorNotificar | `GestorNotificarUbicacionBolsin.notificarUbicacion()` (CU incluido) |
+| **43** | `MailEnviadoDTO (retorno)` | GestorNotificar → Gestor | `return` de `notificarUbicacion()` |
+| **44** | `finCU()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.finCU()` |
+| **45** | `MailEnviadoDTO (retorno)` | Gestor → Pantalla | `return` de `GestorConsultarSeguimientoBolsines.tomarConfirmacionDeMail()` |
+| **46** | `mostrarMailEnviado()` | Pantalla → Pantalla | Frontend: `mostrarMailEnviado()` (abre `DialogoMailEnviado.jsx`) |
+
+Flujos alternativos (no están en el diagrama del flujo básico; buscar `A1`, `A2`, etc. en el código):
+- **A1** (no hay bolsines enviados): `GestorConsultarSeguimientoBolsines.consultarUbicacionBolsines()`, después del mensaje 10.
+- **A2** (precinto inexistente): `GestorConsultarSeguimientoBolsines.tomarFiltro()`.
+- **A3** (el GPS no informa ubicación): `GestorConsultarSeguimientoBolsines.obtenerUbicacionBolsines()` (`catch`) y el `catch` de cada adaptador.
+- **A4** (cancelar): `GestorConsultarSeguimientoBolsines.cancelarCU()` y `PantallaConsultarSeguimientoBolsines.cancelar()`.
+- **A5** (no enviar el mail): `GestorConsultarSeguimientoBolsines.tomarConfirmacionDeMail()`, al principio.
+
+### Figura 2 – Patrón Adapter: dónde está cada mensaje
+
+| N° | Mensaje | De → a | Dónde está en el código |
+|---|---|---|---|
+| **1** | `obtenerUbicacionBolsines()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.obtenerUbicacionBolsines()` |
+| **2** | `getNumeroBolsin()` | Gestor → Bolsin | `Bolsin.getNumeroBolsin()` |
+| **3** | `getCodigoCMOrigen()` | Gestor → Bolsin | `Bolsin.getCodigoCMOrigen()` |
+| **4** | `getCodigo()` | Bolsin → origen: ComisionMedica | `ComisionMedica.getCodigo()` |
+| **5** | `getCodigoCMDestino()` | Gestor → Bolsin | `Bolsin.getCodigoCMDestino()` |
+| **6** | `getCodigo()` | Bolsin → destino: ComisionMedica | `ComisionMedica.getCodigo()` |
+| **7** | `getModeloGPSTracker()` | Gestor → Bolsin | `Bolsin.getModeloGPSTracker()` |
+| **8** | `solicitarUbicacionBolsin(...)` | Gestor → InterfazGPSTracker | `InterfazGPSTracker.solicitarUbicacionBolsin()` |
+| **9** | `crearAdaptador(modelo)` | Interfaz → Interfaz | `InterfazGPSTracker.crearAdaptador()` |
+| **10** | `new(restClient)` | Interfaz → ServicioGPSTrackerXTR4500L | `crearAdaptador()` crea el servicio (constructor de `ServicioGPSTrackerXTR4500L`) |
+| **11** | `new(claveAPI, servicio)` | Interfaz → AdaptadorGPSTrackerXTR4500L | `crearAdaptador()` crea el adaptador |
+| **12** | `obtenerUbicacion(...)` | Interfaz → Adaptador | `AdaptadorGPSTrackerXTR4500L.obtenerUbicacion()` (definido en `IAdaptadorGPSTracker`) |
+| **13** | `solicitarUbicacion(...)` | Adaptador → Adaptador | `AdaptadorGPSTrackerXTR4500L.solicitarUbicacion()` |
+| **14** | `getBolsinLocation(apiKey, nro, cmOrigen)` | Adaptador → Servicio | `ServicioGPSTrackerXTR4500L.getBolsinLocation()` (llama a la API del GPS) |
+| **15** | `JSON (retorno)` | Servicio → Adaptador | `return` de `getBolsinLocation()` |
+| **16** | `adaptarUbicacion(json)` | Adaptador → Adaptador | `AdaptadorGPSTrackerXTR4500L.adaptarUbicacion()` |
+| **17** | `new(numeroBolsin, latitud, longitud, fechaHora)` | Adaptador → UbicacionBolsin | `new UbicacionBolsin(...)` dentro de `adaptarUbicacion()` |
+| **18** | `UbicacionBolsin (retorno)` | Adaptador → Interfaz | `return` de `obtenerUbicacion()` |
+| **19** | `UbicacionBolsin (retorno)` | Interfaz → Gestor | `return` de `solicitarUbicacionBolsin()` |
+
+Los adaptadores NavTrack QX-7A y GeoPulse MTR-900 tienen los mismos comentarios (mensajes 12 a 17), porque siguen la misma secuencia con su propio formato.
 
 ---
 

@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 // <<boundary>> PantallaConsultarSeguimientoBolsines
-// Recibe las acciones del EB desde el frontend y las delega al gestor.
+// Recibe las acciones del EB (desde el frontend) y las delega al gestor.
+// Los mensajes que la pantalla se envía a sí misma (mostrar...) están en
+// frontend/src/pantallas/PantallaConsultarSeguimientoBolsines.jsx
 @RestController
 @RequestMapping("/api/seguimiento-bolsines")
 public class PantallaConsultarSeguimientoBolsines {
@@ -28,35 +30,48 @@ public class PantallaConsultarSeguimientoBolsines {
         this.gestor = gestor;
     }
 
-    // Paso 1: el EB selecciona la opción de consultar la ubicación de bolsines
+    // [Fig. 3 · 1] Paso 1: el EB selecciona la opción para consultar la ubicación de bolsines
     @PostMapping("/iniciar")
     public MapaBolsinesDTO selecOpcionConsultarUbicacionBolsines() {
+        // [Fig. 3 · 2]
+        return habilitarPantalla();
+    }
+
+    // [Fig. 3 · 2] habilitarPantalla()
+    private MapaBolsinesDTO habilitarPantalla() {
+        // [Fig. 3 · 3] pide al gestor la CM, los bolsines enviados y sus ubicaciones
+        // [Fig. 3 · 24] recibe los datos del mapa
         return gestor.consultarUbicacionBolsines();
     }
 
-    // Paso 6: el EB filtra por número de precinto y/o CM destino
+    // Paso 6 (opcional): el EB filtra por número de precinto y/o CM destino (A2)
     @PostMapping("/filtrar")
     public List<BolsinEnMapaDTO> tomarFiltro(@RequestBody FiltroRequest filtro) {
         return gestor.tomarFiltro(filtro.numeroPrecinto(), filtro.codigoCMDestino());
     }
 
-    // Paso 7: el EB selecciona un bolsín del mapa
+    // [Fig. 3 · 26] Paso 7: el EB selecciona un bolsín del mapa
     @PostMapping("/seleccionar-bolsin")
-    public BolsinEnMapaDTO tomarSeleccionBolsin(@RequestBody SeleccionBolsinRequest seleccion) {
+    public BolsinEnMapaDTO selecBolsin(@RequestBody SeleccionBolsinRequest seleccion) {
+        // [Fig. 3 · 27] avisa al gestor  /  [Fig. 3 · 29] recibe los datos del bolsín
+        // (Paso 8 - [Fig. 3 · 30] la pantalla pide la confirmación del envío del correo)
         return gestor.tomarSeleccionBolsin(seleccion.numeroBolsin());
     }
 
-    // Paso 9: el EB confirma (o no) el envío del correo
+    // [Fig. 3 · 31] Paso 9: el EB confirma (o no) el envío del correo
     @PostMapping("/confirmar-mail")
-    public ResponseEntity<?> tomarConfirmacionDeMail(@RequestBody ConfirmacionMailRequest confirmacion) {
+    public ResponseEntity<?> confirmarEnvioMail(@RequestBody ConfirmacionMailRequest confirmacion) {
+        // [Fig. 3 · 32] avisa al gestor  /  [Fig. 3 · 45] recibe el correo enviado
         MailEnviadoDTO mail = gestor.tomarConfirmacionDeMail(confirmacion.confirma());
+
+        // A5: el EB no selecciona la opción para enviar el correo
         if (mail == null) {
             return ResponseEntity.ok(Map.of("mailEnviado", false));
         }
         return ResponseEntity.ok(Map.of("mailEnviado", true, "mail", mail));
     }
 
-    // A4: el EB cancela el caso de uso
+    // A4: el EB cancela la ejecución del caso de uso
     @PostMapping("/cancelar")
     public Map<String, String> cancelar() {
         gestor.cancelarCU();

@@ -9,10 +9,12 @@ public class ServicioGPSTrackerNavTrackQX7A {
 
     private final RestClient restClient;
 
+    // [Fig. 2 · 10] lo crea InterfazGPSTracker en crearAdaptador()
     public ServicioGPSTrackerNavTrackQX7A(RestClient restClient) {
         this.restClient = restClient;
     }
 
+    // [Fig. 2 · 14] operación original del GPS Tracker  /  [Fig. 2 · 15] devuelve la respuesta en su formato
     public String retrieveTrackingData(String apiKey, int numeroBolsin, String codigoCMDestino) {
         return restClient.get()
                 .uri("/api/navtrack-qx-7a/retrieveTrackingData?numeroBolsin={nro}&codigoComisionMedicaDestino={cm}",

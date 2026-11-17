@@ -15,17 +15,21 @@ title CU 36 Consultar seguimiento de bolsines - Diseño (Adapter)
 
 class PantallaConsultarSeguimientoBolsines <<boundary>> {
   + selecOpcionConsultarUbicacionBolsines(): MapaBolsinesDTO
-  + tomarFiltro(numeroPrecinto: Integer, codigoCMDestino: String): List<BolsinEnMapaDTO>
-  + tomarSeleccionBolsin(numeroBolsin: int): BolsinEnMapaDTO
-  + tomarConfirmacionDeMail(confirma: boolean): MailEnviadoDTO
-  + cancelar(): void
+  - habilitarPantalla(): MapaBolsinesDTO
+  + tomarFiltro(filtro: FiltroRequest): List<BolsinEnMapaDTO>
+  + selecBolsin(seleccion: SeleccionBolsinRequest): BolsinEnMapaDTO
+  + confirmarEnvioMail(confirmacion: ConfirmacionMailRequest): ResponseEntity
+  + cancelar(): Map<String, String>
 }
 
 class GestorConsultarSeguimientoBolsines <<control>> {
   - comisionMedicaUsuario: ComisionMedica
+  - codigoCMUsuario: String
+  - nombreCMUsuario: String
   - bolsinesEnviados: List<Bolsin>
   - ubicacionesBolsines: Map<Integer, UbicacionBolsin>
   - bolsinesSinUbicacion: List<BolsinSinUbicacionDTO>
+  - bolsinesEnMapa: Map<Integer, BolsinEnMapaDTO>
   - bolsinSeleccionado: Bolsin
   + consultarUbicacionBolsines(): MapaBolsinesDTO
   - buscarCM(): ComisionMedica
@@ -36,7 +40,7 @@ class GestorConsultarSeguimientoBolsines <<control>> {
   + tomarSeleccionBolsin(numeroBolsin: int): BolsinEnMapaDTO
   + tomarConfirmacionDeMail(confirma: boolean): MailEnviadoDTO
   - buscarMailDeGerenteCMDestino(): Empleado
-  - llamarCUNotificarUbicacion(gerente: Empleado): MailEnviadoDTO
+  - llamarCUNotificarUbicacion(mailGerente: String, nombreGerente: String): MailEnviadoDTO
   + cancelarCU(): void
   - finCU(): void
 }
@@ -109,8 +113,12 @@ class Bolsin <<entity>> {
   - modeloGPSTracker: String
   + esEnviado(): boolean
   + esTuCMOrigen(cm: ComisionMedica): boolean
+  + esTuNumeroBolsin(numero: int): boolean
   + esTuNumeroPrecinto(numero: Integer): boolean
   + esTuCMDestino(codigoCM: String): boolean
+  + getCodigoCMOrigen(): String
+  + getCodigoCMDestino(): String
+  + getNombreCMDestino(): String
   + getNumeroBolsin(): Integer
   + getNumeroPrecinto(): Integer
   + getModeloGPSTracker(): String

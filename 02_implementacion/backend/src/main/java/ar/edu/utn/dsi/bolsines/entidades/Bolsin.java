@@ -51,19 +51,42 @@ public class Bolsin {
         this.destino = destino;
     }
 
-    // Indica si el estado actual del bolsín es Enviado
+    // [Fig. 3 · 11] Indica si el estado actual del bolsín es Enviado
     public boolean esEnviado() {
+        // [Fig. 3 · 12] busca el cambio de estado actual
+        CambioEstadoBolsin actual = null;
         for (CambioEstadoBolsin cambio : cambioEstado) {
             if (cambio.esActual()) {
-                return cambio.esEnviado();
+                actual = cambio;
             }
         }
-        return false;
+        // [Fig. 3 · 13] le pregunta al cambio de estado actual si es Enviado
+        return actual != null && actual.esEnviado();
     }
 
-    // Indica si la CM de origen del bolsín es la CM recibida
+    // [Fig. 3 · 17] Indica si la CM de origen del bolsín es la CM recibida
     public boolean esTuCMOrigen(ComisionMedica comisionMedica) {
         return origen.esMiCM(comisionMedica);
+    }
+
+    // [Fig. 3 · 28] Indica si el bolsín tiene el número recibido
+    public boolean esTuNumeroBolsin(int numero) {
+        return numeroBolsin == numero;
+    }
+
+    // [Fig. 2 · 3-4] [Fig. 3 · 19] Código de la CM origen (se lo pide a su ComisionMedica)
+    public String getCodigoCMOrigen() {
+        return origen.getCodigo();
+    }
+
+    // [Fig. 2 · 5-6] [Fig. 3 · 19 y 22] Código de la CM destino (se lo pide a su ComisionMedica)
+    public String getCodigoCMDestino() {
+        return destino.getCodigo();
+    }
+
+    // [Fig. 3 · 22] Nombre de la CM destino (se lo pide a su ComisionMedica)
+    public String getNombreCMDestino() {
+        return destino.getNombre();
     }
 
     // Indica si el bolsín tiene el número de precinto recibido
@@ -71,7 +94,7 @@ public class Bolsin {
         return numeroPrecinto != null && numeroPrecinto.equals(numero);
     }
 
-    // Indica si la CM de destino del bolsín tiene el código recibido
+    // Indica si la CM de destino del bolsín tiene el código recibido (filtro, A2)
     public boolean esTuCMDestino(String codigoCM) {
         return destino.getCodigo().equals(codigoCM);
     }
@@ -86,6 +109,7 @@ public class Bolsin {
         cambioEstado.add(new CambioEstadoBolsin(fechaHora, nuevoEstado, responsable));
     }
 
+    // [Fig. 2 · 2] [Fig. 3 · 19, 22 y 40]
     public Integer getNumeroBolsin() {
         return numeroBolsin;
     }
@@ -94,6 +118,7 @@ public class Bolsin {
         return fecha;
     }
 
+    // [Fig. 3 · 22]
     public Integer getNumeroPrecinto() {
         return numeroPrecinto;
     }
@@ -102,6 +127,7 @@ public class Bolsin {
         return peso;
     }
 
+    // [Fig. 2 · 7] [Fig. 3 · 19 y 22]
     public String getModeloGPSTracker() {
         return modeloGPSTracker;
     }
@@ -110,6 +136,7 @@ public class Bolsin {
         return origen;
     }
 
+    // [Fig. 3 · 34]
     public ComisionMedica getDestino() {
         return destino;
     }

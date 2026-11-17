@@ -17,8 +17,10 @@ import {
   tomarSeleccionBolsin
 } from '../servicios/apiBolsines'
 
-// <<boundary>> PantallaConsultarSeguimientoBolsines - CU 36 Consultar seguimiento de bolsines
-// Los nombres de las funciones siguen el diagrama de secuencia.
+// <<boundary>> PantallaConsultarSeguimientoBolsines - CU 36 Consultar seguimiento de bolsines (parte visual)
+// Los nombres de las funciones siguen el diagrama de secuencia del flujo básico (Figura 3).
+// [Fig. 3 · N] = mensaje N de la Figura 3. Lo que recibe el backend está en
+// backend/.../boundary/pantallas/PantallaConsultarSeguimientoBolsines.java
 export default function PantallaConsultarSeguimientoBolsines({ alSalir }) {
   const [cargando, setCargando] = useState(true)
   const [datos, setDatos] = useState(null)                 // respuesta de /iniciar
@@ -30,13 +32,14 @@ export default function PantallaConsultarSeguimientoBolsines({ alSalir }) {
   const [mailEnviado, setMailEnviado] = useState(null)
   const [aviso, setAviso] = useState('')
 
-  // Pasos 1 a 6: pide al gestor la CM, los bolsines enviados y sus ubicaciones
+  // [Fig. 3 · 2] habilitarPantalla(): pide al gestor la CM, los bolsines enviados y sus ubicaciones
   const habilitarPantalla = async () => {
     setCargando(true)
     setSinBolsines('')
     setErrorFiltro('')
     setEnfocado(null)
     try {
+      // [Fig. 3 · 3] el backend llama al gestor  /  [Fig. 3 · 24] llegan los datos del mapa
       mostrarMapaDeBolsines(await consultarUbicacionBolsines())
     } catch (e) {
       setDatos(null)
@@ -45,7 +48,7 @@ export default function PantallaConsultarSeguimientoBolsines({ alSalir }) {
     setCargando(false)
   }
 
-  // Paso 6: muestra el mapa con los bolsines recibidos
+  // [Fig. 3 · 25] Paso 6: muestra el mapa con los bolsines recibidos
   const mostrarMapaDeBolsines = (respuesta) => {
     setDatos(respuesta)
     setBolsinesVisibles(respuesta.bolsines)
@@ -53,7 +56,7 @@ export default function PantallaConsultarSeguimientoBolsines({ alSalir }) {
 
   useEffect(() => { habilitarPantalla() }, [])
 
-  // Paso 6: filtro por número de precinto y/o CM destino
+  // Paso 6 (opcional): filtro por número de precinto y/o CM destino (A2)
   const filtrar = async (numeroPrecinto, codigoCMDestino) => {
     setErrorFiltro('')
     try {
@@ -68,23 +71,25 @@ export default function PantallaConsultarSeguimientoBolsines({ alSalir }) {
     setBolsinesVisibles(datos.bolsines)
   }
 
-  // Paso 7: el EB selecciona un bolsín del mapa
+  // [Fig. 3 · 26] Paso 7: el EB selecciona un bolsín del mapa
   const selecBolsin = async (bolsin) => {
     try {
+      // [Fig. 3 · 27] avisa al gestor  /  [Fig. 3 · 29] recibe los datos del bolsín
       solicitarConfirmacionEnvioMail(await tomarSeleccionBolsin(bolsin.numeroBolsin))
     } catch (e) {
       setAviso(e.mensaje)
     }
   }
 
-  // Paso 8: abre el diálogo que pregunta si enviar el correo al Gerente
+  // [Fig. 3 · 30] Paso 8: abre el diálogo que pregunta si enviar el correo al Gerente
   const solicitarConfirmacionEnvioMail = (bolsin) => {
     setSeleccionado(bolsin)
   }
 
-  // Paso 9: el EB confirma (o no) el envío del correo
+  // [Fig. 3 · 31] Paso 9: el EB confirma (o no) el envío del correo
   const confirmarEnvioMail = async (confirma) => {
     try {
+      // [Fig. 3 · 32] avisa al gestor  /  [Fig. 3 · 45] recibe el correo enviado
       const respuesta = await tomarConfirmacionDeMail(confirma)
       setSeleccionado(null)
       if (respuesta.mailEnviado) {
@@ -99,7 +104,7 @@ export default function PantallaConsultarSeguimientoBolsines({ alSalir }) {
     }
   }
 
-  // Paso 11: muestra el correo enviado
+  // [Fig. 3 · 46] Paso 11: muestra el correo enviado
   const mostrarMailEnviado = (mail) => {
     setMailEnviado(mail)
   }
