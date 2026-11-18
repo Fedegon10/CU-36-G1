@@ -1,4 +1,4 @@
-@startuml 05_maquina_estados_remito
+@startuml Figura_5_maquina_estados_remito
 ' Máquina de estados del Remito (corregida según la revisión de la Entrega 1)
 ' Notación de las transiciones: Evento (caso de uso) [guarda] / método()
 skinparam dpi 120

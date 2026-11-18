@@ -7,6 +7,6 @@
 | Presentación de consignas de UX (MoodBoard, Mapa de Empatía, User Journey) | https://ppai-bolsines-ux.vercel.app/ |
 
 Notas:
-- La copia de la API que usamos, con los bolsines 111 a 115 agregados, está en `02_implementacion/api-gps-tracker/`.
-- Si alguien clona los repos originales, conviene hacerlo en `05_material_catedra/repos_originales/`. Esa carpeta no se sube a git.
+- La copia de la API que usamos, con los bolsines 111 a 115 agregados, está en `1_ENTREGA_2/3_implementacion/api-gps-tracker/`.
+- Si alguien clona los repos originales, conviene hacerlo en `4_MATERIAL_CATEDRA/repos_originales/`. Esa carpeta no se sube a git.
 - En la Entrega 2 no se pide el apartado de UX (aviso del equipo docente).

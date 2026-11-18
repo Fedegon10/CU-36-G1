@@ -1,4 +1,4 @@
-@startuml 03_secuencia_completa_corregida
+@startuml Figura_3_secuencia_flujo_basico
 ' Vista dinámica - flujo básico completo del CU 36 (diseño), con las correcciones de la Entrega 1.
 ' Cada número de mensaje está indicado en el código con un comentario [Fig. 3 · N].
 ' Los mensajes 19-20 se detallan en la Figura 2 (patrón Adapter).

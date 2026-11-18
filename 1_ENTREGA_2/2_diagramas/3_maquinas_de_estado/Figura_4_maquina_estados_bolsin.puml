@@ -1,4 +1,4 @@
-@startuml 04_maquina_estados_bolsin
+@startuml Figura_4_maquina_estados_bolsin
 ' Máquina de estados del Bolsín (corregida según la revisión de la Entrega 1)
 ' Notación de las transiciones: Evento (caso de uso) / método()
 skinparam dpi 120

@@ -2,16 +2,16 @@
 ~$*.docx
 
 # Sistema: compilados, base de datos local y dependencias
-02_implementacion/backend/target/
-02_implementacion/backend/data/
-02_implementacion/api-gps-tracker/target/
-02_implementacion/frontend/node_modules/
-02_implementacion/frontend/dist/
+1_ENTREGA_2/3_implementacion/backend/target/
+1_ENTREGA_2/3_implementacion/backend/data/
+1_ENTREGA_2/3_implementacion/api-gps-tracker/target/
+1_ENTREGA_2/3_implementacion/frontend/node_modules/
+1_ENTREGA_2/3_implementacion/frontend/dist/
 
 # Repos originales de la cátedra clonados localmente (tienen su propio .git).
-# Los links están en 05_material_catedra/enlaces.md.
-# La API del GPS que usamos (con nuestros cambios) está en 02_implementacion/api-gps-tracker/
-05_material_catedra/repos_originales/
+# Los links están en 4_MATERIAL_CATEDRA/enlaces.md.
+# La API del GPS que usamos (con nuestros cambios) está en 1_ENTREGA_2/3_implementacion/api-gps-tracker/
+4_MATERIAL_CATEDRA/repos_originales/
 
 # IDE
 .idea/

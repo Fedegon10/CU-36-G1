@@ -36,7 +36,7 @@ Esta guía cubre qué hicimos, cómo levantar el sistema, cómo explicar el patr
 **La solución.** Aplicamos el patrón **Adapter**. Hay un "adaptador" por modelo que traduce la respuesta a un formato único (`UbicacionBolsin`). El resto del sistema no sabe ni le importa qué modelo de GPS tiene cada bolsín.
 
 **Qué entregamos.**
-- El documento de la Entrega 2 en **Word (.docx)**, editable: `01_entrega_2/PPAI2026_3K4_G1_E2_Diseño.docx`.
+- El documento de la Entrega 2 en **Word (.docx)**, editable: `1_ENTREGA_2/1_documento_UV/PPAI2026_3K4_G1_E2_Diseño.docx`.
 - El **sistema funcionando**: web, con base de datos, contra la API real de la cátedra. Andan el flujo básico y los **5 flujos alternativos**; la consigna pide al menos 2.
 
 ---
@@ -45,23 +45,23 @@ Esta guía cubre qué hicimos, cómo levantar el sistema, cómo explicar el patr
 
 ```
 CU-36-G1/
-├── README.md                ← punto de partida: qué se entrega y dónde está cada cosa
-├── GUIA_DEFENSA.md          ← esta guía
-├── 01_entrega_2/            ← LO QUE SE ENTREGA
-│   ├── PPAI2026_3K4_G1_E2_Diseño.docx    documento de la entrega (Word, editable)
-│   ├── capturas_del_sistema/             capturas usadas en el documento
-│   └── modelo_de_formato/                modelo de formato del grupo (referencia)
-├── 02_implementacion/       ← EL SISTEMA (código)
-│   ├── README.md                         resumen técnico de cómo correrlo
-│   ├── api-gps-tracker/                  API del GPS Tracker de la cátedra (con 5 bolsines agregados)
-│   ├── backend/                          Java + Spring Boot (la lógica y la base de datos)
-│   └── frontend/                         React (las pantallas que ve el usuario)
-├── 03_diagramas/            ← DIAGRAMAS (fuentes .puml, PNG y SVG)
-├── 04_entrega_1/            ← entrega 1 y su revisión con correcciones
-└── 05_material_catedra/     ← enunciado, ejemplo de la cátedra y enlaces
+├── README.md                    ← punto de partida
+├── 1_ENTREGA_2/                 ← TODO LO DE LA ENTREGA 2 (lo que se le muestra a la profe)
+│   ├── 1_documento_UV/            documento de la entrega (.docx) y sus recursos
+│   ├── 2_diagramas/
+│   │   ├── 1_clases/              Figura 1
+│   │   ├── 2_secuencia/           Figura 2 (Adapter) y Figura 3 (flujo básico): las que se comparan con el código
+│   │   └── 3_maquinas_de_estado/  Figuras 4 y 5
+│   └── 3_implementacion/
+│       ├── api-gps-tracker/       API del GPS Tracker de la cátedra (con 5 bolsines agregados)
+│       ├── backend/               Java + Spring Boot (la lógica, el patrón y la base de datos)
+│       └── frontend/              React (las pantallas que ve el usuario)
+├── 2_GUIAS_DEL_GRUPO/           ← esta guía y la guía personal en PDF
+├── 3_ENTREGA_1/                 ← entrega 1 y su revisión con correcciones
+└── 4_MATERIAL_CATEDRA/          ← enunciado, ejemplo de la cátedra y enlaces
 ```
 
-**Atención:** a la API de la cátedra le **agregamos 5 bolsines** (111 a 115), para que el mapa muestre varios. El día de la defensa hay que levantar **nuestra copia** (`02_implementacion/api-gps-tracker/`), no una bajada nueva del repo de la cátedra. El cambio está en `src/main/java/ar/edu/dsi/gpstracker/repository/InMemoryBolsinRepository.java`.
+**Atención:** a la API de la cátedra le **agregamos 5 bolsines** (111 a 115), para que el mapa muestre varios. El día de la defensa hay que levantar **nuestra copia** (`1_ENTREGA_2/3_implementacion/api-gps-tracker/`), no una bajada nueva del repo de la cátedra. El cambio está en `src/main/java/ar/edu/dsi/gpstracker/repository/InMemoryBolsinRepository.java`.
 
 ---
 
@@ -81,12 +81,12 @@ Copiar **solo las líneas de comandos** de cada bloque, sin agregarles nada. Tod
 
 Mac / Linux:
 ```bash
-cd 02_implementacion/api-gps-tracker
+cd 1_ENTREGA_2/3_implementacion/api-gps-tracker
 ./mvnw spring-boot:run
 ```
 Windows (PowerShell):
 ```powershell
-cd 02_implementacion\api-gps-tracker
+cd 1_ENTREGA_2\3_implementacion\api-gps-tracker
 .\mvnw.cmd spring-boot:run
 ```
 
@@ -94,20 +94,20 @@ cd 02_implementacion\api-gps-tracker
 
 Mac / Linux:
 ```bash
-cd 02_implementacion/backend
+cd 1_ENTREGA_2/3_implementacion/backend
 ./mvnw spring-boot:run
 ```
 Windows (PowerShell):
 ```powershell
-cd 02_implementacion\backend
+cd 1_ENTREGA_2\3_implementacion\backend
 .\mvnw.cmd spring-boot:run
 ```
 
 **Terminal 3 – Frontend (puerto 5173)**
 
-`npm install` va solo la primera vez. Es igual en Mac y en Windows; en Windows la carpeta se escribe `02_implementacion\frontend`.
+`npm install` va solo la primera vez. Es igual en Mac y en Windows; en Windows la carpeta se escribe `1_ENTREGA_2\3_implementacion\frontend`.
 ```bash
-cd 02_implementacion/frontend
+cd 1_ENTREGA_2/3_implementacion/frontend
 npm install
 npm run dev
 ```
@@ -132,7 +132,7 @@ En la pantalla de login hay botones que completan el usuario solos.
 | Todos los bolsines aparecen "sin ubicación" | La API del GPS (terminal 1) no está corriendo |
 | El mapa se ve gris | No hay internet |
 | La pantalla dice "No se pudo conectar con el backend" | Falta levantar la terminal 2 |
-| Quiero volver a los datos iniciales | Detener el backend y borrar la carpeta `02_implementacion/backend/data/`. Se recrea sola al iniciar |
+| Quiero volver a los datos iniciales | Detener el backend y borrar la carpeta `1_ENTREGA_2/3_implementacion/backend/data/`. Se recrea sola al iniciar |
 | En Windows, `.\mvnw.cmd` no funciona | Abrir la terminal en esa carpeta. Si PowerShell bloquea scripts: `Set-ExecutionPolicy RemoteSigned` |
 
 ---
@@ -216,7 +216,7 @@ En nuestro sistema pasa lo mismo:
 - Es el mismo problema que el ejemplo de la cátedra (monitores **AGCO, Case IH y Topcon**), que también se resolvió con Adapter.
 
 ### Dónde está en el código
-`02_implementacion/backend/src/main/java/ar/edu/utn/dsi/bolsines/`
+`1_ENTREGA_2/3_implementacion/backend/src/main/java/ar/edu/utn/dsi/bolsines/`
 
 | Archivo | Rol |
 |---|---|
@@ -235,8 +235,8 @@ Todos los archivos del patrón tienen al principio un comentario `// PATRÓN ADA
 En la evaluación, la profe **compara el diagrama de secuencia con el código** y controla que los pasos estén **en el mismo orden** y que coincidan. Para facilitarlo:
 
 - Los diagramas de secuencia tienen los **mensajes numerados**:
-  - **Figura 3**: flujo básico completo (46 mensajes). Archivo `03_diagramas/png/03_secuencia_completa_corregida.png`.
-  - **Figura 2**: parte rediseñada con el patrón Adapter (19 mensajes). Archivo `03_diagramas/png/02_secuencia_diseno_adapter.png`.
+  - **Figura 3**: flujo básico completo (46 mensajes). Archivo `1_ENTREGA_2/2_diagramas/2_secuencia/Figura_3_secuencia_flujo_basico.png`.
+  - **Figura 2**: parte rediseñada con el patrón Adapter (19 mensajes). Archivo `1_ENTREGA_2/2_diagramas/2_secuencia/Figura_2_secuencia_patron_adapter.png`.
 - En el código, cada mensaje tiene un comentario con su número, en la línea donde se envía o se recibe:
   ```java
   // [Fig. 3 · 4] Paso 2: busca la CM del usuario logueado
@@ -260,7 +260,7 @@ Con la Figura 3 en la mano, ir de arriba hacia abajo:
 
 **Mensajes de la pantalla al gestor.** Como es una API REST, los retornos (24, 29, 45) son el valor que devuelve cada método. La pantalla recibe **DTO** (objetos solo con datos), nunca entidades. La implementación de ejemplo de la cátedra lo hace igual.
 
-Rutas: `backend/src/main/java/ar/edu/utn/dsi/bolsines/` (Java) y `frontend/src/` (React), ambas dentro de `02_implementacion/`.
+Rutas: `backend/src/main/java/ar/edu/utn/dsi/bolsines/` (Java) y `frontend/src/` (React), ambas dentro de `1_ENTREGA_2/3_implementacion/`.
 
 ### Figura 3 – Flujo básico completo: dónde está cada mensaje
 
@@ -350,7 +350,7 @@ Los adaptadores NavTrack QX-7A y GeoPulse MTR-900 tienen los mismos comentarios 
 
 ## 7. Persistencia (base de datos)
 
-- **Base de datos:** H2, guardada en archivo (`02_implementacion/backend/data/`). Los datos **persisten** entre reinicios.
+- **Base de datos:** H2, guardada en archivo (`1_ENTREGA_2/3_implementacion/backend/data/`). Los datos **persisten** entre reinicios.
 - **Framework de persistencia:** JPA con Hibernate (Spring Data JPA).
   - Las clases de `entidades/` tienen `@Entity`: cada una es una tabla.
   - Las relaciones (`@ManyToOne`, `@OneToMany`) son las asociaciones del diagrama de clases.
@@ -374,7 +374,7 @@ Los adaptadores NavTrack QX-7A y GeoPulse MTR-900 tienen los mismos comentarios 
 | CU incluido equivocado (decía Registrar Revisión) | Ahora es **Notificar ubicación de bolsín** |
 | Asociación "estado" entre CambioEstadoBolsin y Empleado | Renombrada **responsable** |
 | "Escalar las imágenes para mayor resolución" | Diagramas en SVG (vectorial) |
-| Máquinas de estado: "Evento / método()" | Redibujadas (`03_diagramas/fuentes_plantuml/04_...` y `05_...`, anexo del documento) con la notación *Evento / método()*. En Remito: guardas [toda / no toda la documentación es aceptada], sin la transición "no corresponde a CM destino" y con retorno a Creado por el CU 21 |
+| Máquinas de estado: "Evento / método()" | Redibujadas (`1_ENTREGA_2/2_diagramas/3_maquinas_de_estado/`, anexo del documento) con la notación *Evento / método()*. En Remito: guardas [toda / no toda la documentación es aceptada], sin la transición "no corresponde a CM destino" y con retorno a Creado por el CU 21 |
 
 ---
 
@@ -393,7 +393,7 @@ El `Bolsin` tiene el atributo `modeloGPSTracker`. `InterfazGPSTracker` lo usa pa
 Porque la interfaz común tiene que servir para todos. Cada adaptador usa lo que su GPS necesita: XTR usa origen, NavTrack usa destino y GeoPulse ninguna.
 
 **¿De dónde salen las API Keys?**
-Están en `02_implementacion/backend/src/main/resources/application.properties`. La interfaz se las pasa a cada adaptador cuando lo crea, igual que en el ejemplo de la cátedra.
+Están en `1_ENTREGA_2/3_implementacion/backend/src/main/resources/application.properties`. La interfaz se las pasa a cada adaptador cuando lo crea, igual que en el ejemplo de la cátedra.
 
 **¿Qué pasa si el GPS no responde?**
 El adaptador lanza `GPSTrackerException`, el Gestor la atrapa y ese bolsín se muestra como "sin ubicación". Es el flujo **A3**, y se puede mostrar en vivo.
@@ -422,14 +422,14 @@ Java es uno de los lenguajes que soporta la cátedra. Es el mismo stack del ejem
 - [ ] Subir **un solo integrante**, con el nombre `PPAI2026_3K4_G1_E2_Diseño.pdf`.
 
 ### Cómo cambiar algo del documento
-- **Textos** (fecha, integrantes, explicaciones): editar directamente `01_entrega_2/PPAI2026_3K4_G1_E2_Diseño.docx` en Word.
-- **Diagramas**: seguir los pasos de `03_diagramas/README.md` (se edita el `.puml`, se exporta y se reemplaza la imagen en Word).
+- **Textos** (fecha, integrantes, explicaciones): editar directamente `1_ENTREGA_2/1_documento_UV/PPAI2026_3K4_G1_E2_Diseño.docx` en Word.
+- **Diagramas**: seguir los pasos de `1_ENTREGA_2/2_diagramas/README.md` (se edita el `.puml`, se exporta y se reemplaza la imagen en Word).
 
 ### El día de la defensa
 - [ ] Levantar las 3 terminales **antes** de entrar y probar el flujo una vez.
 - [ ] Tener internet (mapa).
 - [ ] Tener abiertos en VS Code: `GestorConsultarSeguimientoBolsines.java`, `InterfazGPSTracker.java`, `IAdaptadorGPSTracker.java` y `AdaptadorGPSTrackerXTR4500L.java`.
-- [ ] Tener a mano los diagramas (`03_diagramas/svg/`).
+- [ ] Tener a mano los diagramas (`1_ENTREGA_2/2_diagramas/`, en PNG o SVG).
 - [ ] Repartir quién explica qué: demo, patrón y código.
 
 ---

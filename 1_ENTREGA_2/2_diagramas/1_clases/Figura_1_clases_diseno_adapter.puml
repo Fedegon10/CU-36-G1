@@ -1,4 +1,4 @@
-@startuml 01_clases_diseno_adapter
+@startuml Figura_1_clases_diseno_adapter
 ' Vista estática de la realización de CU de diseño - CU 36 con patrón ADAPTER
 ' Exportar en alta resolución (PNG con scale o SVG) para el informe.
 skinparam classAttributeIconSize 0
