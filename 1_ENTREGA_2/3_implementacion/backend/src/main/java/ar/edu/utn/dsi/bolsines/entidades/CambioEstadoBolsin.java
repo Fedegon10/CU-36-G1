@@ -36,12 +36,12 @@ public class CambioEstadoBolsin {
         this.responsable = responsable;
     }
 
-    // [Fig. 3 · 12] Es el cambio de estado actual si no tiene fecha de fin
+    // Es el cambio de estado actual si no tiene fecha de fin
     public boolean esActual() {
         return fechaHoraFin == null;
     }
 
-    // [Fig. 3 · 13] Consulta a su estado si es Enviado (Fig. 3 · 14)
+    // Consulta a su estado si es Enviado
     public boolean esEnviado() {
         return estado.esEnviado();
     }

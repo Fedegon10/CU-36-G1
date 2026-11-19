@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 // <<control>> GestorConsultarSeguimientoBolsines - CU 36 Consultar seguimiento de bolsines
-// Los comentarios [Fig. 3 · N] indican el mensaje N del diagrama de secuencia del flujo básico (Figura 3).
-// Los comentarios [Fig. 2 · N] indican el mensaje N del diagrama de secuencia del patrón Adapter (Figura 2).
 @Service
 public class GestorConsultarSeguimientoBolsines {
 
@@ -63,14 +61,14 @@ public class GestorConsultarSeguimientoBolsines {
     }
 
     // =====================================================================
-    // [Fig. 3 · 3] consultarUbicacionBolsines() - Pasos 2 a 6 del CU
+    // consultarUbicacionBolsines() - Pasos 2 a 6 del CU
     // (synchronized: evita que dos consultas al mismo tiempo mezclen los datos)
     // =====================================================================
     public synchronized MapaBolsinesDTO consultarUbicacionBolsines() {
-        // [Fig. 3 · 4] Paso 2: busca la CM del usuario logueado
+        // Paso 2: busca la CM del usuario logueado
         comisionMedicaUsuario = buscarCM();
 
-        // [Fig. 3 · 10] Paso 3: busca los bolsines Enviados cuya CM origen es la del usuario
+        // Paso 3: busca los bolsines Enviados cuya CM origen es la del usuario
         buscarBolsinesEnviados();
 
         // A1: no se encuentran bolsines en estado Enviado
@@ -79,16 +77,16 @@ public class GestorConsultarSeguimientoBolsines {
                     "No se encontraron bolsines en estado Enviado para " + nombreCMUsuario + ".");
         }
 
-        // [Fig. 3 · 18] Pasos 4 y 5: pide la ubicación de cada bolsín al GPS Tracker (patrón Adapter)
+        // Pasos 4 y 5: pide la ubicación de cada bolsín al GPS Tracker (patrón Adapter)
         obtenerUbicacionBolsines();
 
-        // [Fig. 3 · 21] Paso 6: arma los datos del mapa  /  [Fig. 3 · 24] los devuelve a la pantalla
+        // Paso 6: arma los datos del mapa y los devuelve a la pantalla
         return armarMapaDePosicionDeBolsines();
     }
 
-    // [Fig. 3 · 4] buscarCM(): Sesion -> Usuario -> Empleado -> ComisionMedica
+    // buscarCM(): Sesion -> Usuario -> Empleado -> ComisionMedica
     private ComisionMedica buscarCM() {
-        // [Fig. 3 · 5] busca la sesión activa
+        // busca la sesión activa
         Sesion sesionActiva = null;
         for (Sesion sesion : sesionRepository.findAll()) {
             if (sesion.estaActiva()) {
@@ -99,10 +97,10 @@ public class GestorConsultarSeguimientoBolsines {
             throw new FlujoAlternativoException("SESION", "No hay un usuario logueado.");
         }
 
-        // [Fig. 3 · 6] obtiene el usuario de la sesión
+        // obtiene el usuario de la sesión
         Usuario usuarioLogueado = sesionActiva.getUsuario();
 
-        // [Fig. 3 · 7] busca el empleado de ese usuario
+        // busca el empleado de ese usuario
         Empleado empleadoLogueado = null;
         for (Empleado empleado : empleadoRepository.findAll()) {
             if (empleado.esTuUsuario(usuarioLogueado)) {
@@ -113,40 +111,40 @@ public class GestorConsultarSeguimientoBolsines {
             throw new FlujoAlternativoException("SESION", "El usuario logueado no tiene un empleado asociado.");
         }
 
-        // [Fig. 3 · 8] obtiene la CM del empleado
+        // obtiene la CM del empleado
         ComisionMedica cm = empleadoLogueado.getCM();
 
-        // [Fig. 3 · 9] obtiene el código y el nombre de la CM (se muestran en pantalla)
+        // obtiene el código y el nombre de la CM (se muestran en pantalla)
         codigoCMUsuario = cm.getCodigo();
         nombreCMUsuario = cm.getNombre();
         return cm;
     }
 
-    // [Fig. 3 · 10] buscarBolsinesEnviados()
+    // buscarBolsinesEnviados()
     private void buscarBolsinesEnviados() {
         bolsinesEnviados = new ArrayList<>();
         for (Bolsin bolsin : bolsinRepository.findAll()) {
-            // [Fig. 3 · 11] ¿está Enviado?  y  [Fig. 3 · 16] ¿su CM origen es la del usuario?
+            // ¿está Enviado? y ¿su CM origen es la del usuario?
             if (bolsin.esEnviado() && bolsin.esTuCMOrigen(comisionMedicaUsuario)) {
                 bolsinesEnviados.add(bolsin);
             }
         }
     }
 
-    // [Fig. 3 · 18] = [Fig. 2 · 1] obtenerUbicacionBolsines(): parte rediseñada con el patrón Adapter
+    // obtenerUbicacionBolsines(): parte rediseñada con el patrón Adapter
     private void obtenerUbicacionBolsines() {
         ubicacionesBolsines = new HashMap<>();
         bolsinesSinUbicacion = new ArrayList<>();
 
         for (Bolsin bolsin : bolsinesEnviados) {
-            // [Fig. 3 · 19] datos del bolsín que necesita el GPS Tracker
-            int numeroBolsin = bolsin.getNumeroBolsin();              // [Fig. 2 · 2]
-            String codigoCMOrigen = bolsin.getCodigoCMOrigen();       // [Fig. 2 · 3-4]
-            String codigoCMDestino = bolsin.getCodigoCMDestino();     // [Fig. 2 · 5-6]
-            String modeloGPSTracker = bolsin.getModeloGPSTracker();   // [Fig. 2 · 7]
+            // datos del bolsín que necesita el GPS Tracker
+            int numeroBolsin = bolsin.getNumeroBolsin();
+            String codigoCMOrigen = bolsin.getCodigoCMOrigen();
+            String codigoCMDestino = bolsin.getCodigoCMDestino();
+            String modeloGPSTracker = bolsin.getModeloGPSTracker();
 
             try {
-                // [Fig. 3 · 20] = [Fig. 2 · 8] Paso 4: solicita la ubicación  /  [Fig. 2 · 19] Paso 5: la recibe
+                // Pasos 4 y 5: solicita la ubicación y la recibe
                 UbicacionBolsin ubicacion = interfazGPSTracker.solicitarUbicacionBolsin(
                         numeroBolsin, codigoCMOrigen, codigoCMDestino, modeloGPSTracker);
                 ubicacionesBolsines.put(numeroBolsin, ubicacion);
@@ -158,7 +156,7 @@ public class GestorConsultarSeguimientoBolsines {
         }
     }
 
-    // [Fig. 3 · 21] armarMapaDePosicionDeBolsines() - Paso 6
+    // armarMapaDePosicionDeBolsines() - Paso 6
     private MapaBolsinesDTO armarMapaDePosicionDeBolsines() {
         bolsinesEnMapa = new HashMap<>();
         List<BolsinEnMapaDTO> listaMapa = new ArrayList<>();
@@ -170,7 +168,7 @@ public class GestorConsultarSeguimientoBolsines {
                 continue; // A3: sin ubicación, no va al mapa
             }
 
-            // [Fig. 3 · 22] datos del bolsín  y  [Fig. 3 · 23] datos de su ubicación
+            // datos del bolsín y datos de su ubicación
             BolsinEnMapaDTO datos = new BolsinEnMapaDTO(
                     bolsin.getNumeroBolsin(),
                     bolsin.getNumeroPrecinto(),
@@ -196,7 +194,7 @@ public class GestorConsultarSeguimientoBolsines {
             }
         }
 
-        // [Fig. 3 · 24] respuesta para la pantalla
+        // respuesta para la pantalla
         ComisionMedicaDTO cmUsuario = new ComisionMedicaDTO(codigoCMUsuario, nombreCMUsuario);
         return new MapaBolsinesDTO(cmUsuario, listaMapa, bolsinesSinUbicacion, comisionesDestino);
     }
@@ -230,10 +228,10 @@ public class GestorConsultarSeguimientoBolsines {
     }
 
     // =====================================================================
-    // [Fig. 3 · 27] tomarSeleccionBolsin() - Paso 7: el EB selecciona un bolsín del mapa
+    // tomarSeleccionBolsin() - Paso 7: el EB selecciona un bolsín del mapa
     // =====================================================================
     public BolsinEnMapaDTO tomarSeleccionBolsin(int numeroBolsin) {
-        // [Fig. 3 · 28] busca el bolsín seleccionado
+        // busca el bolsín seleccionado
         bolsinSeleccionado = null;
         for (Bolsin bolsin : bolsinesEnviados) {
             if (bolsin.esTuNumeroBolsin(numeroBolsin)) {
@@ -244,12 +242,12 @@ public class GestorConsultarSeguimientoBolsines {
             throw new FlujoAlternativoException("SELECCION", "El bolsín seleccionado no está en el mapa.");
         }
 
-        // [Fig. 3 · 29] devuelve los datos del bolsín (Paso 8: la pantalla pregunta si enviar el correo)
+        // devuelve los datos del bolsín (Paso 8: la pantalla pregunta si enviar el correo)
         return bolsinesEnMapa.get(numeroBolsin);
     }
 
     // =====================================================================
-    // [Fig. 3 · 32] tomarConfirmacionDeMail() - Paso 9: el EB confirma (o no) el envío del correo
+    // tomarConfirmacionDeMail() - Paso 9: el EB confirma (o no) el envío del correo
     // =====================================================================
     public MailEnviadoDTO tomarConfirmacionDeMail(boolean confirma) {
         if (bolsinSeleccionado == null) {
@@ -262,29 +260,29 @@ public class GestorConsultarSeguimientoBolsines {
             return null;
         }
 
-        // [Fig. 3 · 33] Paso 10: busca el Gerente de la CM destino
+        // Paso 10: busca el Gerente de la CM destino
         Empleado gerente = buscarMailDeGerenteCMDestino();
 
-        // [Fig. 3 · 38] obtiene su mail y su nombre
+        // obtiene su mail y su nombre
         String mailGerente = gerente.getEmail();
         String nombreGerente = gerente.getNombreCompleto();
 
-        // [Fig. 3 · 39] Paso 11: incluye el CU "Notificar ubicación de bolsín"
+        // Paso 11: incluye el CU "Notificar ubicación de bolsín"
         MailEnviadoDTO mail = llamarCUNotificarUbicacion(mailGerente, nombreGerente);
 
-        // [Fig. 3 · 44] fin del caso de uso
+        // fin del caso de uso
         finCU();
 
-        // [Fig. 3 · 45] devuelve el correo enviado a la pantalla
+        // devuelve el correo enviado a la pantalla
         return mail;
     }
 
-    // [Fig. 3 · 33] buscarMailDeGerenteCMDestino()
+    // buscarMailDeGerenteCMDestino()
     private Empleado buscarMailDeGerenteCMDestino() {
-        // [Fig. 3 · 34] CM destino del bolsín seleccionado
+        // CM destino del bolsín seleccionado
         ComisionMedica cmDestino = bolsinSeleccionado.getDestino();
 
-        // [Fig. 3 · 35] busca el empleado que es Gerente de esa CM
+        // busca el empleado que es Gerente de esa CM
         Empleado gerente = null;
         for (Empleado empleado : empleadoRepository.findAll()) {
             if (empleado.sosGCMDeCM(cmDestino)) {
@@ -297,18 +295,18 @@ public class GestorConsultarSeguimientoBolsines {
         return gerente;
     }
 
-    // [Fig. 3 · 39] llamarCUNotificarUbicacion()
+    // llamarCUNotificarUbicacion()
     private MailEnviadoDTO llamarCUNotificarUbicacion(String mailGerente, String nombreGerente) {
-        // [Fig. 3 · 40] número del bolsín seleccionado
+        // número del bolsín seleccionado
         int numeroBolsin = bolsinSeleccionado.getNumeroBolsin();
 
-        // [Fig. 3 · 41] fecha y hora de la última actualización y coordenadas
+        // fecha y hora de la última actualización y coordenadas
         UbicacionBolsin ubicacion = ubicacionesBolsines.get(numeroBolsin);
         LocalDateTime fechaHora = ubicacion.getFechaHoraUltimaActualizacion();
         double latitud = ubicacion.getLatitud();
         double longitud = ubicacion.getLongitud();
 
-        // [Fig. 3 · 42] CU incluido Notificar ubicación de bolsín  /  [Fig. 3 · 43] devuelve el correo enviado
+        // llama al CU incluido Notificar ubicación de bolsín, que devuelve el correo enviado
         return gestorNotificarUbicacionBolsin.notificarUbicacion(
                 mailGerente, nombreGerente, numeroBolsin, fechaHora, latitud, longitud);
     }
@@ -318,7 +316,7 @@ public class GestorConsultarSeguimientoBolsines {
         finCU();
     }
 
-    // [Fig. 3 · 44] finCU(): limpia los datos del caso de uso
+    // finCU(): limpia los datos del caso de uso
     private void finCU() {
         comisionMedicaUsuario = null;
         codigoCMUsuario = null;

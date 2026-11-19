@@ -9,12 +9,12 @@ public class ServicioGPSTrackerXTR4500L {
 
     private final RestClient restClient;
 
-    // [Fig. 2 · 10] lo crea InterfazGPSTracker en crearAdaptador()
+    // lo crea InterfazGPSTracker en crearAdaptador()
     public ServicioGPSTrackerXTR4500L(RestClient restClient) {
         this.restClient = restClient;
     }
 
-    // [Fig. 2 · 14] operación original del GPS Tracker  /  [Fig. 2 · 15] devuelve la respuesta en su formato
+    // operación original del GPS Tracker: devuelve la respuesta en su formato
     public String getBolsinLocation(String apiKey, int numeroBolsin, String codigoCMOrigen) {
         return restClient.get()
                 .uri("/api/xtr-4500l/getBolsinLocation?numeroBolsin={nro}&codigoComisionMedicaOrigen={cm}",

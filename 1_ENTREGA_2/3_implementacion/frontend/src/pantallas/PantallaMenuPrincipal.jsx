@@ -24,7 +24,7 @@ export default function PantallaMenuPrincipal({ sesion, alElegirOpcion }) {
             <Card variant="outlined" sx={{ height: '100%', opacity: opcion.habilitada ? 1 : 0.55 }}>
               <CardActionArea
                 disabled={!opcion.habilitada}
-                onClick={() => alElegirOpcion(opcion.id)} /* [Fig. 3 · 1] selecOpcionConsultarUbicacionBolsines() */
+                onClick={() => alElegirOpcion(opcion.id)} /* selecOpcionConsultarUbicacionBolsines() */
                 sx={{ height: '100%', p: 1 }}
               >
                 <CardContent sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>

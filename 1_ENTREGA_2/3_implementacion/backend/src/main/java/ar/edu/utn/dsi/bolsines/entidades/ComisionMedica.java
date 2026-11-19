@@ -26,17 +26,15 @@ public class ComisionMedica {
         this.telefono = telefono;
     }
 
-    // [Fig. 3 · 17 y 37] Indica si es la misma CM que la recibida
+    // Indica si es la misma CM que la recibida
     public boolean esMiCM(ComisionMedica otra) {
         return otra != null && codigo.equals(otra.getCodigo());
     }
 
-    // [Fig. 2 · 4 y 6] [Fig. 3 · 9]
     public String getCodigo() {
         return codigo;
     }
 
-    // [Fig. 3 · 9]
     public String getNombre() {
         return nombre;
     }

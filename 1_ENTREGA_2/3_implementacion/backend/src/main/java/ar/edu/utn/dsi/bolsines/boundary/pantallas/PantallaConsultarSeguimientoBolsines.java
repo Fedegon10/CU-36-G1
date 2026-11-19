@@ -30,17 +30,16 @@ public class PantallaConsultarSeguimientoBolsines {
         this.gestor = gestor;
     }
 
-    // [Fig. 3 · 1] Paso 1: el EB selecciona la opción para consultar la ubicación de bolsines
+    // Paso 1: el EB selecciona la opción para consultar la ubicación de bolsines
     @PostMapping("/iniciar")
     public MapaBolsinesDTO selecOpcionConsultarUbicacionBolsines() {
-        // [Fig. 3 · 2]
         return habilitarPantalla();
     }
 
-    // [Fig. 3 · 2] habilitarPantalla()
+    // habilitarPantalla()
     private MapaBolsinesDTO habilitarPantalla() {
-        // [Fig. 3 · 3] pide al gestor la CM, los bolsines enviados y sus ubicaciones
-        // [Fig. 3 · 24] recibe los datos del mapa
+        // pide al gestor la CM, los bolsines enviados y sus ubicaciones
+        // recibe los datos del mapa
         return gestor.consultarUbicacionBolsines();
     }
 
@@ -50,18 +49,18 @@ public class PantallaConsultarSeguimientoBolsines {
         return gestor.tomarFiltro(filtro.numeroPrecinto(), filtro.codigoCMDestino());
     }
 
-    // [Fig. 3 · 26] Paso 7: el EB selecciona un bolsín del mapa
+    // Paso 7: el EB selecciona un bolsín del mapa
     @PostMapping("/seleccionar-bolsin")
     public BolsinEnMapaDTO selecBolsin(@RequestBody SeleccionBolsinRequest seleccion) {
-        // [Fig. 3 · 27] avisa al gestor  /  [Fig. 3 · 29] recibe los datos del bolsín
-        // (Paso 8 - [Fig. 3 · 30] la pantalla pide la confirmación del envío del correo)
+        // avisa al gestor y recibe los datos del bolsín
+        // (Paso 8: la pantalla pide la confirmación del envío del correo)
         return gestor.tomarSeleccionBolsin(seleccion.numeroBolsin());
     }
 
-    // [Fig. 3 · 31] Paso 9: el EB confirma (o no) el envío del correo
+    // Paso 9: el EB confirma (o no) el envío del correo
     @PostMapping("/confirmar-mail")
     public ResponseEntity<?> confirmarEnvioMail(@RequestBody ConfirmacionMailRequest confirmacion) {
-        // [Fig. 3 · 32] avisa al gestor  /  [Fig. 3 · 45] recibe el correo enviado
+        // avisa al gestor y recibe el correo enviado
         MailEnviadoDTO mail = gestor.tomarConfirmacionDeMail(confirmacion.confirma());
 
         // A5: el EB no selecciona la opción para enviar el correo

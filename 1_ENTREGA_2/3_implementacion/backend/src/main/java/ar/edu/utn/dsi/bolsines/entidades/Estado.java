@@ -29,12 +29,12 @@ public class Estado {
         this.descripcion = descripcion;
     }
 
-    // [Fig. 3 · 15] Indica si el estado pertenece al ámbito Bolsín
+    // Indica si el estado pertenece al ámbito Bolsín
     public boolean esAmbitoBolsin() {
         return AMBITO_BOLSIN.equals(ambito);
     }
 
-    // [Fig. 3 · 14] Indica si es el estado Enviado de un bolsín
+    // Indica si es el estado Enviado de un bolsín
     public boolean esEnviado() {
         return esAmbitoBolsin() && ENVIADO.equals(nombre);
     }

@@ -11,7 +11,7 @@ public class UbicacionBolsin {
     private final double longitud;
     private final LocalDateTime fechaHoraUltimaActualizacion;
 
-    // [Fig. 2 · 17] la crea el adaptador concreto
+    // la crea el adaptador concreto
     public UbicacionBolsin(int numeroBolsin, double latitud, double longitud,
                            LocalDateTime fechaHoraUltimaActualizacion) {
         this.numeroBolsin = numeroBolsin;
@@ -24,17 +24,14 @@ public class UbicacionBolsin {
         return numeroBolsin;
     }
 
-    // [Fig. 3 · 23 y 41]
     public double getLatitud() {
         return latitud;
     }
 
-    // [Fig. 3 · 23 y 41]
     public double getLongitud() {
         return longitud;
     }
 
-    // [Fig. 3 · 23 y 41]
     public LocalDateTime getFechaHoraUltimaActualizacion() {
         return fechaHoraUltimaActualizacion;
     }

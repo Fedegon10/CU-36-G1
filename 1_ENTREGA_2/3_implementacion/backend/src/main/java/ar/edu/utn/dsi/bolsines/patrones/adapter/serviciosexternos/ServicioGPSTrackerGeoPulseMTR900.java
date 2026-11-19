@@ -9,12 +9,12 @@ public class ServicioGPSTrackerGeoPulseMTR900 {
 
     private final RestClient restClient;
 
-    // [Fig. 2 · 10] lo crea InterfazGPSTracker en crearAdaptador()
+    // lo crea InterfazGPSTracker en crearAdaptador()
     public ServicioGPSTrackerGeoPulseMTR900(RestClient restClient) {
         this.restClient = restClient;
     }
 
-    // [Fig. 2 · 14] operación original del GPS Tracker  /  [Fig. 2 · 15] devuelve la respuesta en su formato
+    // operación original del GPS Tracker: devuelve la respuesta en su formato
     public Object[][] fetchCargoPositions(String apiKey, int numeroBolsin) {
         return restClient.get()
                 .uri("/api/geopulse-mtr-900/fetchCargoPositions?numeroBolsin={nro}", numeroBolsin)

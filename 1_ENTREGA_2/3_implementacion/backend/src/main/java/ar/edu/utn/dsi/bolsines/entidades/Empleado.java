@@ -43,28 +43,25 @@ public class Empleado {
         this.usuario = usuario;
     }
 
-    // [Fig. 3 · 7] Indica si el empleado corresponde al usuario recibido
+    // Indica si el empleado corresponde al usuario recibido
     public boolean esTuUsuario(Usuario otroUsuario) {
         return usuario != null && usuario.getNombre().equals(otroUsuario.getNombre());
     }
 
-    // [Fig. 3 · 35] Indica si el empleado es Gerente de la CM recibida
+    // Indica si el empleado es Gerente de la CM recibida
     public boolean sosGCMDeCM(ComisionMedica comisionMedica) {
-        // [Fig. 3 · 36] le pregunta a su Rol y [Fig. 3 · 37] a su CM
+        // le pregunta a su Rol y a su CM
         return rol.esGCM() && asignadaA.esMiCM(comisionMedica);
     }
 
-    // [Fig. 3 · 8]
     public ComisionMedica getCM() {
         return asignadaA;
     }
 
-    // [Fig. 3 · 38]
     public String getEmail() {
         return email;
     }
 
-    // [Fig. 3 · 38]
     public String getNombreCompleto() {
         return nombre + " " + apellido;
     }

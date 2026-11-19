@@ -30,12 +30,12 @@ export const cerrarSesion = () => post('/api/sesion/cerrar')
 // ---------- CU 36 Consultar seguimiento de bolsines ----------
 const CU36 = '/api/seguimiento-bolsines'
 
-// [Fig. 3 · 1-3] PantallaConsultarSeguimientoBolsines.selecOpcionConsultarUbicacionBolsines() en el backend
+// PantallaConsultarSeguimientoBolsines.selecOpcionConsultarUbicacionBolsines() en el backend
 export const consultarUbicacionBolsines = () => post(`${CU36}/iniciar`)
 export const tomarFiltro = (numeroPrecinto, codigoCMDestino) =>
   post(`${CU36}/filtrar`, { numeroPrecinto, codigoCMDestino })
-// [Fig. 3 · 26-27] selecBolsin() en el backend
+// selecBolsin() en el backend
 export const tomarSeleccionBolsin = (numeroBolsin) => post(`${CU36}/seleccionar-bolsin`, { numeroBolsin })
-// [Fig. 3 · 31-32] confirmarEnvioMail() en el backend
+// confirmarEnvioMail() en el backend
 export const tomarConfirmacionDeMail = (confirma) => post(`${CU36}/confirmar-mail`, { confirma })
 export const cancelarCU = () => post(`${CU36}/cancelar`)

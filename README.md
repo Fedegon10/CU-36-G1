@@ -69,6 +69,22 @@ npm install
 npm run dev
 ```
 
+Si se abre directamente la carpeta `3_implementacion`, una terminal por cada parte:
+
+```bash
+cd api-gps-tracker
+./mvnw spring-boot:run
+```
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
 Abrir **http://localhost:5173** y entrar con el usuario `eb.cordoba` (contraseña `1234`).
 Los comandos para Windows y el guion de la demo están en [`2_GUIAS_DEL_GRUPO/GUIA_DEFENSA.md`](2_GUIAS_DEL_GRUPO/GUIA_DEFENSA.md).
 

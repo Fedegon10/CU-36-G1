@@ -31,7 +31,7 @@ public class Sesion {
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    // [Fig. 3 · 5] La sesión está activa si no tiene fecha de fin
+    // La sesión está activa si no tiene fecha de fin
     public boolean estaActiva() {
         return fechaHoraFin == null;
     }
@@ -40,7 +40,6 @@ public class Sesion {
         this.fechaHoraFin = fechaHora;
     }
 
-    // [Fig. 3 · 6]
     public Usuario getUsuario() {
         return usuario;
     }

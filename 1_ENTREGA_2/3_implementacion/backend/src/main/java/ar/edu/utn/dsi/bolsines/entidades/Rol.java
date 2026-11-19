@@ -27,7 +27,7 @@ public class Rol {
         this.descripcion = descripcion;
     }
 
-    // [Fig. 3 · 36] Indica si el rol es Gerente de Comisión Médica
+    // Indica si el rol es Gerente de Comisión Médica
     public boolean esGCM() {
         return GERENTE_CM.equals(nombre);
     }

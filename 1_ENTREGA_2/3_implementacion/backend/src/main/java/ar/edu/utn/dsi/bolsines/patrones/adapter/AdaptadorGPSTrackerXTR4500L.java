@@ -20,19 +20,19 @@ public class AdaptadorGPSTrackerXTR4500L implements IAdaptadorGPSTracker {
         this.servicio = servicio;
     }
 
-    // [Fig. 2 · 12] método polimórfico definido en IAdaptadorGPSTracker
+    // método polimórfico definido en IAdaptadorGPSTracker
     @Override
     public UbicacionBolsin obtenerUbicacion(int numeroBolsin, String codigoCMOrigen, String codigoCMDestino) {
-        // [Fig. 2 · 13] pide los datos al servicio externo
+        // pide los datos al servicio externo
         String respuesta = solicitarUbicacion(numeroBolsin, codigoCMOrigen);
-        // [Fig. 2 · 16] los traduce al formato común (UbicacionBolsin)
+        // los traduce al formato común (UbicacionBolsin)
         return adaptarUbicacion(respuesta);
     }
 
-    // [Fig. 2 · 13] Llama al servicio externo (este modelo usa la CM de origen)
+    // Llama al servicio externo (este modelo usa la CM de origen)
     private String solicitarUbicacion(int numeroBolsin, String codigoCMOrigen) {
         try {
-            // [Fig. 2 · 14] llamada al servicio externo  /  [Fig. 2 · 15] respuesta en su formato
+            // llama al servicio externo y recibe la respuesta en su formato
             return servicio.getBolsinLocation(claveAPI, numeroBolsin, codigoCMOrigen);
         } catch (RestClientException e) {
             // A3: el GPS Tracker no pudo informar la ubicación del bolsín
@@ -40,7 +40,7 @@ public class AdaptadorGPSTrackerXTR4500L implements IAdaptadorGPSTracker {
         }
     }
 
-    // [Fig. 2 · 16] Lee el JSON: { "items": [ { numeroBolsin, latitud, longitud, fechaHoraUltimaActualizacion } ] }
+    // Lee el JSON: { "items": [ { numeroBolsin, latitud, longitud, fechaHoraUltimaActualizacion } ] }
     private UbicacionBolsin adaptarUbicacion(String json) {
         try {
             JsonNode item = new ObjectMapper().readTree(json).get("items").get(0);
@@ -50,7 +50,7 @@ public class AdaptadorGPSTrackerXTR4500L implements IAdaptadorGPSTracker {
             double longitud = item.get("longitud").asDouble();
             LocalDateTime fechaHora = LocalDateTime.parse(item.get("fechaHoraUltimaActualizacion").asText());
 
-            // [Fig. 2 · 17] crea el objeto en el formato común
+            // crea el objeto en el formato común
             return new UbicacionBolsin(numero, latitud, longitud, fechaHora);
         } catch (Exception e) {
             throw new GPSTrackerException("Respuesta inválida del XTR-4500L");

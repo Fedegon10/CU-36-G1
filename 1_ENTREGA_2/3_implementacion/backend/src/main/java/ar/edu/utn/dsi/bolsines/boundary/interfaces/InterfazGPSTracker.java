@@ -15,7 +15,6 @@ import org.springframework.web.client.RestClient;
 
 // <<boundary>> InterfazGPSTracker
 // PATRÓN ADAPTER - Cliente: usa siempre IAdaptadorGPSTracker, sin conocer el formato de cada modelo.
-// Los comentarios [Fig. 2 · N] indican el mensaje N del diagrama de secuencia del patrón (Figura 2).
 @Component
 public class InterfazGPSTracker {
 
@@ -39,21 +38,21 @@ public class InterfazGPSTracker {
         this.restClient = RestClient.builder().baseUrl(urlGPSTracker).build();
     }
 
-    // [Fig. 2 · 8] Solicita la ubicación de un bolsín al GPS Tracker que corresponde a su modelo
+    // Solicita la ubicación de un bolsín al GPS Tracker que corresponde a su modelo
     public UbicacionBolsin solicitarUbicacionBolsin(int numeroBolsin, String codigoCMOrigen,
                                                     String codigoCMDestino, String modeloGPSTracker) {
-        // [Fig. 2 · 9] crea el adaptador concreto
+        // crea el adaptador concreto
         IAdaptadorGPSTracker adaptador = crearAdaptador(modeloGPSTracker);
 
-        // [Fig. 2 · 12] método polimórfico  /  [Fig. 2 · 18] recibe UbicacionBolsin  /  [Fig. 2 · 19] la devuelve al gestor
+        // llama al método polimórfico, recibe UbicacionBolsin y la devuelve al gestor
         return adaptador.obtenerUbicacion(numeroBolsin, codigoCMOrigen, codigoCMDestino);
     }
 
-    // [Fig. 2 · 9] Crea el adaptador concreto según el modelo de GPS Tracker
+    // Crea el adaptador concreto según el modelo de GPS Tracker
     private IAdaptadorGPSTracker crearAdaptador(String modeloGPSTracker) {
         if (MODELO_XTR_4500L.equals(modeloGPSTracker)) {
-            ServicioGPSTrackerXTR4500L servicio = new ServicioGPSTrackerXTR4500L(restClient);   // [Fig. 2 · 10]
-            return new AdaptadorGPSTrackerXTR4500L(claveAPIXtr, servicio);                     // [Fig. 2 · 11]
+            ServicioGPSTrackerXTR4500L servicio = new ServicioGPSTrackerXTR4500L(restClient);
+            return new AdaptadorGPSTrackerXTR4500L(claveAPIXtr, servicio);
         }
         if (MODELO_NAVTRACK_QX_7A.equals(modeloGPSTracker)) {
             ServicioGPSTrackerNavTrackQX7A servicio = new ServicioGPSTrackerNavTrackQX7A(restClient);

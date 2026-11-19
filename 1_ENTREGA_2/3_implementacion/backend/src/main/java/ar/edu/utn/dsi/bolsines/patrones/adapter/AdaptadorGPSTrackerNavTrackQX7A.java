@@ -18,19 +18,19 @@ public class AdaptadorGPSTrackerNavTrackQX7A implements IAdaptadorGPSTracker {
         this.servicio = servicio;
     }
 
-    // [Fig. 2 · 12] método polimórfico definido en IAdaptadorGPSTracker (misma secuencia que el XTR-4500L)
+    // método polimórfico definido en IAdaptadorGPSTracker (misma secuencia que el XTR-4500L)
     @Override
     public UbicacionBolsin obtenerUbicacion(int numeroBolsin, String codigoCMOrigen, String codigoCMDestino) {
-        // [Fig. 2 · 13] pide los datos al servicio externo
+        // pide los datos al servicio externo
         String respuesta = solicitarUbicacion(numeroBolsin, codigoCMDestino);
-        // [Fig. 2 · 16] los traduce al formato común (UbicacionBolsin)
+        // los traduce al formato común (UbicacionBolsin)
         return adaptarUbicacion(respuesta);
     }
 
-    // [Fig. 2 · 13] Llama al servicio externo (este modelo usa la CM de destino)
+    // Llama al servicio externo (este modelo usa la CM de destino)
     private String solicitarUbicacion(int numeroBolsin, String codigoCMDestino) {
         try {
-            // [Fig. 2 · 14] llamada al servicio externo  /  [Fig. 2 · 15] respuesta en su formato
+            // llama al servicio externo y recibe la respuesta en su formato
             return servicio.retrieveTrackingData(claveAPI, numeroBolsin, codigoCMDestino);
         } catch (RestClientException e) {
             // A3: el GPS Tracker no pudo informar la ubicación del bolsín
@@ -38,7 +38,7 @@ public class AdaptadorGPSTrackerNavTrackQX7A implements IAdaptadorGPSTracker {
         }
     }
 
-    // [Fig. 2 · 16] Lee el texto: "numeroBolsin,latitud,longitud,fechaHora"
+    // Lee el texto: "numeroBolsin,latitud,longitud,fechaHora"
     private UbicacionBolsin adaptarUbicacion(String texto) {
         try {
             String[] datos = texto.trim().split(",");
@@ -48,7 +48,7 @@ public class AdaptadorGPSTrackerNavTrackQX7A implements IAdaptadorGPSTracker {
             double longitud = Double.parseDouble(datos[2]);
             LocalDateTime fechaHora = LocalDateTime.parse(datos[3]);
 
-            // [Fig. 2 · 17] crea el objeto en el formato común
+            // crea el objeto en el formato común
             return new UbicacionBolsin(numero, latitud, longitud, fechaHora);
         } catch (Exception e) {
             throw new GPSTrackerException("Respuesta inválida del NavTrack QX-7A");
