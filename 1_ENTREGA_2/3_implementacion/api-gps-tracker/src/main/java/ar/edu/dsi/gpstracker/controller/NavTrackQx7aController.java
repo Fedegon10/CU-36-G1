@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+// API del GPS Tracker modelo NavTrack QX-7A (de la cátedra)
+// La llama ServicioGPSTrackerNavTrackQX7A del backend
 @RestController
 @RequestMapping("/api/navtrack-qx-7a")
 public class NavTrackQx7aController {
@@ -21,13 +23,17 @@ public class NavTrackQx7aController {
         this.bolsinService = bolsinService;
     }
 
+    // retrieveTrackingData(): devuelve la ubicación del bolsín como texto separado por comas
+    // Recibe: API Key, número de bolsín y código de CM destino
     @GetMapping(value = "/retrieveTrackingData", produces = MediaType.TEXT_PLAIN_VALUE)
     public String retrieveTrackingData(
             @RequestHeader("X-API-Key") String apiKey,
             @RequestParam Integer numeroBolsin,
             @RequestParam String codigoComisionMedicaDestino
     ) {
+        // valida la API Key del modelo
         apiKeyService.validateForNavTrackQx7a(apiKey);
+        // busca el bolsín y arma la respuesta
         return bolsinService.getNavTrackData(numeroBolsin, codigoComisionMedicaDestino);
     }
 }

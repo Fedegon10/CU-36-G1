@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public record BolsinEnMapaDTO(
         int numeroBolsin,
         Integer numeroPrecinto,
+        String nombreCMOrigen,
         String codigoCMDestino,
         String nombreCMDestino,
         String modeloGPSTracker,

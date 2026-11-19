@@ -12,6 +12,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class ManejadorErrores {
 
+    // flujoAlternativo(): devuelve el código del flujo (A1, A2...) y su mensaje
     @ExceptionHandler(FlujoAlternativoException.class)
     public ResponseEntity<Map<String, String>> flujoAlternativo(FlujoAlternativoException e) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)

@@ -29,7 +29,8 @@ export default function ListaBolsines({ bolsines, enfocado, alEnfocar, alSelecci
                 <Box sx={{ flexGrow: 1 }} />
                 <Chip size="small" label={b.modeloGPSTracker} variant="outlined" />
               </Stack>
-              <Typography variant="body2" sx={{ mt: 0.5 }}>Destino: {b.nombreCMDestino}</Typography>
+              <Typography variant="body2" sx={{ mt: 0.5 }}>Origen: {b.nombreCMOrigen}</Typography>
+              <Typography variant="body2">Destino: {b.nombreCMDestino}</Typography>
               <Typography variant="body2" color="text.secondary">
                 Precinto {b.numeroPrecinto} · Act. {formatearFechaHora(b.fechaHoraUltimaActualizacion)}
               </Typography>

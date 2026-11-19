@@ -12,6 +12,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.time.LocalDateTime;
 
+// Convierte cada error en una respuesta con código HTTP y mensaje
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -46,6 +47,7 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_INTERNO", "Ocurrio un error interno inesperado.");
     }
 
+    // Arma la respuesta de error
     private ResponseEntity<ErrorResponseDto> build(HttpStatus status, String errorCode, String message) {
         ErrorResponseDto body = new ErrorResponseDto(
                 errorCode,

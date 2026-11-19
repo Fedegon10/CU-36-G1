@@ -24,11 +24,13 @@ public class PantallaIniciarSesion {
         this.gestorSesion = gestorSesion;
     }
 
+    // iniciarSesion(): valida usuario y contraseña y abre la sesión
     @PostMapping("/iniciar")
     public SesionDTO iniciarSesion(@RequestBody LoginRequest login) {
         return gestorSesion.iniciarSesion(login.nombreUsuario(), login.password());
     }
 
+    // cerrarSesion(): cierra la sesión activa
     @PostMapping("/cerrar")
     public Map<String, String> cerrarSesion() {
         gestorSesion.cerrarSesion();
@@ -45,6 +47,7 @@ public class PantallaIniciarSesion {
         return ResponseEntity.ok(sesion);
     }
 
+    // usuarios(): lista los usuarios de prueba para la pantalla de inicio de sesión
     @GetMapping("/usuarios")
     public List<SesionDTO> usuarios() {
         return gestorSesion.listarUsuarios();

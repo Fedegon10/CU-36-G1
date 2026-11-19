@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Busca los bolsines y arma la respuesta en el formato de cada modelo de GPS
 @Service
 public class BolsinService {
 
@@ -19,17 +20,21 @@ public class BolsinService {
         this.bolsinRepository = bolsinRepository;
     }
 
+    // Devuelve todos los bolsines cargados
     public List<Bolsin> getAll() {
         return bolsinRepository.findAll();
     }
 
+    // Busca un bolsín por su número (si no existe lanza BolsinNotFoundException)
     public Bolsin getByNumeroBolsin(Integer numeroBolsin) {
         return bolsinRepository.findByNumeroBolsin(numeroBolsin)
                 .orElseThrow(() -> new BolsinNotFoundException(numeroBolsin));
     }
 
+    // Respuesta del XTR-4500L: JSON { "items": [ { numeroBolsin, latitud, longitud, fechaHoraUltimaActualizacion } ] }
     public XtrBolsinLocationResponseDto getXtrBolsinLocation(Integer numeroBolsin, String codigoComisionMedicaOrigen) {
         Bolsin bolsin = getByNumeroBolsin(numeroBolsin);
+        // la CM origen recibida tiene que ser la del bolsín
         if (!bolsin.getCodigoComisionMedicaOrigen().equalsIgnoreCase(codigoComisionMedicaOrigen)) {
             throw new CommissionCodeMismatchException("codigoComisionMedicaOrigen no coincide con el bolsin solicitado.");
         }
@@ -43,8 +48,10 @@ public class BolsinService {
         return new XtrBolsinLocationResponseDto(List.of(item));
     }
 
+    // Respuesta del NavTrack QX-7A: texto "numeroBolsin,latitud,longitud,fechaHora"
     public String getNavTrackData(Integer numeroBolsin, String codigoComisionMedicaDestino) {
         Bolsin bolsin = getByNumeroBolsin(numeroBolsin);
+        // la CM destino recibida tiene que ser la del bolsín
         if (!bolsin.getCodigoComisionMedicaDestino().equalsIgnoreCase(codigoComisionMedicaDestino)) {
             throw new CommissionCodeMismatchException("codigoComisionMedicaDestino no coincide con el bolsin solicitado.");
         }
@@ -55,6 +62,7 @@ public class BolsinService {
                 bolsin.getFechaHoraUltimaActualizacion();
     }
 
+    // Respuesta del GeoPulse MTR-900: matriz [[numeroBolsin, latitud, longitud, fechaHora]]
     public List<List<Object>> getGeoPulsePositions(Integer numeroBolsin) {
         Bolsin bolsin = getByNumeroBolsin(numeroBolsin);
         List<Object> row = List.of(

@@ -11,6 +11,7 @@ public class InterfazServidorCorreo {
 
     private static final Logger log = LoggerFactory.getLogger(InterfazServidorCorreo.class);
 
+    // enviarMail(): muestra el correo en la consola
     public void enviarMail(String destinatario, String asunto, String cuerpo) {
         log.info("\n===== MAIL ENVIADO (simulado) =====\nPara: {}\nAsunto: {}\n{}\n===================================",
                 destinatario, asunto, cuerpo);

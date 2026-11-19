@@ -53,6 +53,7 @@ export default function MapaBolsines({ bolsines, enfocado, alSeleccionar }) {
           >
             <Popup>
               <Typography fontWeight={700}>Bolsín {b.numeroBolsin}</Typography>
+              <Typography variant="body2">Origen: {b.nombreCMOrigen}</Typography>
               <Typography variant="body2">Destino: {b.nombreCMDestino}</Typography>
               <Typography variant="body2">Precinto: {b.numeroPrecinto}</Typography>
               <Typography variant="body2">GPS: {b.modeloGPSTracker}</Typography>

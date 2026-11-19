@@ -2,6 +2,7 @@ package ar.edu.dsi.gpstracker.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+// Lee las API Keys de cada modelo desde application.properties (gps.api.keys.*)
 @ConfigurationProperties(prefix = "gps.api")
 public class GpsApiProperties {
 

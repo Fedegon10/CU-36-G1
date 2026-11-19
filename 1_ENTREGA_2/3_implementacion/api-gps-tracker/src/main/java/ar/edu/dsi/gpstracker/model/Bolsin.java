@@ -2,6 +2,7 @@ package ar.edu.dsi.gpstracker.model;
 
 import java.time.LocalDateTime;
 
+// Bolsín con su ubicación según el GPS Tracker
 public class Bolsin {
     private Integer numeroBolsin;
     private String codigoComisionMedicaOrigen;

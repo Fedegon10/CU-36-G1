@@ -79,6 +79,11 @@ public class Bolsin {
         return origen.getCodigo();
     }
 
+    // Nombre de la CM origen (se lo pide a su ComisionMedica)
+    public String getNombreCMOrigen() {
+        return origen.getNombre();
+    }
+
     // Código de la CM destino (se lo pide a su ComisionMedica)
     public String getCodigoCMDestino() {
         return destino.getCodigo();

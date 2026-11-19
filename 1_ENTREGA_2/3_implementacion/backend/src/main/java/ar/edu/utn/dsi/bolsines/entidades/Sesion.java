@@ -36,6 +36,7 @@ public class Sesion {
         return fechaHoraFin == null;
     }
 
+    // Cierra la sesión con la fecha y hora recibida
     public void cerrar(LocalDateTime fechaHora) {
         this.fechaHoraFin = fechaHora;
     }

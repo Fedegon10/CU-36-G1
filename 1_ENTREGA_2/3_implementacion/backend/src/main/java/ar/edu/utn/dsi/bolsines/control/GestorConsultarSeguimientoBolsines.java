@@ -172,6 +172,7 @@ public class GestorConsultarSeguimientoBolsines {
             BolsinEnMapaDTO datos = new BolsinEnMapaDTO(
                     bolsin.getNumeroBolsin(),
                     bolsin.getNumeroPrecinto(),
+                    bolsin.getNombreCMOrigen(),
                     bolsin.getCodigoCMDestino(),
                     bolsin.getNombreCMDestino(),
                     bolsin.getModeloGPSTracker(),

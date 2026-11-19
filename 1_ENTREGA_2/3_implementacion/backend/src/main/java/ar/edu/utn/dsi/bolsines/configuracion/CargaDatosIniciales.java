@@ -52,6 +52,7 @@ public class CargaDatosIniciales implements CommandLineRunner {
         this.bolsinRepository = bolsinRepository;
     }
 
+    // run(): carga los datos de prueba al iniciar el backend (solo la primera vez)
     @Override
     public void run(String... args) {
         if (estadoRepository.count() > 0) {
@@ -133,6 +134,7 @@ public class CargaDatosIniciales implements CommandLineRunner {
         bolsinEnviado(104, 50104, GEOPULSE, central, cordoba, ebCordoba);
     }
 
+    // Crea una comisión médica
     private ComisionMedica cm(String codigo, String nombre, String direccion) {
         String email = codigo.toLowerCase() + "@bolsines.example";
         return comisionMedicaRepository.save(new ComisionMedica(codigo, nombre, direccion, email, "0800-000-0000"));

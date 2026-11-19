@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// Bolsines cargados en memoria (la API no usa base de datos)
 @Repository
 public class InMemoryBolsinRepository {
 
     private final List<Bolsin> bolsines = new ArrayList<>();
 
+    // Carga los bolsines al iniciar la API
     @PostConstruct
     void init() {
+        // Bolsines originales de la cátedra
         bolsines.add(new Bolsin(101, "CM-CBA-01", "CM-ROS-02", -31.4201, -64.1888, LocalDateTime.of(2026, 3, 7, 12, 30, 0)));
         bolsines.add(new Bolsin(102, "CM-ROS-02", "CM-MDZ-03", -32.9468, -60.6393, LocalDateTime.of(2026, 3, 7, 12, 32, 15)));
         bolsines.add(new Bolsin(103, "CM-MDZ-03", "CM-BA-01", -32.8895, -68.8458, LocalDateTime.of(2026, 3, 7, 12, 35, 4)));
@@ -36,10 +39,12 @@ public class InMemoryBolsinRepository {
         // El bolsin 116 NO se carga a proposito: sirve para el flujo alternativo A3 (GPS sin ubicacion)
     }
 
+    // Devuelve todos los bolsines
     public List<Bolsin> findAll() {
         return List.copyOf(bolsines);
     }
 
+    // Busca un bolsín por su número
     public Optional<Bolsin> findByNumeroBolsin(Integer numeroBolsin) {
         return bolsines.stream()
                 .filter(b -> b.getNumeroBolsin().equals(numeroBolsin))

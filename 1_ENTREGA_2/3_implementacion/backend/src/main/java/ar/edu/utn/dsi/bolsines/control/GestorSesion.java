@@ -78,6 +78,7 @@ public class GestorSesion {
         return lista;
     }
 
+    // Busca el empleado que corresponde al usuario
     private Empleado buscarEmpleado(Usuario usuario) {
         for (Empleado empleado : empleadoRepository.findAll()) {
             if (empleado.esTuUsuario(usuario)) {

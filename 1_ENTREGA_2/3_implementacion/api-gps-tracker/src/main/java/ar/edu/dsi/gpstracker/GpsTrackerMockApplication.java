@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import ar.edu.dsi.gpstracker.config.GpsApiProperties;
 
+// Inicia la API simulada del GPS Tracker (puerto 8080)
 @SpringBootApplication
 @EnableConfigurationProperties(GpsApiProperties.class)
 public class GpsTrackerMockApplication {
