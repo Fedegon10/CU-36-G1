@@ -4,6 +4,7 @@ package ar.edu.utn.dsi.bolsines.dto;
 public record BolsinSinUbicacionDTO(
         int numeroBolsin,
         Integer numeroPrecinto,
+        String nombreCMOrigen,
         String nombreCMDestino,
         String modeloGPSTracker,
         String motivo) {

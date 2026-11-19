@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from '@mui/material'
+import { Alert, AlertTitle, Box, Typography } from '@mui/material'
 
 // A3: bolsines cuyo GPS Tracker no pudo informar la ubicación
 export default function AvisoBolsinesSinUbicacion({ bolsines }) {
@@ -8,9 +8,14 @@ export default function AvisoBolsinesSinUbicacion({ bolsines }) {
     <Alert severity="warning">
       <AlertTitle>Sin ubicación del GPS Tracker</AlertTitle>
       {bolsines.map((b) => (
-        <div key={b.numeroBolsin}>
-          Bolsín {b.numeroBolsin} ({b.modeloGPSTracker}) → {b.nombreCMDestino}
-        </div>
+        <Box key={b.numeroBolsin} sx={{ mb: 0.5 }}>
+          <Typography variant="body2" fontWeight={700}>
+            Bolsín {b.numeroBolsin} · Precinto {b.numeroPrecinto}
+          </Typography>
+          <Typography variant="body2">Origen: {b.nombreCMOrigen}</Typography>
+          <Typography variant="body2">Destino: {b.nombreCMDestino}</Typography>
+          <Typography variant="body2">GPS: {b.modeloGPSTracker} (no informó la ubicación)</Typography>
+        </Box>
       ))}
     </Alert>
   )

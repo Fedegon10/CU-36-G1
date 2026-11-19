@@ -151,7 +151,7 @@ public class GestorConsultarSeguimientoBolsines {
             } catch (GPSTrackerException e) {
                 // A3: el GPS Tracker no pudo informar la ubicación del bolsín
                 bolsinesSinUbicacion.add(new BolsinSinUbicacionDTO(numeroBolsin, bolsin.getNumeroPrecinto(),
-                        bolsin.getNombreCMDestino(), modeloGPSTracker, e.getMessage()));
+                        bolsin.getNombreCMOrigen(), bolsin.getNombreCMDestino(), modeloGPSTracker, e.getMessage()));
             }
         }
     }

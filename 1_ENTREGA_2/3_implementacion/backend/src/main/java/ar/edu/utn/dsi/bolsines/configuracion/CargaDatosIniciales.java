@@ -90,6 +90,8 @@ public class CargaDatosIniciales implements CommandLineRunner {
         Empleado ebCordoba = empleado("Lucía", "Fernández", "lfernandez@bolsines.example", eb, cordoba, "eb.cordoba");
         Empleado ebRosario = empleado("Martín", "Gómez", "mgomez@bolsines.example", eb, rosario, "eb.rosario");
         empleado("Paula", "Quispe", "pquispe@bolsines.example", eb, jujuy, "eb.jujuy");
+        // Encargado de bolsines de la CM Central (sin usuario: solo figura como responsable del bolsín 104)
+        Empleado ebCentral = empleado("Tomás", "Herrera", "therrera@bolsines.example", eb, central, null);
 
         // ---------- Gerentes de comisión médica (destinatarios del mail) ----------
         empleado("Carlos", "Medina", "gcm.cordoba@bolsines.example", gcm, cordoba, null);
@@ -131,7 +133,7 @@ public class CargaDatosIniciales implements CommandLineRunner {
 
         // ---------- Bolsines enviados desde otras CM ----------
         bolsinEnviado(102, 50102, NAVTRACK, rosario, mendoza, ebRosario);
-        bolsinEnviado(104, 50104, GEOPULSE, central, cordoba, ebCordoba);
+        bolsinEnviado(104, 50104, GEOPULSE, central, cordoba, ebCentral);
     }
 
     // Crea una comisión médica
