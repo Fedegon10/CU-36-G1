@@ -237,13 +237,14 @@ En la evaluación, la profe **compara el diagrama de secuencia con el código** 
 - Los diagramas de secuencia tienen los **mensajes numerados**:
   - **Figura 3**: flujo básico completo (46 mensajes). Archivo `1_ENTREGA_2/2_diagramas/2_secuencia/Figura_3_secuencia_flujo_basico.png`.
   - **Figura 2**: parte rediseñada con el patrón Adapter (19 mensajes). Archivo `1_ENTREGA_2/2_diagramas/2_secuencia/Figura_2_secuencia_patron_adapter.png`.
-- En el código, cada mensaje tiene un comentario con su número, en la línea donde se envía o se recibe:
+- El código usa los mismos nombres de métodos que el diagrama y los comentarios indican el paso del CU:
   ```java
-  // [Fig. 3 · 4] Paso 2: busca la CM del usuario logueado
+  // Paso 2: busca la CM del usuario logueado
   comisionMedicaUsuario = buscarCM();
   ```
-  `[Fig. 3 · 4]` significa **Figura 3, mensaje 4**. También se indica el **paso del CU** (paso 2, paso 7, etc.) y los flujos alternativos (`A1` a `A5`).
-- **Para encontrar un mensaje rápido:** en VS Code, `Ctrl + Shift + F` (Mac: `Cmd + Shift + F`) y buscar, por ejemplo, `Fig. 3 · 17`.
+  También se indican los flujos alternativos (`A1` a `A5`).
+- **Submensajes de la Figura 3** (7.1, 17.1, 19.1, 22.1, 37.1): son las delegaciones internas de cada entidad. Por ejemplo, en 22.1 `Bolsin.getNombreCMDestino()` le pide `getNombre()` a su CM destino.
+- **Para encontrar un mensaje rápido:** en VS Code, `Ctrl + Shift + F` (Mac: `Cmd + Shift + F`) y buscar el nombre del método, por ejemplo `esMiCM`, o el paso, por ejemplo `Paso 7`.
 
 ### Cómo recorrer el código durante la evaluación
 
@@ -254,9 +255,9 @@ Con la Figura 3 en la mano, ir de arriba hacia abajo:
 3. **Mensajes 18–20 en detalle, el patrón (Figura 2)**: `obtenerUbicacionBolsines()` → `boundary/interfaces/InterfazGPSTracker.java` → `patrones/adapter/AdaptadorGPSTrackerXTR4500L.java` → `patrones/adapter/serviciosexternos/ServicioGPSTrackerXTR4500L.java`.
 4. **Mensajes 26–29**: `PantallaConsultarSeguimientoBolsines.selecBolsin()` → gestor `tomarSeleccionBolsin()`.
 5. **Mensajes 31–45**: `PantallaConsultarSeguimientoBolsines.confirmarEnvioMail()` → gestor `tomarConfirmacionDeMail()`, que se lee en orden: `buscarMailDeGerenteCMDestino()` (33–37), `getEmail()` (38), `llamarCUNotificarUbicacion()` (39–43), `finCU()` (44).
-6. **Mensajes a entidades** (5–17, 28, 34–37, 40): cada método de `entidades/` tiene arriba su número, por ejemplo `// [Fig. 3 · 17]` en `ComisionMedica.esMiCM()`.
+6. **Mensajes a entidades** (5–17, 28, 34–37, 40): cada método de `entidades/` tiene el mismo nombre que en el diagrama, por ejemplo `ComisionMedica.esMiCM()` (mensaje 17).
 
-**La pantalla está en dos partes.** El backend (`PantallaConsultarSeguimientoBolsines.java`) recibe las acciones del EB y llama al gestor. El frontend (`PantallaConsultarSeguimientoBolsines.jsx`) es lo que se ve y tiene los mensajes que la pantalla se envía a sí misma (`mostrarMapaDeBolsines()`, `solicitarConfirmacionEnvioMail()`, `mostrarMailEnviado()`). Los dos archivos tienen los mismos números de mensaje.
+**La pantalla está en dos partes.** El backend (`PantallaConsultarSeguimientoBolsines.java`) recibe las acciones del EB y llama al gestor. El frontend (`PantallaConsultarSeguimientoBolsines.jsx`) es lo que se ve y tiene los mensajes que la pantalla se envía a sí misma (`mostrarMapaDeBolsines()`, `solicitarConfirmacionEnvioMail()`, `mostrarMailEnviado()`). Los dos archivos usan los mismos nombres de métodos que el diagrama.
 
 **Mensajes de la pantalla al gestor.** Como es una API REST, los retornos (24, 29, 45) son el valor que devuelve cada método. La pantalla recibe **DTO** (objetos solo con datos), nunca entidades. La implementación de ejemplo de la cátedra lo hace igual.
 
@@ -273,6 +274,7 @@ Rutas: `backend/src/main/java/ar/edu/utn/dsi/bolsines/` (Java) y `frontend/src/`
 | **5** | `estaActiva()` | Gestor → Sesion | `Sesion.estaActiva()` (loop en `buscarCM()`) |
 | **6** | `getUsuario()` | Gestor → Sesion | `Sesion.getUsuario()` |
 | **7** | `esTuUsuario(usuario)` | Gestor → Empleado | `Empleado.esTuUsuario()` (loop en `buscarCM()`) |
+| **7.1** | `getNombre()` | Empleado → Usuario | `Usuario.getNombre()` (dentro de `Empleado.esTuUsuario()`) |
 | **8** | `getCM()` | Gestor → Empleado | `Empleado.getCM()` |
 | **9** | `getCodigo() / getNombre()` | Gestor → ComisionMedica | `ComisionMedica.getCodigo()` y `getNombre()` |
 | **10** | `buscarBolsinesEnviados()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.buscarBolsinesEnviados()` |
@@ -283,11 +285,14 @@ Rutas: `backend/src/main/java/ar/edu/utn/dsi/bolsines/` (Java) y `frontend/src/`
 | **15** | `esAmbitoBolsin()` | Estado → Estado | `Estado.esAmbitoBolsin()` |
 | **16** | `esTuCMOrigen(cm)` | Gestor → Bolsin | `Bolsin.esTuCMOrigen()` |
 | **17** | `esMiCM(cm)` | Bolsin → ComisionMedica | `ComisionMedica.esMiCM()` |
+| **17.1** | `getCodigo()` | ComisionMedica → ComisionMedica | código de la CM recibida (dentro de `esMiCM()`) |
 | **18** | `obtenerUbicacionBolsines()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.obtenerUbicacionBolsines()` (detalle en la Figura 2) |
 | **19** | `getNumeroBolsin() / getCodigoCMOrigen() / getCodigoCMDestino() / getModeloGPSTracker()` | Gestor → Bolsin | `Bolsin` (llamados en `obtenerUbicacionBolsines()`) |
+| **19.1** | `getCodigo()` (origen y destino) | Bolsin → ComisionMedica | dentro de `Bolsin.getCodigoCMOrigen()` y `getCodigoCMDestino()` |
 | **20** | `solicitarUbicacionBolsin(...)` | Gestor → InterfazGPSTracker | `InterfazGPSTracker.solicitarUbicacionBolsin()` (detalle en la Figura 2) |
 | **21** | `armarMapaDePosicionDeBolsines()` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.armarMapaDePosicionDeBolsines()` |
-| **22** | `getNumeroBolsin() / getNumeroPrecinto() / getCodigoCMDestino() / getNombreCMDestino() / getModeloGPSTracker()` | Gestor → Bolsin | `Bolsin` (llamados en `armarMapaDePosicionDeBolsines()`) |
+| **22** | `getNumeroBolsin() / getNumeroPrecinto() / getNombreCMOrigen() / getCodigoCMDestino() / getNombreCMDestino() / getModeloGPSTracker()` | Gestor → Bolsin | `Bolsin` (llamados en `armarMapaDePosicionDeBolsines()`) |
+| **22.1** | `getNombre()` (origen) / `getCodigo()` / `getNombre()` (destino) | Bolsin → ComisionMedica | dentro de `Bolsin.getNombreCMOrigen()`, `getCodigoCMDestino()` y `getNombreCMDestino()` |
 | **23** | `getLatitud() / getLongitud() / getFechaHoraUltimaActualizacion()` | Gestor → UbicacionBolsin | `UbicacionBolsin` (llamados en `armarMapaDePosicionDeBolsines()`) |
 | **24** | `MapaBolsinesDTO (retorno)` | Gestor → Pantalla | `return` de `GestorConsultarSeguimientoBolsines.consultarUbicacionBolsines()` |
 | **25** | `mostrarMapaDeBolsines()` | Pantalla → Pantalla | Frontend: `mostrarMapaDeBolsines()` en `PantallaConsultarSeguimientoBolsines.jsx` |
@@ -303,6 +308,7 @@ Rutas: `backend/src/main/java/ar/edu/utn/dsi/bolsines/` (Java) y `frontend/src/`
 | **35** | `sosGCMDeCM(cmDestino)` | Gestor → Empleado | `Empleado.sosGCMDeCM()` (loop en `buscarMailDeGerenteCMDestino()`) |
 | **36** | `esGCM()` | Empleado → Rol | `Rol.esGCM()` |
 | **37** | `esMiCM(cmDestino)` | Empleado → ComisionMedica | `ComisionMedica.esMiCM()` |
+| **37.1** | `getCodigo()` | ComisionMedica → ComisionMedica | código de la CM destino (dentro de `esMiCM()`) |
 | **38** | `getEmail() / getNombreCompleto()` | Gestor → Empleado | `Empleado.getEmail()` y `getNombreCompleto()` (en `tomarConfirmacionDeMail()`) |
 | **39** | `llamarCUNotificarUbicacion(...)` | Gestor → Gestor | `GestorConsultarSeguimientoBolsines.llamarCUNotificarUbicacion()` |
 | **40** | `getNumeroBolsin()` | Gestor → Bolsin | `Bolsin.getNumeroBolsin()` |

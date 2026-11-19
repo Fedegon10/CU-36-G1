@@ -13,7 +13,7 @@ Docente tutora: Ing. Judith Meles · Patrón aplicado: **Adapter**
 | **2. Diagramas** | [`1_ENTREGA_2/2_diagramas/`](1_ENTREGA_2/2_diagramas/) | `1_clases/` (Figura 1) · **`2_secuencia/`** (Figuras 2 y 3: las que se comparan con el código) · `3_maquinas_de_estado/` (Figuras 4 y 5) |
 | **3. Implementación** | [`1_ENTREGA_2/3_implementacion/`](1_ENTREGA_2/3_implementacion/) | `api-gps-tracker/` (API de la cátedra) · `backend/` (Java: lógica, patrón y base de datos) · `frontend/` (pantallas) |
 
-> En el código, cada mensaje de los diagramas de secuencia tiene un comentario con su número. Por ejemplo, `// [Fig. 3 · 12]` es el mensaje 12 de `Figura_3_secuencia_flujo_basico.png`.
+> El código sigue el mismo orden y usa los mismos nombres de métodos que los diagramas de secuencia. Los comentarios indican el paso del CU, por ejemplo `// Paso 2: busca la CM del usuario logueado`.
 > Por aviso del equipo docente, en la Entrega 2 **no** se pide el apartado de Diseño de experiencia de usuario.
 
 ---

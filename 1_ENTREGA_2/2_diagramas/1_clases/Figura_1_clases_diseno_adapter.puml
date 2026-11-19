@@ -117,6 +117,7 @@ class Bolsin <<entity>> {
   + esTuNumeroPrecinto(numero: Integer): boolean
   + esTuCMDestino(codigoCM: String): boolean
   + getCodigoCMOrigen(): String
+  + getNombreCMOrigen(): String
   + getCodigoCMDestino(): String
   + getNombreCMDestino(): String
   + getNumeroBolsin(): Integer

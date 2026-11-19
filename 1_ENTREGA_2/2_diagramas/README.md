@@ -8,7 +8,7 @@
 | `3_maquinas_de_estado/` | `Figura_4_maquina_estados_bolsin` | Máquina de estados del Bolsín (corregida) | 6. Anexo |
 | `3_maquinas_de_estado/` | `Figura_5_maquina_estados_remito` | Máquina de estados del Remito (corregida) | 6. Anexo |
 
-**Diagramas de secuencia y código:** cada mensaje de las Figuras 2 y 3 tiene un número, y en el código hay un comentario con ese número en la línea que lo envía o lo recibe. Por ejemplo, `// [Fig. 3 · 12]` es el mensaje 12 de `Figura_3_secuencia_flujo_basico`. El código sigue el mismo orden que los diagramas.
+**Diagramas de secuencia y código:** el código sigue el mismo orden que los diagramas, con los mismos nombres de métodos y los mismos objetos que reciben cada mensaje. En la Figura 3, los submensajes (7.1, 17.1, 19.1, 22.1 y 37.1) son las delegaciones internas de cada entidad, por ejemplo `Bolsin.getNombreCMDestino()` que le pide `getNombre()` a su CM destino. Los comentarios del código indican el paso del CU.
 
 ## Formatos
 Cada diagrama está en tres formatos, con el mismo nombre:
@@ -23,4 +23,4 @@ Cada diagrama está en tres formatos, con el mismo nombre:
 4. En el documento Word: clic derecho sobre la imagen → **Cambiar imagen** → elegir el PNG nuevo.
 
 No subir el `skinparam dpi` por encima de 120: el servidor de PlantUML corta las imágenes a 4096 px de ancho.
-Si se cambia un diagrama de secuencia, hay que revisar que los números de los comentarios `[Fig. N · M]` del código sigan coincidiendo.
+Si se cambia un diagrama de secuencia, hay que revisar que el código siga el mismo orden y los mismos nombres de métodos.

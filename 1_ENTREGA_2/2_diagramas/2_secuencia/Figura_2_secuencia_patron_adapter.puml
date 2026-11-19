@@ -1,7 +1,6 @@
 @startuml Figura_2_secuencia_patron_adapter
 ' Vista dinámica - parte del escenario rediseñada por el patrón ADAPTER (pasos 4 y 5 del CU 36)
 ' Escenario del flujo descripto: GPS Tracker modelo XTR-4500L.
-' Cada número de mensaje está indicado en el código con un comentario [Fig. 2 · N].
 skinparam dpi 120
 skinparam sequenceMessageAlign center
 autonumber

@@ -1,7 +1,7 @@
 @startuml Figura_3_secuencia_flujo_basico
 ' Vista dinámica - flujo básico completo del CU 36 (diseño), con las correcciones de la Entrega 1.
-' Cada número de mensaje está indicado en el código con un comentario [Fig. 3 · N].
 ' Los mensajes 19-20 se detallan en la Figura 2 (patrón Adapter).
+' Los submensajes (7.1, 17.1, 19.1, 22.1, 37.1) son las delegaciones internas de cada entidad.
 skinparam dpi 110
 skinparam sequenceMessageAlign left
 autonumber
@@ -12,6 +12,7 @@ participant ":PantallaConsultar\nSeguimientoBolsines" as P <<boundary>>
 participant ":GestorConsultar\nSeguimientoBolsines" as G <<control>>
 participant ":Sesion" as SE <<entity>>
 participant ":Empleado" as EM <<entity>>
+participant ":Usuario" as US <<entity>>
 participant ":Rol" as R <<entity>>
 participant ":ComisionMedica" as CM <<entity>>
 participant ":Bolsin" as B <<entity>>
@@ -32,6 +33,9 @@ end
 G -> SE : getUsuario()
 loop para cada Empleado
   G -> EM : esTuUsuario(usuario)
+  autonumber stop
+  EM -> US : 7.1 getNombre()
+  autonumber resume
 end
 G -> EM : getCM()
 G -> CM : getCodigo() / getNombre()
@@ -47,19 +51,28 @@ loop para cada Bolsin
   E -> E : esAmbitoBolsin()
   G -> B : esTuCMOrigen(cm)
   B -> CM : esMiCM(cm)
+  autonumber stop
+  CM -> CM : 17.1 getCodigo() (de la CM recibida)
+  autonumber resume
 end
 note right of G : A1: si no hay bolsines enviados, se informa y termina
 
 G -> G : obtenerUbicacionBolsines()
 loop para cada bolsín enviado
   G -> B : getNumeroBolsin() / getCodigoCMOrigen() /\ngetCodigoCMDestino() / getModeloGPSTracker()
+  autonumber stop
+  B -> CM : 19.1 getCodigo() (origen y destino)
+  autonumber resume
   G -> I : solicitarUbicacionBolsin(...): UbicacionBolsin
   note right of I : detalle en la Figura 2 (Adapter). A3 si no informa ubicación
 end
 
 G -> G : armarMapaDePosicionDeBolsines()
 loop para cada bolsín con ubicación
-  G -> B : getNumeroBolsin() / getNumeroPrecinto() / getCodigoCMDestino() /\ngetNombreCMDestino() / getModeloGPSTracker()
+  G -> B : getNumeroBolsin() / getNumeroPrecinto() / getNombreCMOrigen() /\ngetCodigoCMDestino() / getNombreCMDestino() / getModeloGPSTracker()
+  autonumber stop
+  B -> CM : 22.1 getNombre() (origen) / getCodigo() / getNombre() (destino)
+  autonumber resume
   G -> U : getLatitud() / getLongitud() / getFechaHoraUltimaActualizacion()
 end
 G --> P : MapaBolsinesDTO
@@ -82,6 +95,9 @@ loop para cada Empleado
   G -> EM : sosGCMDeCM(cmDestino)
   EM -> R : esGCM()
   EM -> CM : esMiCM(cmDestino)
+  autonumber stop
+  CM -> CM : 37.1 getCodigo() (de cmDestino)
+  autonumber resume
 end
 G -> EM : getEmail() / getNombreCompleto()
 G -> G : llamarCUNotificarUbicacion(mailGerente, nombreGerente)
