@@ -1,0 +1,13 @@
+# Archivos locales del sistema y del editor
+.DS_Store
+~$*.docx
+.idea/
+.vscode/
+*.iml
+
+# Compilados, base de datos local y dependencias
+/backend/target/
+/backend/data/
+/api-gps-tracker/target/
+/frontend/node_modules/
+/frontend/dist/

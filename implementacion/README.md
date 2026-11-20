@@ -8,7 +8,7 @@
 
 ## Cómo levantarlo (3 terminales, en este orden)
 
-Desde la carpeta `3_implementacion`, una terminal para cada parte. Copiar solo los comandos, sin agregarles nada.
+Desde la carpeta `implementacion`, una terminal para cada parte. Copiar solo los comandos, sin agregarles nada.
 
 **1) API mock del GPS Tracker**
 ```bash
