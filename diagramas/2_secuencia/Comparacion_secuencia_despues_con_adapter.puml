@@ -1,0 +1,40 @@
+@startuml Comparacion_secuencia_despues_con_adapter
+' Después: InterfazGPSTracker crea el adaptador y le delega la llamada y la traducción
+skinparam dpi 120
+skinparam sequenceMessageAlign center
+skinparam note {
+  BackgroundColor #E8F3E8
+  BorderColor #5B9B5B
+}
+autonumber
+hide footbox
+title Después: con el patrón Adapter (modelo XTR-4500L)
+
+participant ":GestorConsultar\nSeguimientoBolsines" as G <<control>>
+participant ":InterfazGPSTracker" as I <<boundary>>
+participant ":AdaptadorGPSTracker\nXTR4500L" as A
+participant ":ServicioGPSTracker\nXTR4500L" as S <<adaptee>>
+participant ":UbicacionBolsin" as U
+
+G -> I : solicitarUbicacionBolsin(...,\nmodeloGPSTracker)
+I -> I : crearAdaptador(\nmodeloGPSTracker)
+create S
+I -> S : new(restClient)
+create A
+I -> A : new(claveAPI, servicio)
+I -> A : obtenerUbicacion(numeroBolsin,\ncodigoCMOrigen, codigoCMDestino)
+A -> A : solicitarUbicacion(numeroBolsin,\ncodigoCMOrigen)
+A -> S : getBolsinLocation(claveAPI,\nnumeroBolsin, codigoCMOrigen)
+S --> A : JSON (String)
+A -> A : adaptarUbicacion(json)
+create U
+A -> U : new(...)
+A --> I : UbicacionBolsin
+I --> G : UbicacionBolsin
+
+note over I, A
+  La interfaz siempre envía obtenerUbicacion()
+  a IAdaptadorGPSTracker. Con NavTrack QX-7A o
+  GeoPulse MTR-900 cambia solo el adaptador creado.
+end note
+@enduml

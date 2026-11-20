@@ -1,0 +1,53 @@
+@startuml Comparacion_antes_sin_patron
+' Antes: InterfazGPSTracker se comunica directo con los tres servicios (sin el patrón Adapter)
+skinparam classAttributeIconSize 0
+skinparam dpi 120
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor<<boundary>> #DDF3FF
+  BackgroundColor<<control>> #DDF3FF
+  BackgroundColor<<servicio externo>> #FFFFA8
+}
+skinparam note {
+  BackgroundColor #FDECEC
+  BorderColor #C0504D
+}
+title Antes: sin el patrón Adapter
+
+class GestorConsultarSeguimientoBolsines <<control>> {
+  - obtenerUbicacionBolsines(): void
+}
+
+class InterfazGPSTracker <<boundary>> {
+  - claveAPIXtr: String
+  - claveAPINavTrack: String
+  - claveAPIGeoPulse: String
+  + solicitarUbicacionBolsin(..., modeloGPSTracker: String): UbicacionBolsin
+  - leerJSONXTR4500L(json: String): UbicacionBolsin
+  - leerTextoNavTrackQX7A(texto: String): UbicacionBolsin
+  - leerMatrizGeoPulseMTR900(matriz: Object[][]): UbicacionBolsin
+}
+
+class ServicioGPSTrackerXTR4500L <<servicio externo>> {
+  + getBolsinLocation(...): String
+}
+class ServicioGPSTrackerNavTrackQX7A <<servicio externo>> {
+  + retrieveTrackingData(...): String
+}
+class ServicioGPSTrackerGeoPulseMTR900 <<servicio externo>> {
+  + fetchCargoPositions(...): Object[][]
+}
+
+GestorConsultarSeguimientoBolsines ..> InterfazGPSTracker
+InterfazGPSTracker --> ServicioGPSTrackerXTR4500L
+InterfazGPSTracker --> ServicioGPSTrackerNavTrackQX7A
+InterfazGPSTracker --> ServicioGPSTrackerGeoPulseMTR900
+
+note right of InterfazGPSTracker
+  Conoce las tres operaciones
+  y los tres formatos.
+  Usa un si/sino por modelo.
+  Un modelo nuevo obliga
+  a modificar esta clase.
+end note
+@enduml

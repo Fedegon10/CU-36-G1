@@ -1,0 +1,68 @@
+@startuml Comparacion_despues_con_adapter
+' Después: InterfazGPSTracker usa la interfaz común y cada adaptador encapsula un modelo
+skinparam classAttributeIconSize 0
+skinparam dpi 120
+skinparam class {
+  BackgroundColor<<boundary>> #DDF3FF
+  BackgroundColor<<control>> #DDF3FF
+  BackgroundColor<<interface>> #CCF5F5
+  BackgroundColor<<adaptee>> #FFFFA8
+}
+skinparam note {
+  BackgroundColor #E8F3E8
+  BorderColor #5B9B5B
+}
+title Después: con el patrón Adapter
+
+class GestorConsultarSeguimientoBolsines <<control>> {
+  - obtenerUbicacionBolsines(): void
+}
+
+class InterfazGPSTracker <<boundary>> {
+  + solicitarUbicacionBolsin(..., modeloGPSTracker: String): UbicacionBolsin
+  - crearAdaptador(modeloGPSTracker: String): IAdaptadorGPSTracker
+}
+
+interface IAdaptadorGPSTracker <<interface>> {
+  + obtenerUbicacion(numeroBolsin, codigoCMOrigen,\n    codigoCMDestino): UbicacionBolsin
+}
+
+class AdaptadorGPSTrackerXTR4500L {
+  + obtenerUbicacion(...): UbicacionBolsin
+  - adaptarUbicacion(json: String): UbicacionBolsin
+}
+class AdaptadorGPSTrackerNavTrackQX7A {
+  + obtenerUbicacion(...): UbicacionBolsin
+  - adaptarUbicacion(texto: String): UbicacionBolsin
+}
+class AdaptadorGPSTrackerGeoPulseMTR900 {
+  + obtenerUbicacion(...): UbicacionBolsin
+  - adaptarUbicacion(matriz: Object[][]): UbicacionBolsin
+}
+
+class ServicioGPSTrackerXTR4500L <<adaptee>> {
+  + getBolsinLocation(...): String
+}
+class ServicioGPSTrackerNavTrackQX7A <<adaptee>> {
+  + retrieveTrackingData(...): String
+}
+class ServicioGPSTrackerGeoPulseMTR900 <<adaptee>> {
+  + fetchCargoPositions(...): Object[][]
+}
+
+GestorConsultarSeguimientoBolsines ..> InterfazGPSTracker
+InterfazGPSTracker ..> IAdaptadorGPSTracker : <<usa>>
+IAdaptadorGPSTracker <|.. AdaptadorGPSTrackerXTR4500L
+IAdaptadorGPSTracker <|.. AdaptadorGPSTrackerNavTrackQX7A
+IAdaptadorGPSTracker <|.. AdaptadorGPSTrackerGeoPulseMTR900
+AdaptadorGPSTrackerXTR4500L o--> "1" ServicioGPSTrackerXTR4500L : servicio
+AdaptadorGPSTrackerNavTrackQX7A o--> "1" ServicioGPSTrackerNavTrackQX7A : servicio
+AdaptadorGPSTrackerGeoPulseMTR900 o--> "1" ServicioGPSTrackerGeoPulseMTR900 : servicio
+
+note right of InterfazGPSTracker
+  Solo conoce IAdaptadorGPSTracker
+  y recibe siempre un UbicacionBolsin.
+  Un modelo nuevo se agrega
+  con otro adaptador.
+end note
+@enduml

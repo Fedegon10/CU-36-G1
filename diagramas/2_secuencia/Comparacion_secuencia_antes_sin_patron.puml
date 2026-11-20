@@ -1,0 +1,43 @@
+@startuml Comparacion_secuencia_antes_sin_patron
+' Antes: InterfazGPSTracker pide la ubicación y traduce la respuesta de cada modelo (sin el patrón Adapter)
+skinparam dpi 120
+skinparam sequenceMessageAlign center
+skinparam note {
+  BackgroundColor #FDECEC
+  BorderColor #C0504D
+}
+autonumber
+hide footbox
+title Antes: sin el patrón Adapter
+
+participant ":GestorConsultar\nSeguimientoBolsines" as G <<control>>
+participant ":InterfazGPSTracker" as I <<boundary>>
+participant ":ServicioGPSTracker\nXTR4500L" as SX <<servicio externo>>
+participant ":ServicioGPSTracker\nNavTrackQX7A" as SN <<servicio externo>>
+participant ":ServicioGPSTracker\nGeoPulseMTR900" as SG <<servicio externo>>
+participant ":UbicacionBolsin" as U
+
+G -> I : solicitarUbicacionBolsin(...,\nmodeloGPSTracker)
+alt modeloGPSTracker = "XTR-4500L"
+  I -> SX : getBolsinLocation(claveAPIXtr,\nnumeroBolsin, codigoCMOrigen)
+  SX --> I : JSON (String)
+  I -> I : leerJSONXTR4500L(json)
+else modeloGPSTracker = "NavTrack QX-7A"
+  I -> SN : retrieveTrackingData(claveAPINavTrack,\nnumeroBolsin, codigoCMDestino)
+  SN --> I : texto con comas (String)
+  I -> I : leerTextoNavTrackQX7A(texto)
+else modeloGPSTracker = "GeoPulse MTR-900"
+  I -> SG : fetchCargoPositions(claveAPIGeoPulse,\nnumeroBolsin)
+  SG --> I : matriz (Object[][])
+  I -> I : leerMatrizGeoPulseMTR900(matriz)
+end
+create U
+I -> U : new(...)
+I --> G : UbicacionBolsin
+
+note over I, SG
+  La interfaz decide, llama y traduce
+  según el modelo. Un modelo nuevo
+  agrega otra rama al alt.
+end note
+@enduml
