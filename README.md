@@ -42,40 +42,38 @@ Cada diagrama está en tres formatos: `.png` (va en el documento), `.svg` (vecto
 
 ## 🚀 Levantar el sistema (resumen)
 
-Requisitos: Java 17 o superior y Node.js 18 o superior. Desde la carpeta `CU-36-G1`, una terminal por cada parte:
+Requisitos: Java 17 o superior y Node.js 18 o superior.
 
-```bash
-cd implementacion/api-gps-tracker
-./mvnw spring-boot:run
-```
-```bash
-cd implementacion/backend
-./mvnw spring-boot:run
-```
-```bash
-cd implementacion/frontend
-npm install
-npm run dev
-```
+Abrir directamente la carpeta `implementacion` en el editor. Abrir **tres terminales**, cada una ubicada inicialmente en esa carpeta, y ejecutar los siguientes bloques **en este orden**. Dejar cada proceso ejecutándose en su terminal.
 
-Si se abre directamente la carpeta `implementacion`, una terminal por cada parte:
+**1) Terminal 1: API GPS Tracker (puerto 8080)**
 
 ```bash
 cd api-gps-tracker
 ./mvnw spring-boot:run
 ```
+
+**2) Terminal 2: backend (puerto 8081)**
+
 ```bash
 cd backend
 ./mvnw spring-boot:run
 ```
+
+**3) Terminal 3: frontend (puerto 5173)**
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
+`npm install` es necesario la primera vez o cuando cambian las dependencias. En los siguientes inicios basta con `cd frontend` y `npm run dev` desde una terminal nueva ubicada en `implementacion`.
+
+En Windows (PowerShell), reemplazar `./mvnw spring-boot:run` por `.\mvnw.cmd spring-boot:run` en las terminales 1 y 2. Los comandos del frontend son los mismos.
+
 Abrir **http://localhost:5173** y entrar con el usuario `eb.cordoba` (contraseña `1234`).
-Los comandos para Windows y el guion de la demo están en [`implementacion/README.md`](implementacion/README.md).
+El guion de la demo y el detalle de cada parte están en [`implementacion/README.md`](implementacion/README.md).
 
 ---
 

@@ -8,7 +8,9 @@
 
 ## Cómo levantarlo (3 terminales, en este orden)
 
-Desde la carpeta `implementacion`, una terminal para cada parte. Copiar solo los comandos, sin agregarles nada.
+Requisitos: Java 17 o superior y Node.js 18 o superior.
+
+Abrir directamente la carpeta `implementacion` en el editor. Abrir **tres terminales**, cada una ubicada inicialmente en esa carpeta. Ejecutar un bloque por terminal, en el orden indicado, y dejar cada proceso ejecutándose.
 
 **1) API mock del GPS Tracker**
 ```bash
@@ -31,7 +33,7 @@ npm run dev
 
 En Windows (PowerShell) se usa `.\mvnw.cmd spring-boot:run` en lugar de `./mvnw spring-boot:run`, y las carpetas se escriben con `\`.
 
-Abrir **http://localhost:5173**.
+Abrir **http://localhost:5173** e ingresar con el usuario `eb.cordoba` y la contraseña `1234`.
 
 - La base de datos es H2 **en archivo** (`backend/data/`). Los datos se cargan la primera vez y persisten entre reinicios.
 - Para volver a los datos iniciales: detener el backend y borrar la carpeta `backend/data/`.
